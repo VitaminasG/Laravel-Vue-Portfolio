@@ -1,0 +1,53 @@
+body p {
+  line-height: 1;
+}
+
+a {
+  font-family: $computer;
+  color: $fontColor-green;
+  font-size: $sizeDefault;
+  text-decoration: none;
+}
+
+a:hover {
+  font-family: $computer;
+  color: $spanAlert;
+  font-size: $sizeDefault;
+  text-decoration: none;
+}
+
+input, label {
+  font-size: $sizeDefault;
+  background: transparent;
+  border: none;
+  font-family: $computer;
+  color: $fontColor-green;
+}
+
+/* Change Autocomplete styles in Chrome */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border: none;
+  -webkit-text-fill-color: $fontColor-green;
+}
+
+input:focus, select:focus, textarea:focus, button:focus {
+  outline: none;
+}
+
+/* Change autofill background colour */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active  {
+  -webkit-box-shadow: 0 0 0 30px $dark-body inset !important;
+}

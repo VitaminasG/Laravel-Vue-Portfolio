@@ -1,0 +1,93 @@
+// Bulma
+@import '~bulma';
+
+// Variables
+@import 'variables';
+@import 'reset';
+
+html,
+body{
+  margin:  0;
+  padding: 0;
+  overflow: hidden;
+  background-color: $dark-body;
+}
+
+html{
+  background-image: url("../assets/Bg_trans.png");
+  background-repeat: repeat;
+  opacity: 0.8;
+  position: relative;
+  z-index: 9999;
+  height: 100%;
+}
+
+body {
+  height: 100vh;
+  font-family: $computer;
+  text-shadow: $shadow-green;
+  color: $fontColor-green;
+}
+
+.a-box {
+  position: absolute;
+  z-index: 5;
+  width: 100%;
+}
+
+.a-line {
+  background-image: url("../assets/Bg_trans.png");
+  background-repeat: repeat;
+  height: 30px;
+  opacity: 0;
+  top: 0;
+  filter: drop-shadow(0px 0px 10px #97c51d);
+}
+
+// Flex rules
+
+.flex{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.flex- {
+
+  &center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &block {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+}
+
+.text- {
+
+    &underline {
+      text-decoration: underline;
+    }
+
+    &center {
+      text-align: center;
+    }
+
+    &alert {
+      color: $spanAlert;
+    }
+
+}
+
+.title {
+  color: $fontColor-green;
+}
+
+.section {
+  padding: 1.5rem 1.5rem;
+}
+

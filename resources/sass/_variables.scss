@@ -1,0 +1,129 @@
+// Colors
+$blue: #3490dc;
+$indigo: #6574cd;
+$purple: #9561e2;
+$pink: #f66D9b;
+$red: #e3342f;
+$orange: #f6993f;
+$yellow: #ffed4a;
+$green: #38c172;
+$teal: #4dc0b5;
+$cyan: #6cb2eb;
+$dark-body: #121212;
+
+$spanAlert: #e4c921;
+
+// Fonts
+
+$font-path: '../fonts/';
+$fontColor-green: #86c60b;
+$computer: 'computer';
+$shadow-green: 0 0 5px rgba(134, 198, 11, 0.60);
+$sizeDefault: 1.25em;
+
+@font-face {
+  font-family: $computer;
+  src: url("#{$font-path}clacon.ttf");
+}
+
+$FontSize: '1' 1em, '1h' 1.5em, '2' 2em, '2h' 2.5em, '3' 3em;
+
+@each $size in $FontSize{
+  .fontSize-#{nth($size, 1)}{
+    font-size: nth($size, 2);
+  }
+}
+
+// Margin & Padding
+
+$marginSize: '1' 1em, '2' 2em, '3' 3em, '4' 4em;
+
+@each $size in $marginSize{
+  .mx-#{nth($size, 1)}{
+
+    margin-left: nth($size, 2);
+    margin-right: nth($size, 2);
+
+  }
+}
+
+@each $size in $marginSize{
+  .my-#{nth($size, 1)}{
+
+    margin-top: nth($size, 2);
+    margin-bottom: nth($size, 2);
+
+  }
+}
+
+@each $size in $marginSize{
+  .mt-#{nth($size, 1)}{
+
+    margin-top: nth($size, 2);
+
+  }
+}
+
+@each $size in $marginSize{
+  .mb-#{nth($size, 1)}{
+
+    margin-bottom: nth($size, 2);
+
+  }
+}
+
+$paddingSize: '1' 1em, '2' 2em, '3' 3em, '4' 4em;
+
+@each $size in $paddingSize{
+  .px-#{nth($size, 1)}{
+
+    padding-left: nth($size, 2);
+    padding-right: nth($size, 2);
+
+  }
+}
+
+@each $size in $paddingSize{
+  .py-#{nth($size, 1)}{
+
+    padding-top: nth($size, 2);
+    padding-bottom: nth($size, 2);
+
+  }
+}
+
+@each $size in $paddingSize{
+  .pt-#{nth($size, 1)}{
+
+    padding-top: nth($size, 2);
+
+  }
+}
+
+@each $size in $paddingSize{
+  .pb-#{nth($size, 1)}{
+
+    padding-bottom: nth($size, 2);
+
+  }
+}
+
+// Width
+
+$widthPer: '25' 25%, '50' 50%, '75' 75%, '100' 100%;
+
+@each $size in $widthPer{
+  .w-#{nth($size, 1)}{
+    width: nth($size, 2);
+  }
+}
+
+// Height
+
+$heightPer: '25' 25%, '50' 50%, '75' 75%, '100' 100%;
+
+@each $size in $heightPer{
+  .h-#{nth($size, 1)}{
+    height: nth($size, 2);
+  }
+}
