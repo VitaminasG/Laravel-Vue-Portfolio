@@ -14,17 +14,29 @@ class IndexController extends Controller
      */
     public function index()
     {
+
     	$agent = new Agent();
 
     	if( $agent->isDesktop() ){
 
 		    return view( 'layouts.master' );
 
-	    } else {
+	    }
 
-    		return view( 'layouts.mobile' );
+    	if ( $agent->isMobile() ) {
+
+    		if( request()->path() != '/' ){
+
+    			abort(404);
+
+		    } else {
+
+			    return view( 'layouts.mobile' );
+
+		    }
 
 	    }
+
     }
 
     /**

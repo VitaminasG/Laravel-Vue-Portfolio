@@ -5,11 +5,19 @@ function loadView(view) {
 }
 
 let routes =  [
+
+    {
+        path: '*',
+        name: 'Error',
+        component: loadView('Error')
+    },
+
     {
         path: '/',
         name: 'Home',
         component: loadView('Home')
     },
+
     {
 
         path: '/OS',

@@ -1,5 +1,6 @@
 @font-face {
-  font-family: "computer";
+  font-family: "Computer";
+  font-weight: normal;
   src: url(/fonts/clacon.ttf?f2f97095d1105880c85067557fb1e311);
 }
 
@@ -204,14 +205,14 @@ body p {
 }
 
 a {
-  font-family: "computer";
+  font-family: "Computer", Courier New;
   color: #86c60b;
   font-size: 1.25em;
   text-decoration: none;
 }
 
 a:hover {
-  font-family: "computer";
+  font-family: "Computer", Courier New;
   color: #e4c921;
   font-size: 1.25em;
   text-decoration: none;
@@ -222,7 +223,7 @@ label {
   font-size: 1.25em;
   background: transparent;
   border: none;
-  font-family: "computer";
+  font-family: "Computer", Courier New;
   color: #86c60b;
 }
 
@@ -274,7 +275,7 @@ html {
 }
 
 body {
-  font-family: "computer";
+  font-family: "Computer", Courier New;
   text-shadow: 0 0 5px rgba(134, 198, 11, 0.6);
   color: #86c60b;
 }
@@ -297,57 +298,33 @@ body {
 }
 
 .flex {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
+  justify-content: space-evenly;
 }
 
 .flex-center {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  align-items: center;
+  justify-content: center;
 }
 
 .flex-block {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
-  -webkit-box-align: stretch;
-      -ms-flex-align: stretch;
-          align-items: stretch;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: stretch;
 }
 
 .grow-one {
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
+  flex-grow: 1;
 }
 
 .grow-two {
-  -webkit-box-flex: 2;
-      -ms-flex-positive: 2;
-          flex-grow: 2;
+  flex-grow: 2;
 }
 
 .grow-three {
-  -webkit-box-flex: 3;
-      -ms-flex-positive: 3;
-          flex-grow: 3;
+  flex-grow: 3;
 }
 
 .text-underline {

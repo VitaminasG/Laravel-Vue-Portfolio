@@ -1,14 +1,11 @@
 <?php
 
 
-Route::get('/', 'IndexController@index');
+Route::get('/{Vue?}', 'IndexController@index')->where('Vue', '^([\w]+)');
 
 
 	/*
-
-		TODO create mobile site simple for user
-			Edit 404, 401
-			Twaak and add more Content to component Desktop site
-
+		TODO Twaak and add more Content to component Desktop site
+			make and redirect SEO FRIENDLY page for Search Engines
 
 	*/

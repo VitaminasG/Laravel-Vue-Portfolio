@@ -17,12 +17,13 @@ $spanAlert: #e4c921;
 
 $font-path: '../fonts/';
 $fontColor-green: #86c60b;
-$computer: 'computer';
+$computer: "Computer", Courier New;
 $shadow-green: 0 0 5px rgba(134, 198, 11, 0.60);
 $sizeDefault: 1.25em;
 
 @font-face {
-  font-family: $computer;
+  font-family: "Computer";
+  font-weight: normal;
   src: url("#{$font-path}clacon.ttf");
 }
 
