@@ -10,6 +10,7 @@ composer.lock
 package-lock.json
 
 public/storage
+public/mix-manifest.json
 public/hot
 storage/*.key
 .env.*.php
