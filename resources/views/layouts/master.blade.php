@@ -9,7 +9,7 @@
 
         <link rel="stylesheet" href="/css/app.css"/>
 
-        <title>Gediminas Palsys Portfolio - Fierce Monkey OS v0.1</title>
+        <title>{{ config('app.name') }}</title>
 
     </head>
 

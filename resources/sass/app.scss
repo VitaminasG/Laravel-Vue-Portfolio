@@ -81,6 +81,14 @@ body {
       color: $spanAlert;
     }
 
+    &success {
+      color: $success;
+    }
+
+    &justify {
+      text-align: justify;
+    }
+
 }
 
 .title {
@@ -90,4 +98,10 @@ body {
 .section {
   padding: 1.5rem 1.5rem;
 }
+
+button, textarea, textarea::placeholder{
+  font-family: $computer;
+}
+
+
 

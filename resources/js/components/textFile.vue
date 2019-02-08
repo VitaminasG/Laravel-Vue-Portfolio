@@ -5,31 +5,32 @@
         <div class="modal" v-bind:class="{ 'is-active' : this.isActive}">
 
             <div class="modal-background"></div>
-            <div class="modal-card">
 
-                <header class="modal-card-head">
+                <div class="modal-card">
 
-                    <p class="modal-card-title">
-                        <slot name="header"></slot> - textPad
-                    </p>
+                    <header class="modal-card-head">
 
-                    <button @click="closeMod" class="delete" ></button>
+                        <p class="modal-card-title">
+                            <slot name="header"></slot> - textPad
+                        </p>
 
-                </header>
+                        <button @click="closeMod" class="delete" ></button>
 
-                <section class="modal-card-body">
+                    </header>
 
-                    <slot name="content"></slot>
+                    <section class="modal-card-body">
 
-                </section>
+                        <slot class="py-1" name="content"></slot>
 
-                <footer class="modal-card-foot">
+                    </section>
 
-                    <slot name="footer"></slot>
+                    <footer class="modal-card-foot">
 
-                </footer>
+                        <slot name="footer"></slot>
 
-            </div>
+                    </footer>
+
+                </div>
 
         </div>
 
@@ -91,7 +92,7 @@
         background-color: transparent;
     }
 
-    .delete::before, .modal-close::before, .delete::after, .modal-close::after{
+    .delete::before, .delete::after {
         background-color: #c33c3c;
     }
 
@@ -104,8 +105,16 @@
         color: #0a0a0a;
     }
 
+    .modal-card {
+        width: 90%;
+    }
+
     .modal-card-title {
         color: #0a0a0a;
+    }
+
+    .modal-card-body {
+        font-size: 1.5em
     }
 
 </style>

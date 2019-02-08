@@ -5,15 +5,22 @@
             <div class="d-content h-50">
 
                 <div class="d-file flex-center">
-                    <a class="mx-1" @click="toggle(true)" v-on:mouseover="mouseOver">
+                    <a class="my-1" @click="toggleText(true, 'text1')" v-on:mouseover="mouseOver()">
                         <img src="../../assets/DocumentIcon.png" alt="ReadMe">
                         <p class="text-center">ReadMe.txt</p>
                     </a>
                 </div>
 
                 <div class="d-file flex-center">
-                    <a class="mx-1">
-                        <img src="../../assets/MailIcon.png" alt="Mail">
+                    <a class="my-1" @click="toggleText(true, 'text2')" v-on:mouseover="mouseOver()">
+                        <img src="../../assets/DocumentIcon.png" alt="AboutMe">
+                        <p class="text-center">AboutMe.txt</p>
+                    </a>
+                </div>
+
+                <div class="d-file flex-center">
+                    <a class="my-1" @click="toggleMail(true)" v-on:mouseover="mouseOver()">
+                        <img src="../../assets/MailIcon.png" alt="MailMe">
                         <p class="text-center">Inbox</p>
                     </a>
                 </div>
@@ -38,54 +45,43 @@
 
             <keep-alive v-if="show">
 
-                <text-file>
+                <component :is="targetComp">
 
-                    <template slot="header">
-                        Read Me.txt
-                    </template>
+                        <template slot="header">
 
-                    <template slot="content">
+                            <span v-show="modalType === 'text'">
 
-                        <p class="px-1">
-                            Hey! As you noticed this personal project tried to convey and give a feeling,
-                            as being a person who used one of many computer systems existed almost three
-                            decades ago. If someone was a curious kid during that period, they should know
-                            where I'm heading. I didn't want to bring back everything in this project like
-                            it was age's ago and replicate everything in very small details like Windows
-                            98 used to be and to have a same ugly low-resolution Graphical User Interface
-                            (GUI). Either, I am not a romantic person, who still remembers the good old days
-                            spent surrounded by friends and chilling after a football match which we had in
-                            common courtyard and cooling down by having a cold glass of water... Next to a
-                            computer screen protected with a greenish cover from low refresh rate and playing
-                            DUNE from a floppy disk. Ufff, that was very impressive. However, I still don't
-                            get it till now, how they managed to fit all polyphonic soundtrack, graphical
-                            assets and code inside one 2MB size floppy disk. I am still thinking it was made
-                            with Magic!
-                        </p>
+                                {{ textFiles[pointing].header}}
 
-                        <p class="px-1">
-                            I just want to highlight what kind big leap WE have done in the
-                            telecommunication industry. Technologies progressing very fast
-                            and to be on top of it is impossible. For me web development like
-                            endless sea which you want and trying to drink without choking.
-                        </p>
+                            </span>
 
-                        <p class="px-1">
-                            I will drop a small bit of history to the visitors who maybe hadn’t a chance to live ~25 years
-                            ago or maybe, to have at home or even, to have a friend who owned that very expensive piece of
-                            technology which gave us possibility by few seconds to send an email to the other
-                            side of the world... Even a user by using this hi-tech had to be patient because it
-                            took longer to load all required internet or system assets. I named this project - Fierce Monkey
-                            OS. It is a fictional name made by me regarding to my logo. I am Code Monkey! Copy and Past :D
-                        </p>
+                            <span v-show="modalType === 'mail'">
+                                Mail Tool
+                            </span>
 
-                        <p class="px-1">
-                            P.S. - All code of this website you can find by clicking on desktop github icon.
-                        </p>
+                        </template>
 
-                    </template>
+                        <template slot="content">
 
-                </text-file>
+                            <span v-show="modalType === 'text'" v-for="text in textFiles[pointing].content">
+
+                                <p class="pb-1 text-justify">{{ text }}</p>
+
+                            </span>
+
+                            <span v-show="modalType === 'mail'">
+
+                                <div class="flex-center">
+
+                                    <p>{{ 'I am Mail Content' }}</p>
+
+                                </div>
+
+                            </span>
+
+                        </template>
+
+                </component>
 
             </keep-alive>
 
@@ -97,7 +93,9 @@
 
     import { store } from "../state-man";
 
-    import textFile from "../components/textFile"
+    const file = () => import('../components/textFile');
+
+    const mail = () => import('../components/mailMe');
 
     export default {
 
@@ -106,19 +104,87 @@
         data(){
             return {
 
+                debug: true,
+
                 clock: '',
                 date: '',
 
-                filename: '',
-                show : ''
+                show: '',
+                pointing: 'text1',
+                modalType: '',
+                textFiles: {
+
+                    text1: {
+
+                        header: 'ReadMe.txt',
+
+                        content: {
+
+                            c1: 'Hey, You made it at last! As you noticed this personal project tried to convey\n' +
+                                'and give a feeling, as being a person who used one of many computer\n' +
+                                'systems existed almost three decades ago. If someone was a curious kid during that period,\n' +
+                                'they should know where I\'m heading. I didn\'t want to bring back everything in this project like\n' +
+                                'it was age\'s ago and replicate everything in very small details like Windows\n' +
+                                '98 used to be and to have a same ugly low-resolution Graphical User Interface\n' +
+                                '(GUI). Either, I am not a romantic person, who still remembers the good old days\n' +
+                                'spent with friends next to a computer screen protected with a greenish cover\n' +
+                                'from low refresh rate and playing DUNE from a floppy disk. Ufff, that was very\n' +
+                                'impressive. However, I still don\'t get it till now, how they managed to fit all\n' +
+                                'polyphonic soundtracks, graphical assets and code inside one 2MB size floppy\n' +
+                                'disk. I am still thinking it was made with Magic!',
+
+                            c2: 'I will drop a small bit of history to the visitors who maybe had not a chance to live ~25 years\n' +
+                                'ago or maybe, to have at home or even, to have a friend who owned that very expensive piece of\n' +
+                                'technology which gave us possibility by few seconds to send an email to the other\n' +
+                                'side of the world... Even a user by using this hi-tech had to be patient because it\n' +
+                                'took longer to load all required internet or system assets. I named this project - Fierce Monkey\n' +
+                                'OS. It is a fictional name made by me regarding to my logo. I am Code Monkey!',
+
+                            c3: 'P.S. - All code for this website you can find by clicking\n' +
+                                'on desktop github icon or send me an email by using Mail icon.'
+
+                        }
+
+                    },
+
+                    text2: {
+
+                        header: 'AboutMe.txt',
+
+                        content: {
+
+                            c1: 'I am a self-motivated person, who has a big passion for web technologies.\n' +
+                                'Since my childhood, I noticed that I have a big curiosity to understand\n' +
+                                'how computers working and what they can do for us. The cognitive path about\n' +
+                                'computers was related to remote technologies. Since that time, I am focused \n' +
+                                'on programming languages and IT systems which helps to communicate and\n' +
+                                'complete tasks from a distance. I had a period of my life spent with Linux\n' +
+                                'OS by administrating, as well as deploying internet network. My life goal\n' +
+                                'was to travel to the United Kingdom and get a Higher education in the Computer\n' +
+                                'Science field. In my believe this country had achieved many goals in this\n' +
+                                'field and study programs are much more accurately constructed to prepare an\n' +
+                                'information technology specialist. However, the industry evolving rapidly and\n' +
+                                'to be at the same pace with all trends is very difficult. In 2018, I graduated\n' +
+                                'from Birbeck University at the heart of London with web technology level 5\n' +
+                                'degree. I am currently freelancing as Back-End and Front-End web developer.\n' +
+                                'My field may vary from demand but the main core technologies still are on the\n' +
+                                'hilltop. My main back-end scripting language is PHP and for the front-end\n' +
+                                'currently, I am using Vue JavaScript framework. I am able to design systems\n' +
+                                'from scratch by finding all functional and non-functional requirements for\n' +
+                                'the client and providing the best solution to minimise the cost. I speak and\n' +
+                                'write in three languages – English, Lithuanian and Russian.'
+
+                        }}
+
+                },
 
             }
 
         },
 
-        components : {
+        components: {
 
-            textFile
+            targetComp: ''
 
         },
 
@@ -155,15 +221,50 @@
                     + ' : ' + ('0' + cd.getSeconds()).slice(-2);
             },
 
-            toggle(event){
+            toggleText(event, target){
+
+                this.modalType = 'text';
+
+                if (this.debug){
+                    console.log('Pointing to: ', target);
+                    console.log('Modal Type: ', this.modalType);
+                }
+
+                // Clear and Add State of Modal
 
                 store.clearState();
                 store.changeState(event);
-                this.show = store.dispatchState()
+                this.show = store.dispatchState();
+
+                this.pointing = target;
+
+                // Add TextFile Component
+                this.targetComp = file;
+
+            },
+
+            toggleMail(event){
+
+                this.modalType = 'mail';
+
+                if (this.debug){
+                    console.log('Modal Type: ', this.modalType);
+                }
+
+                // Clear and Add State of Modal
+
+                store.clearState();
+                store.changeState(event);
+                this.show = store.dispatchState();
+
+                // Add mail Component
+                this.targetComp = mail;
 
             },
 
             mouseOver(){
+
+                // Restore state on hover the icon
 
                 store.dispatchState();
                 this.show = store.dispatchState();

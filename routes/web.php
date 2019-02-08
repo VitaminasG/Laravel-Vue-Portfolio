@@ -2,10 +2,9 @@
 
 
 Route::get('/{Vue?}', 'IndexController@index')->where('Vue', '^([\w]+)');
-
+Route::post('/ContactMe', 'IndexController@store');
 
 	/*
-		TODO Twaak and add more Content to component Desktop site
-			make and redirect SEO FRIENDLY page for Search Engines
+		TODO make and redirect SEO FRIENDLY page for Search Engines
 
 	*/

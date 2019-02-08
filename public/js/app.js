@@ -1764,11 +1764,8 @@ module.exports = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _state_man__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../state-man */ "./resources/js/state-man.js");
-/* harmony import */ var _components_textFile__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/textFile */ "./resources/js/components/textFile.vue");
-//
-//
-//
-//
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
 //
 //
 //
@@ -1861,19 +1858,49 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
+var file = function file() {
+  return Promise.resolve().then(function () {
+    return _interopRequireWildcard(__webpack_require__(/*! ../components/textFile */ "./resources/js/components/textFile.vue"));
+  });
+};
+
+var mail = function mail() {
+  return Promise.resolve().then(function () {
+    return _interopRequireWildcard(__webpack_require__(/*! ../components/mailMe */ "./resources/js/components/mailMe.vue"));
+  });
+};
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "desktop",
   data: function data() {
     return {
+      debug: true,
       clock: '',
       date: '',
-      filename: '',
-      show: ''
+      show: '',
+      pointing: 'text1',
+      modalType: '',
+      textFiles: {
+        text1: {
+          header: 'ReadMe.txt',
+          content: {
+            c1: 'Hey, You made it at last! As you noticed this personal project tried to convey\n' + 'and give a feeling, as being a person who used one of many computer\n' + 'systems existed almost three decades ago. If someone was a curious kid during that period,\n' + 'they should know where I\'m heading. I didn\'t want to bring back everything in this project like\n' + 'it was age\'s ago and replicate everything in very small details like Windows\n' + '98 used to be and to have a same ugly low-resolution Graphical User Interface\n' + '(GUI). Either, I am not a romantic person, who still remembers the good old days\n' + 'spent with friends next to a computer screen protected with a greenish cover\n' + 'from low refresh rate and playing DUNE from a floppy disk. Ufff, that was very\n' + 'impressive. However, I still don\'t get it till now, how they managed to fit all\n' + 'polyphonic soundtracks, graphical assets and code inside one 2MB size floppy\n' + 'disk. I am still thinking it was made with Magic!',
+            c2: 'I will drop a small bit of history to the visitors who maybe had not a chance to live ~25 years\n' + 'ago or maybe, to have at home or even, to have a friend who owned that very expensive piece of\n' + 'technology which gave us possibility by few seconds to send an email to the other\n' + 'side of the world... Even a user by using this hi-tech had to be patient because it\n' + 'took longer to load all required internet or system assets. I named this project - Fierce Monkey\n' + 'OS. It is a fictional name made by me regarding to my logo. I am Code Monkey!',
+            c3: 'P.S. - All code for this website you can find by clicking\n' + 'on desktop github icon or send me an email by using Mail icon.'
+          }
+        },
+        text2: {
+          header: 'AboutMe.txt',
+          content: {
+            c1: 'I am a self-motivated person, who has a big passion for web technologies.\n' + 'Since my childhood, I noticed that I have a big curiosity to understand\n' + 'how computers working and what they can do for us. The cognitive path about\n' + 'computers was related to remote technologies. Since that time, I am focused \n' + 'on programming languages and IT systems which helps to communicate and\n' + 'complete tasks from a distance. I had a period of my life spent with Linux\n' + 'OS by administrating, as well as deploying internet network. My life goal\n' + 'was to travel to the United Kingdom and get a Higher education in the Computer\n' + 'Science field. In my believe this country had achieved many goals in this\n' + 'field and study programs are much more accurately constructed to prepare an\n' + 'information technology specialist. However, the industry evolving rapidly and\n' + 'to be at the same pace with all trends is very difficult. In 2018, I graduated\n' + 'from Birbeck University at the heart of London with web technology level 5\n' + 'degree. I am currently freelancing as Back-End and Front-End web developer.\n' + 'My field may vary from demand but the main core technologies still are on the\n' + 'hilltop. My main back-end scripting language is PHP and for the front-end\n' + 'currently, I am using Vue JavaScript framework. I am able to design systems\n' + 'from scratch by finding all functional and non-functional requirements for\n' + 'the client and providing the best solution to minimise the cost. I speak and\n' + 'write in three languages – English, Lithuanian and Russian.'
+          }
+        }
+      }
     };
   },
   components: {
-    textFile: _components_textFile__WEBPACK_IMPORTED_MODULE_1__["default"]
+    targetComp: ''
   },
   computed: {},
   mounted: function mounted() {
@@ -1890,12 +1917,38 @@ __webpack_require__.r(__webpack_exports__);
       this.date = ('0' + cd.getDate()).slice(-2) + '/' + ('0' + cd.getMonth() + 1).slice(-2) + '/' + cd.getFullYear();
       this.clock = ('0' + cd.getHours()).slice(-2) + ' : ' + ('0' + cd.getMinutes()).slice(-2) + ' : ' + ('0' + cd.getSeconds()).slice(-2);
     },
-    toggle: function toggle(event) {
+    toggleText: function toggleText(event, target) {
+      this.modalType = 'text';
+
+      if (this.debug) {
+        console.log('Pointing to: ', target);
+        console.log('Modal Type: ', this.modalType);
+      } // Clear and Add State of Modal
+
+
       _state_man__WEBPACK_IMPORTED_MODULE_0__["store"].clearState();
       _state_man__WEBPACK_IMPORTED_MODULE_0__["store"].changeState(event);
       this.show = _state_man__WEBPACK_IMPORTED_MODULE_0__["store"].dispatchState();
+      this.pointing = target; // Add TextFile Component
+
+      this.targetComp = file;
+    },
+    toggleMail: function toggleMail(event) {
+      this.modalType = 'mail';
+
+      if (this.debug) {
+        console.log('Modal Type: ', this.modalType);
+      } // Clear and Add State of Modal
+
+
+      _state_man__WEBPACK_IMPORTED_MODULE_0__["store"].clearState();
+      _state_man__WEBPACK_IMPORTED_MODULE_0__["store"].changeState(event);
+      this.show = _state_man__WEBPACK_IMPORTED_MODULE_0__["store"].dispatchState(); // Add mail Component
+
+      this.targetComp = mail;
     },
     mouseOver: function mouseOver() {
+      // Restore state on hover the icon
       _state_man__WEBPACK_IMPORTED_MODULE_0__["store"].dispatchState();
       this.show = _state_man__WEBPACK_IMPORTED_MODULE_0__["store"].dispatchState();
     }
@@ -2111,6 +2164,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "loadingTwo",
@@ -2126,14 +2183,11 @@ __webpack_require__.r(__webpack_exports__);
     }, {
       autoAlpha: 1,
       y: 0
-    }, 1.5);
-    gsap_all__WEBPACK_IMPORTED_MODULE_0__["TweenMax"].staggerFromTo('.barL', 1, {
-      opacity: 0,
-      y: 50
+    }, 1);
+    gsap_all__WEBPACK_IMPORTED_MODULE_0__["TweenMax"].staggerFromTo('.barL', 3, {
+      opacity: 0
     }, {
-      opacity: 1,
-      y: 0,
-      delay: 3
+      opacity: 1
     });
     var to = this;
     setTimeout(to.increaseVal, 6500);
@@ -2226,6 +2280,211 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/mailMe.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/mailMe.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _state_man__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../state-man */ "./resources/js/state-man.js");
+/* harmony import */ var gsap_all__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! gsap/all */ "./node_modules/gsap/all.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "mailMe",
+  data: function data() {
+    return {
+      debug: false,
+      isActive: '',
+      success: false,
+      message: '',
+      fields: {},
+      errors: {}
+    };
+  },
+  watch: {
+    isActive: function isActive() {
+      return _state_man__WEBPACK_IMPORTED_MODULE_0__["store"].dispatchState();
+    }
+  },
+  created: function created() {
+    this.isActive = _state_man__WEBPACK_IMPORTED_MODULE_0__["store"].dispatchState();
+  },
+  methods: {
+    closeMod: function closeMod() {
+      _state_man__WEBPACK_IMPORTED_MODULE_0__["store"].clearState();
+      _state_man__WEBPACK_IMPORTED_MODULE_0__["store"].changeState(false);
+      this.isActive = _state_man__WEBPACK_IMPORTED_MODULE_0__["store"].dispatchState();
+    },
+    submit: function submit() {
+      var _this = this;
+
+      this.clear();
+
+      if (this.debug) {
+        console.log('Clearing Field and Error Obj!');
+      }
+
+      axios.post('/ContactMe', this.fields).then(function (response) {
+        if (_this.debug) {
+          console.log('Sending Data: ', _this.fields);
+        }
+
+        _this.fields = {};
+
+        if (response.status === 200) {
+          _this.feedback(response.data[0]);
+        }
+      }).catch(function (error) {
+        if (error.response) {
+          _this.errors = error.response.data.errors;
+
+          if (_this.debug) {
+            console.log('cached some errors : ', _this.errors);
+          }
+        } else if (error.request) {
+          console.log(error.request);
+        }
+      });
+    },
+    clear: function clear() {
+      this.errors = {};
+    },
+    // animation
+    feedback: function feedback(message) {
+      this.success = true;
+      this.message = message;
+      var tl = new gsap_all__WEBPACK_IMPORTED_MODULE_1__["TimelineMax"]();
+      tl.fromTo(".feedback", 1, {
+        y: 60,
+        opacity: 0
+      }, {
+        y: 0,
+        opacity: 1
+      }).to(".feedback", 1, {
+        opacity: 0
+      }, "+=3");
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/textFile.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/textFile.vue?vue&type=script&lang=js& ***!
@@ -2236,6 +2495,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _state_man__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../state-man */ "./resources/js/state-man.js");
+//
 //
 //
 //
@@ -2849,7 +3109,7 @@ var desktop = function desktop() {
   name: "Home",
   data: function data() {
     return {
-      gui: false,
+      gui: true,
       osStep: 1
     };
   },
@@ -3193,6 +3453,25 @@ exports.push([module.i, "\n.form-field > input[data-v-172b28a4] {\n    font-size
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/mailMe.vue?vue&type=style&index=0&id=ab0c3f8c&scoped=true&lang=css&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/mailMe.vue?vue&type=style&index=0&id=ab0c3f8c&scoped=true&lang=css& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.modal-background[data-v-ab0c3f8c] {\n    background-color: transparent;\n}\n.delete[data-v-ab0c3f8c]::before, .delete[data-v-ab0c3f8c]::after {\n    background-color: #c33c3c;\n}\n.delete[data-v-ab0c3f8c]:hover {\n    background-color: rgba(210,11,0,0.31);\n}\n.modal[data-v-ab0c3f8c] {\n    text-shadow: none;\n    color: #0a0a0a;\n}\n.modal-card-title[data-v-ab0c3f8c] {\n    color: #0a0a0a;\n}\n.modal-card-body[data-v-ab0c3f8c] {\n    font-size: 1.5em\n}\n.label[data-v-ab0c3f8c] {\n    font-size: 1.25rem;\n}\n.input[data-v-ab0c3f8c] {\n    font-size: 1.25rem;\n}\ninput[data-v-ab0c3f8c]::-webkit-input-placeholder {\n    color: #6a6a6a;\n}\ninput[data-v-ab0c3f8c]:-ms-input-placeholder {\n    color: #6a6a6a;\n}\ninput[data-v-ab0c3f8c]::-ms-input-placeholder {\n    color: #6a6a6a;\n}\ninput[data-v-ab0c3f8c]::placeholder {\n    color: #6a6a6a;\n}\ntextarea[data-v-ab0c3f8c] {\n    font-size: 1.25rem;\n}\ntextarea[data-v-ab0c3f8c]::-webkit-input-placeholder {\n    color: #6a6a6a;\n    font-size: 1.25rem;\n}\ntextarea[data-v-ab0c3f8c]:-ms-input-placeholder {\n    color: #6a6a6a;\n    font-size: 1.25rem;\n}\ntextarea[data-v-ab0c3f8c]::-ms-input-placeholder {\n    color: #6a6a6a;\n    font-size: 1.25rem;\n}\ntextarea[data-v-ab0c3f8c]::placeholder {\n    color: #6a6a6a;\n    font-size: 1.25rem;\n}\n.error[data-v-ab0c3f8c] {\n    height: 25px;\n}\n.text-alert[data-v-ab0c3f8c] {\n    color: #c65f4b;\n}\n.submit[data-v-ab0c3f8c] {\n    font-size: 1.25rem;\n}\n.feedback[data-v-ab0c3f8c] {\n    color: #c4c4c4;\n    text-shadow: 0 0 2px rgba(255, 234, 207, 0.8);\n    font-size: 2em;\n    position: absolute;\n    bottom: 0;\n    right: 0;\n    padding: 1.5em;\n    background-color: #303030;\n    z-index: 50;\n}\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/textFile.vue?vue&type=style&index=0&id=56e075d8&scoped=true&lang=css&":
 /*!**************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/textFile.vue?vue&type=style&index=0&id=56e075d8&scoped=true&lang=css& ***!
@@ -3205,7 +3484,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.modal-background[data-v-56e075d8] {\n    background-color: transparent;\n}\n.delete[data-v-56e075d8]::before, .modal-close[data-v-56e075d8]::before, .delete[data-v-56e075d8]::after, .modal-close[data-v-56e075d8]::after{\n    background-color: #c33c3c;\n}\n.delete[data-v-56e075d8]:hover {\n    background-color: rgba(210,11,0,0.31);\n}\n.modal[data-v-56e075d8] {\n    text-shadow: none;\n    color: #0a0a0a;\n}\n.modal-card-title[data-v-56e075d8] {\n    color: #0a0a0a;\n}\n\n", ""]);
+exports.push([module.i, "\n.modal-background[data-v-56e075d8] {\n    background-color: transparent;\n}\n.delete[data-v-56e075d8]::before, .delete[data-v-56e075d8]::after {\n    background-color: #c33c3c;\n}\n.delete[data-v-56e075d8]:hover {\n    background-color: rgba(210,11,0,0.31);\n}\n.modal[data-v-56e075d8] {\n    text-shadow: none;\n    color: #0a0a0a;\n}\n.modal-card[data-v-56e075d8] {\n    width: 90%;\n}\n.modal-card-title[data-v-56e075d8] {\n    color: #0a0a0a;\n}\n.modal-card-body[data-v-56e075d8] {\n    font-size: 1.5em\n}\n\n", ""]);
 
 // exports
 
@@ -33970,6 +34249,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/mailMe.vue?vue&type=style&index=0&id=ab0c3f8c&scoped=true&lang=css&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/mailMe.vue?vue&type=style&index=0&id=ab0c3f8c&scoped=true&lang=css& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--7-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--7-2!../../../node_modules/vue-loader/lib??vue-loader-options!./mailMe.vue?vue&type=style&index=0&id=ab0c3f8c&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/mailMe.vue?vue&type=style&index=0&id=ab0c3f8c&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/textFile.vue?vue&type=style&index=0&id=56e075d8&scoped=true&lang=css&":
 /*!******************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/textFile.vue?vue&type=style&index=0&id=56e075d8&scoped=true&lang=css& ***!
@@ -34698,12 +35007,14 @@ var render = function() {
           _c(
             "a",
             {
-              staticClass: "mx-1",
+              staticClass: "my-1",
               on: {
                 click: function($event) {
-                  return _vm.toggle(true)
+                  return _vm.toggleText(true, "text1")
                 },
-                mouseover: _vm.mouseOver
+                mouseover: function($event) {
+                  return _vm.mouseOver()
+                }
               }
             },
             [
@@ -34719,7 +35030,59 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _vm._m(0)
+        _c("div", { staticClass: "d-file flex-center" }, [
+          _c(
+            "a",
+            {
+              staticClass: "my-1",
+              on: {
+                click: function($event) {
+                  return _vm.toggleText(true, "text2")
+                },
+                mouseover: function($event) {
+                  return _vm.mouseOver()
+                }
+              }
+            },
+            [
+              _c("img", {
+                attrs: {
+                  src: __webpack_require__(/*! ../../assets/DocumentIcon.png */ "./resources/assets/DocumentIcon.png"),
+                  alt: "AboutMe"
+                }
+              }),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-center" }, [_vm._v("AboutMe.txt")])
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "d-file flex-center" }, [
+          _c(
+            "a",
+            {
+              staticClass: "my-1",
+              on: {
+                click: function($event) {
+                  return _vm.toggleMail(true)
+                },
+                mouseover: function($event) {
+                  return _vm.mouseOver()
+                }
+              }
+            },
+            [
+              _c("img", {
+                attrs: {
+                  src: __webpack_require__(/*! ../../assets/MailIcon.png */ "./resources/assets/MailIcon.png"),
+                  alt: "MailMe"
+                }
+              }),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-center" }, [_vm._v("Inbox")])
+            ]
+          )
+        ])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "d-footer" }, [
@@ -34739,37 +35102,99 @@ var render = function() {
             "keep-alive",
             [
               _c(
-                "text-file",
+                _vm.targetComp,
+                { tag: "component" },
                 [
                   _c("template", { slot: "header" }, [
-                    _vm._v("\n                Read Me.txt\n            ")
+                    _c(
+                      "span",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.modalType === "text",
+                            expression: "modalType === 'text'"
+                          }
+                        ]
+                      },
+                      [
+                        _vm._v(
+                          "\n\n                        " +
+                            _vm._s(_vm.textFiles[_vm.pointing].header) +
+                            "\n\n                    "
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "span",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.modalType === "mail",
+                            expression: "modalType === 'mail'"
+                          }
+                        ]
+                      },
+                      [
+                        _vm._v(
+                          "\n                        Mail Tool\n                    "
+                        )
+                      ]
+                    )
                   ]),
                   _vm._v(" "),
-                  _c("template", { slot: "content" }, [
-                    _c("p", { staticClass: "px-1" }, [
-                      _vm._v(
-                        "\n                    Hey! As you noticed this personal project tried to convey and give a feeling,\n                    as being a person who used one of many computer systems existed almost three\n                    decades ago. If someone was a curious kid during that period, they should know\n                    where I'm heading. I didn't want to bring back everything in this project like\n                    it was age's ago and replicate everything in very small details like Windows\n                    98 used to be and to have a same ugly low-resolution Graphical User Interface\n                    (GUI). Either, I am not a romantic person, who still remembers the good old days\n                    spent surrounded by friends and chilling after a football match which we had in\n                    common courtyard and cooling down by having a cold glass of water... Next to a\n                    computer screen protected with a greenish cover from low refresh rate and playing\n                    DUNE from a floppy disk. Ufff, that was very impressive. However, I still don't\n                    get it till now, how they managed to fit all polyphonic soundtrack, graphical\n                    assets and code inside one 2MB size floppy disk. I am still thinking it was made\n                    with Magic!\n                "
+                  _c(
+                    "template",
+                    { slot: "content" },
+                    [
+                      _vm._l(_vm.textFiles[_vm.pointing].content, function(
+                        text
+                      ) {
+                        return _c(
+                          "span",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.modalType === "text",
+                                expression: "modalType === 'text'"
+                              }
+                            ]
+                          },
+                          [
+                            _c("p", { staticClass: "pb-1 text-justify" }, [
+                              _vm._v(_vm._s(text))
+                            ])
+                          ]
+                        )
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "span",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.modalType === "mail",
+                              expression: "modalType === 'mail'"
+                            }
+                          ]
+                        },
+                        [
+                          _c("div", { staticClass: "flex-center" }, [
+                            _c("p", [_vm._v(_vm._s("I am Mail Content"))])
+                          ])
+                        ]
                       )
-                    ]),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "px-1" }, [
-                      _vm._v(
-                        "\n                    I just want to highlight what kind big leap WE have done in the\n                    telecommunication industry. Technologies progressing very fast\n                    and to be on top of it is impossible. For me web development like\n                    endless sea which you want and trying to drink without choking.\n                "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "px-1" }, [
-                      _vm._v(
-                        "\n                    I will drop a small bit of history to the visitors who maybe hadn’t a chance to live ~25 years\n                    ago or maybe, to have at home or even, to have a friend who owned that very expensive piece of\n                    technology which gave us possibility by few seconds to send an email to the other\n                    side of the world... Even a user by using this hi-tech had to be patient because it\n                    took longer to load all required internet or system assets. I named this project - Fierce Monkey\n                    OS. It is a fictional name made by me regarding to my logo. I am Code Monkey! Copy and Past :D\n                "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "px-1" }, [
-                      _vm._v(
-                        "\n                    P.S. - All code of this website you can find by clicking on desktop github icon.\n                "
-                      )
-                    ])
-                  ])
+                    ],
+                    2
+                  )
                 ],
                 2
               )
@@ -34781,22 +35206,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "d-file flex-center" }, [
-      _c("a", { staticClass: "mx-1" }, [
-        _c("img", {
-          attrs: { src: __webpack_require__(/*! ../../assets/MailIcon.png */ "./resources/assets/MailIcon.png"), alt: "Mail" }
-        }),
-        _vm._v(" "),
-        _c("p", { staticClass: "text-center" }, [_vm._v("Inbox")])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -34986,9 +35396,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "h-100 flex-center" }, [
-      _c("div", { staticClass: "text-center" }, [
+      _c("div", { staticClass: "text-center h-50" }, [
         _c("img", {
-          staticClass: "obj",
+          staticClass: "obj h-50",
           attrs: { src: __webpack_require__(/*! ../../assets/mFace.gif */ "./resources/assets/mFace.gif"), alt: "Small" }
         }),
         _vm._v(" "),
@@ -35130,6 +35540,210 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/mailMe.vue?vue&type=template&id=ab0c3f8c&scoped=true&":
+/*!*********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/mailMe.vue?vue&type=template&id=ab0c3f8c&scoped=true& ***!
+  \*********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", {}, [
+    _c("div", { staticClass: "modal", class: { "is-active": this.isActive } }, [
+      _c("div", { staticClass: "modal-background" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "modal-card w-50" }, [
+        _c("header", { staticClass: "modal-card-head" }, [
+          _c("p", { staticClass: "modal-card-title" }, [_vm._t("header")], 2),
+          _vm._v(" "),
+          _c("button", { staticClass: "delete", on: { click: _vm.closeMod } })
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "modal-card-body" }, [
+          _c(
+            "form",
+            {
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.submit($event)
+                }
+              }
+            },
+            [
+              _c("div", { staticClass: "field" }, [
+                _c("label", { staticClass: "label" }, [_vm._v("Your Name: ")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "control" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.fields.name,
+                        expression: "fields.name"
+                      }
+                    ],
+                    staticClass: "input",
+                    attrs: {
+                      type: "text",
+                      name: "name",
+                      placeholder: "e.g Alex Smith"
+                    },
+                    domProps: { value: _vm.fields.name },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.fields, "name", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "error pt-1" }, [
+                    _vm.errors && _vm.errors.name
+                      ? _c("p", { staticClass: "text-alert" }, [
+                          _vm._v(
+                            "\n                                    Please fill your name\n                                "
+                          )
+                        ])
+                      : _vm._e()
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "field" }, [
+                _c("label", { staticClass: "label" }, [
+                  _vm._v("Your Email Address: ")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "control" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.fields.from,
+                        expression: "fields.from"
+                      }
+                    ],
+                    staticClass: "input",
+                    attrs: {
+                      type: "email",
+                      name: "from",
+                      placeholder: "e.g. alexsmith@gmail.com"
+                    },
+                    domProps: { value: _vm.fields.from },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.fields, "from", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "error pt-1" }, [
+                    _vm.errors && _vm.errors.from
+                      ? _c("p", { staticClass: "text-alert" }, [
+                          _vm._v(
+                            "\n                                    Please fill your email address\n                                "
+                          )
+                        ])
+                      : _vm._e()
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "field" }, [
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.fields.message,
+                      expression: "fields.message"
+                    }
+                  ],
+                  staticClass: "textarea",
+                  attrs: {
+                    name: "message",
+                    placeholder: "Please type your message here...",
+                    rows: "5"
+                  },
+                  domProps: { value: _vm.fields.message },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.fields, "message", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "control error pt-1" }, [
+                  _vm.errors && _vm.errors.message
+                    ? _c("p", { staticClass: "text-alert" }, [
+                        _vm._v(
+                          "\n                               Please add message\n                            "
+                        )
+                      ])
+                    : _vm._e()
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(0)
+            ]
+          )
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.success,
+            expression: "success"
+          }
+        ],
+        staticClass: "feedback text-center"
+      },
+      [_c("p", [_vm._v("Thank for contacting me!")])]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "field" }, [
+      _c("div", { staticClass: "control py-1" }, [
+        _c("button", { staticClass: "submit px-1" }, [_vm._v("Submit")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/textFile.vue?vue&type=template&id=56e075d8&scoped=true&":
 /*!***********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/textFile.vue?vue&type=template&id=56e075d8&scoped=true& ***!
@@ -35154,7 +35768,7 @@ var render = function() {
           _c(
             "p",
             { staticClass: "modal-card-title" },
-            [_vm._t("header"), _vm._v(" - textPad\n                ")],
+            [_vm._t("header"), _vm._v(" - textPad\n                    ")],
             2
           ),
           _vm._v(" "),
@@ -50846,7 +51460,7 @@ module.exports = "/images/DocumentIcon.png?70da11a68da5dadad3f36e05f8a653b9";
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "/images/MailIcon.png?57a49afc3782235ba966269a2e2e8e8c";
+module.exports = "/images/MailIcon.png?2b91ec87c1716308064fa295e1978a9b";
 
 /***/ }),
 
@@ -51057,6 +51671,8 @@ var map = {
 	"./components/loadingTwo.vue": "./resources/js/components/loadingTwo.vue",
 	"./components/login": "./resources/js/components/login.vue",
 	"./components/login.vue": "./resources/js/components/login.vue",
+	"./components/mailMe": "./resources/js/components/mailMe.vue",
+	"./components/mailMe.vue": "./resources/js/components/mailMe.vue",
 	"./components/textFile": "./resources/js/components/textFile.vue",
 	"./components/textFile.vue": "./resources/js/components/textFile.vue",
 	"./mobile": "./resources/js/mobile.js",
@@ -51506,6 +52122,93 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/mailMe.vue":
+/*!********************************************!*\
+  !*** ./resources/js/components/mailMe.vue ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mailMe_vue_vue_type_template_id_ab0c3f8c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./mailMe.vue?vue&type=template&id=ab0c3f8c&scoped=true& */ "./resources/js/components/mailMe.vue?vue&type=template&id=ab0c3f8c&scoped=true&");
+/* harmony import */ var _mailMe_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./mailMe.vue?vue&type=script&lang=js& */ "./resources/js/components/mailMe.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _mailMe_vue_vue_type_style_index_0_id_ab0c3f8c_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./mailMe.vue?vue&type=style&index=0&id=ab0c3f8c&scoped=true&lang=css& */ "./resources/js/components/mailMe.vue?vue&type=style&index=0&id=ab0c3f8c&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _mailMe_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _mailMe_vue_vue_type_template_id_ab0c3f8c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _mailMe_vue_vue_type_template_id_ab0c3f8c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "ab0c3f8c",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/mailMe.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/mailMe.vue?vue&type=script&lang=js&":
+/*!*********************************************************************!*\
+  !*** ./resources/js/components/mailMe.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_mailMe_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./mailMe.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/mailMe.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_mailMe_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/mailMe.vue?vue&type=style&index=0&id=ab0c3f8c&scoped=true&lang=css&":
+/*!*****************************************************************************************************!*\
+  !*** ./resources/js/components/mailMe.vue?vue&type=style&index=0&id=ab0c3f8c&scoped=true&lang=css& ***!
+  \*****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_mailMe_vue_vue_type_style_index_0_id_ab0c3f8c_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--7-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--7-2!../../../node_modules/vue-loader/lib??vue-loader-options!./mailMe.vue?vue&type=style&index=0&id=ab0c3f8c&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/mailMe.vue?vue&type=style&index=0&id=ab0c3f8c&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_mailMe_vue_vue_type_style_index_0_id_ab0c3f8c_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_mailMe_vue_vue_type_style_index_0_id_ab0c3f8c_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_mailMe_vue_vue_type_style_index_0_id_ab0c3f8c_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_mailMe_vue_vue_type_style_index_0_id_ab0c3f8c_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_mailMe_vue_vue_type_style_index_0_id_ab0c3f8c_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/mailMe.vue?vue&type=template&id=ab0c3f8c&scoped=true&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/mailMe.vue?vue&type=template&id=ab0c3f8c&scoped=true& ***!
+  \***************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_mailMe_vue_vue_type_template_id_ab0c3f8c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./mailMe.vue?vue&type=template&id=ab0c3f8c&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/mailMe.vue?vue&type=template&id=ab0c3f8c&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_mailMe_vue_vue_type_template_id_ab0c3f8c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_mailMe_vue_vue_type_template_id_ab0c3f8c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/textFile.vue":
 /*!**********************************************!*\
   !*** ./resources/js/components/textFile.vue ***!
@@ -51700,7 +52403,7 @@ __webpack_require__.r(__webpack_exports__);
 var store = {
   debug: false,
   state: {
-    show: false
+    show: null
   },
   changeState: function changeState(boll) {
     this.state.show = boll;
@@ -51711,11 +52414,11 @@ var store = {
     }
   },
   clearState: function clearState() {
-    this.state.show = '';
+    this.state.show = null;
 
     if (this.debug) {
       console.log('clearState triggered', this.state.show);
-      this.state.show = '';
+      this.state.show = null;
     }
   },
   dispatchState: function dispatchState() {

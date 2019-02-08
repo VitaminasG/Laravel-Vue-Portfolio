@@ -17,4 +17,5 @@ storage/*.key
 .env.php
 .env
 /_ide_helper.php
+/.phpstorm.meta.php
 .idea/

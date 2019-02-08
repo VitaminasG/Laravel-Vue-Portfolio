@@ -4,7 +4,7 @@ export const store = {
 
     state: {
 
-        show: false
+        show: null
 
     },
 
@@ -21,11 +21,11 @@ export const store = {
 
     clearState(){
 
-        this.state.show = '';
+        this.state.show = null;
 
         if (this.debug){
             console.log('clearState triggered', this.state.show);
-            this.state.show = '';
+            this.state.show = null;
         }
 
     },

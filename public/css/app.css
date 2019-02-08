@@ -11501,11 +11501,43 @@ body {
   color: #e4c921;
 }
 
+.text-success {
+  color: #86c148;
+}
+
+.text-justify {
+  text-align: justify;
+}
+
 .title {
   color: #86c60b;
 }
 
 .section {
   padding: 1.5rem 1.5rem;
+}
+
+button,
+textarea,
+textarea::-webkit-input-placeholder {
+  font-family: "Computer", Courier New;
+}
+
+button,
+textarea,
+textarea:-ms-input-placeholder {
+  font-family: "Computer", Courier New;
+}
+
+button,
+textarea,
+textarea::-ms-input-placeholder {
+  font-family: "Computer", Courier New;
+}
+
+button,
+textarea,
+textarea::placeholder {
+  font-family: "Computer", Courier New;
 }
 
