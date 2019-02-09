@@ -11541,3 +11541,21 @@ textarea::placeholder {
   font-family: "Computer", Courier New;
 }
 
+.modal-background {
+  background-color: rgba(108, 108, 108, 0.5);
+}
+
+#server {
+  height: 100vh;
+  overflow: auto;
+}
+
+#server .intro {
+  text-align: justify;
+}
+
+#server footer {
+  margin: auto auto 0 auto;
+  padding-bottom: 1em;
+}
+

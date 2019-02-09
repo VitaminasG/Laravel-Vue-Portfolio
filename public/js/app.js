@@ -1857,6 +1857,23 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 var file = function file() {
@@ -1875,7 +1892,7 @@ var mail = function mail() {
   name: "desktop",
   data: function data() {
     return {
-      debug: true,
+      debug: false,
       clock: '',
       date: '',
       show: '',
@@ -3407,7 +3424,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.desktop[data-v-7f64b8be] {\n    background-image: url(" + escape(__webpack_require__(/*! ../../assets/wallpaper.jpg */ "./resources/assets/wallpaper.jpg")) + ");\n    background-size: cover;\n    background-repeat: no-repeat;\n    display: flex;\n    flex-direction: column;\n    min-height: 100vh;\n}\n.d-content[data-v-7f64b8be] {\n    padding: 2rem 2rem 0 2rem;\n    display: flex;\n    flex-direction: column;\n    align-items: flex-start;\n}\n.d-file[data-v-7f64b8be] {\n    width: 150px;\n}\n.d-content > a[data-v-7f64b8be] {\n    padding: 1rem;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n}\n.d-content a img[data-v-7f64b8be] {\n    padding: 0.5rem;\n}\n.d-content a  p[data-v-7f64b8be] {\n    color: #e4e4e4;\n}\na[data-v-7f64b8be]:hover {\n    outline: 3px dotted #0a0a0a;\n    outline-offset: 0.75rem;\n    cursor: default;\n}\n.d-footer[data-v-7f64b8be] {\n    margin-top: auto;\n    display: flex;\n    flex-direction: row-reverse;\n    background-color: #333333;\n}\n.task-right[data-v-7f64b8be] {\n    border-left: 4px solid rgba(165, 165, 165, 0.25);\n    padding: 0 0.75em;\n}\n.date[data-v-7f64b8be] {\n    color: #d6d6d6;\n    font-size: 1.25em;\n}\n\n", ""]);
+exports.push([module.i, "\n.desktop[data-v-7f64b8be] {\n    background-image: url(" + escape(__webpack_require__(/*! ../../assets/wallpaper.jpg */ "./resources/assets/wallpaper.jpg")) + ");\n    background-size: cover;\n    background-repeat: no-repeat;\n    display: flex;\n    flex-direction: column;\n    min-height: 100vh;\n    text-shadow: 0 0 5px rgba(230, 230, 230, 0.31);\n}\n.d-content[data-v-7f64b8be] {\n    padding: 2rem 2rem 0 2rem;\n    display: flex;\n    flex-direction: column;\n    align-items: flex-start;\n}\n.d-file[data-v-7f64b8be] {\n    width: 150px;\n}\n.d-file a img[data-v-7f64b8be]{\n    margin: 0 auto;\n    width: 65%;\n}\n.d-content > a[data-v-7f64b8be] {\n    padding: 1rem;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n}\n.d-content a img[data-v-7f64b8be] {\n    padding: 0.5rem;\n}\n.d-content a  p[data-v-7f64b8be] {\n    color: #e4e4e4;\n}\n.d-file a[data-v-7f64b8be]:hover {\n    outline: 3px dotted #0a0a0a;\n    outline-offset: 0.75rem;\n    cursor: default;\n}\n.d-footer[data-v-7f64b8be] {\n    margin-top: auto;\n    background-color: #333333;\n}\n.task-left[data-v-7f64b8be]{\n    height: 100%;\n    display: flex;\n}\n.task-right[data-v-7f64b8be] {\n    display: flex;\n    flex-direction: row-reverse;\n}\n.task-item-a[data-v-7f64b8be]{\n    padding: 0.25em 0.75em;\n    border-right: 4px solid rgba(165, 165, 165, 0.25);\n}\n.task-item-b[data-v-7f64b8be]{\n    padding: 0 0.75em;\n    border-left: 4px solid rgba(165, 165, 165, 0.25);\n}\n.date[data-v-7f64b8be] {\n    color: #d6d6d6;\n    font-size: 1.25em;\n}\n\n", ""]);
 
 // exports
 
@@ -3464,7 +3481,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.modal-background[data-v-ab0c3f8c] {\n    background-color: transparent;\n}\n.delete[data-v-ab0c3f8c]::before, .delete[data-v-ab0c3f8c]::after {\n    background-color: #c33c3c;\n}\n.delete[data-v-ab0c3f8c]:hover {\n    background-color: rgba(210,11,0,0.31);\n}\n.modal[data-v-ab0c3f8c] {\n    text-shadow: none;\n    color: #0a0a0a;\n}\n.modal-card-title[data-v-ab0c3f8c] {\n    color: #0a0a0a;\n}\n.modal-card-body[data-v-ab0c3f8c] {\n    font-size: 1.5em\n}\n.label[data-v-ab0c3f8c] {\n    font-size: 1.25rem;\n}\n.input[data-v-ab0c3f8c] {\n    font-size: 1.25rem;\n}\ninput[data-v-ab0c3f8c]::-webkit-input-placeholder {\n    color: #6a6a6a;\n}\ninput[data-v-ab0c3f8c]:-ms-input-placeholder {\n    color: #6a6a6a;\n}\ninput[data-v-ab0c3f8c]::-ms-input-placeholder {\n    color: #6a6a6a;\n}\ninput[data-v-ab0c3f8c]::placeholder {\n    color: #6a6a6a;\n}\ntextarea[data-v-ab0c3f8c] {\n    font-size: 1.25rem;\n}\ntextarea[data-v-ab0c3f8c]::-webkit-input-placeholder {\n    color: #6a6a6a;\n    font-size: 1.25rem;\n}\ntextarea[data-v-ab0c3f8c]:-ms-input-placeholder {\n    color: #6a6a6a;\n    font-size: 1.25rem;\n}\ntextarea[data-v-ab0c3f8c]::-ms-input-placeholder {\n    color: #6a6a6a;\n    font-size: 1.25rem;\n}\ntextarea[data-v-ab0c3f8c]::placeholder {\n    color: #6a6a6a;\n    font-size: 1.25rem;\n}\n.error[data-v-ab0c3f8c] {\n    height: 25px;\n}\n.text-alert[data-v-ab0c3f8c] {\n    color: #c65f4b;\n}\n.submit[data-v-ab0c3f8c] {\n    font-size: 1.25rem;\n}\n.feedback[data-v-ab0c3f8c] {\n    color: #c4c4c4;\n    text-shadow: 0 0 2px rgba(255, 234, 207, 0.8);\n    font-size: 2em;\n    position: absolute;\n    bottom: 0;\n    right: 0;\n    padding: 1.5em;\n    background-color: #303030;\n    z-index: 50;\n}\n\n\n", ""]);
+exports.push([module.i, "\n.delete[data-v-ab0c3f8c]::before, .delete[data-v-ab0c3f8c]::after {\n    background-color: #c33c3c;\n}\n.delete[data-v-ab0c3f8c]:hover {\n    background-color: rgba(210,11,0,0.31);\n}\n.modal[data-v-ab0c3f8c] {\n    text-shadow: none;\n    color: #0a0a0a;\n}\n.modal-card-title[data-v-ab0c3f8c] {\n    color: #0a0a0a;\n}\n.modal-card-body[data-v-ab0c3f8c] {\n    font-size: 1.5em\n}\n.label[data-v-ab0c3f8c] {\n    font-size: 1.25rem;\n}\n.input[data-v-ab0c3f8c] {\n    font-size: 1.25rem;\n}\ninput[data-v-ab0c3f8c]::-webkit-input-placeholder {\n    color: #6a6a6a;\n}\ninput[data-v-ab0c3f8c]:-ms-input-placeholder {\n    color: #6a6a6a;\n}\ninput[data-v-ab0c3f8c]::-ms-input-placeholder {\n    color: #6a6a6a;\n}\ninput[data-v-ab0c3f8c]::placeholder {\n    color: #6a6a6a;\n}\ntextarea[data-v-ab0c3f8c] {\n    font-size: 1.25rem;\n}\ntextarea[data-v-ab0c3f8c]::-webkit-input-placeholder {\n    color: #6a6a6a;\n    font-size: 1.25rem;\n}\ntextarea[data-v-ab0c3f8c]:-ms-input-placeholder {\n    color: #6a6a6a;\n    font-size: 1.25rem;\n}\ntextarea[data-v-ab0c3f8c]::-ms-input-placeholder {\n    color: #6a6a6a;\n    font-size: 1.25rem;\n}\ntextarea[data-v-ab0c3f8c]::placeholder {\n    color: #6a6a6a;\n    font-size: 1.25rem;\n}\n.error[data-v-ab0c3f8c] {\n    height: 25px;\n}\n.text-alert[data-v-ab0c3f8c] {\n    color: #c65f4b;\n}\n.submit[data-v-ab0c3f8c] {\n    font-size: 1.25rem;\n}\n.feedback[data-v-ab0c3f8c] {\n    color: #c4c4c4;\n    text-shadow: 0 0 2px rgba(255, 234, 207, 0.8);\n    font-size: 2em;\n    position: absolute;\n    bottom: 0;\n    right: 0;\n    padding: 1.5em;\n    background-color: #303030;\n    z-index: 50;\n}\n\n\n", ""]);
 
 // exports
 
@@ -3483,7 +3500,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.modal-background[data-v-56e075d8] {\n    background-color: transparent;\n}\n.delete[data-v-56e075d8]::before, .delete[data-v-56e075d8]::after {\n    background-color: #c33c3c;\n}\n.delete[data-v-56e075d8]:hover {\n    background-color: rgba(210,11,0,0.31);\n}\n.modal[data-v-56e075d8] {\n    text-shadow: none;\n    color: #0a0a0a;\n}\n.modal-card[data-v-56e075d8] {\n    width: 90%;\n}\n.modal-card-title[data-v-56e075d8] {\n    color: #0a0a0a;\n}\n.modal-card-body[data-v-56e075d8] {\n    font-size: 1.5em\n}\n\n", ""]);
+exports.push([module.i, "\n.delete[data-v-56e075d8]::before, .delete[data-v-56e075d8]::after {\n    background-color: #c33c3c;\n}\n.delete[data-v-56e075d8]:hover {\n    background-color: rgba(210,11,0,0.31);\n}\n.modal[data-v-56e075d8] {\n    text-shadow: none;\n    color: #0a0a0a;\n}\n.modal-card[data-v-56e075d8] {\n    width: 90%;\n}\n.modal-card-title[data-v-56e075d8] {\n    color: #0a0a0a;\n}\n.modal-card-body[data-v-56e075d8] {\n    font-size: 1.5em\n}\n\n", ""]);
 
 // exports
 
@@ -35006,7 +35023,7 @@ var render = function() {
           _c(
             "a",
             {
-              staticClass: "my-1",
+              staticClass: "my-1 flex-block",
               on: {
                 click: function($event) {
                   return _vm.toggleText(true, "text1")
@@ -35033,7 +35050,7 @@ var render = function() {
           _c(
             "a",
             {
-              staticClass: "my-1",
+              staticClass: "my-1 flex-block",
               on: {
                 click: function($event) {
                   return _vm.toggleText(true, "text2")
@@ -35060,7 +35077,7 @@ var render = function() {
           _c(
             "a",
             {
-              staticClass: "my-1",
+              staticClass: "my-1 flex-block",
               on: {
                 click: function($event) {
                   return _vm.toggleMail(true)
@@ -35078,20 +35095,34 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
-              _c("p", { staticClass: "text-center" }, [_vm._v("Inbox")])
+              _c("p", { staticClass: "text-center" }, [_vm._v("ContactMe.exe")])
             ]
           )
-        ])
+        ]),
+        _vm._v(" "),
+        _vm._m(0)
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "d-footer" }, [
-        _c("div", { staticClass: "task-right text-center" }, [
-          _c("p", { staticClass: "date" }, [
-            _vm._v("\n                " + _vm._s(_vm.clock) + "\n            ")
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "date" }, [
-            _vm._v("\n                " + _vm._s(_vm.date) + "\n            ")
+      _c("div", { staticClass: "d-footer flex" }, [
+        _vm._m(1),
+        _vm._v(" "),
+        _c("div", { staticClass: "task-right text-center w-50" }, [
+          _c("div", { staticClass: "text-center task-item task-item-b" }, [
+            _c("p", { staticClass: "date" }, [
+              _vm._v(
+                "\n                    " +
+                  _vm._s(_vm.clock) +
+                  "\n                "
+              )
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "date" }, [
+              _vm._v(
+                "\n                    " +
+                  _vm._s(_vm.date) +
+                  "\n                "
+              )
+            ])
           ])
         ])
       ]),
@@ -35205,7 +35236,42 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "d-file flex-center" }, [
+      _c(
+        "a",
+        {
+          staticClass: "my-1 flex-block",
+          attrs: {
+            href: "https://github.com/VitaminasG/Laravel-Vue-Portfolio",
+            target: "_blank"
+          }
+        },
+        [
+          _c("img", {
+            attrs: { src: __webpack_require__(/*! ../../assets/dGitHub.png */ "./resources/assets/dGitHub.png"), alt: "GitHub" }
+          }),
+          _vm._v(" "),
+          _c("p", { staticClass: "text-center" }, [_vm._v("Github.link")])
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "task-left text-center w-50" }, [
+      _c("a", { staticClass: "task-item task-item-a", attrs: { href: "/" } }, [
+        _vm._v("Log off")
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -36626,7 +36692,7 @@ var render = function() {
     _c("footer", { staticClass: "flex-center" }, [
       _c("p", [
         _vm._v(
-          "All Rights Reserved @ GediminasPalsys.com " +
+          "All Rights Reserved @ GediminasPalsys.com - " +
             _vm._s(new Date().getFullYear())
         )
       ])
@@ -51482,6 +51548,17 @@ module.exports = "/images/SmallLogo.png?bd7b74e1e5c1a3123fde159060225a41";
 /***/ (function(module, exports) {
 
 module.exports = "/images/avatar.gif?9753875a13743b646822b3acc4eb99c0";
+
+/***/ }),
+
+/***/ "./resources/assets/dGitHub.png":
+/*!**************************************!*\
+  !*** ./resources/assets/dGitHub.png ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/dGitHub.png?a7bc1b61793fbf8a0da5d3584f2b7f84";
 
 /***/ }),
 

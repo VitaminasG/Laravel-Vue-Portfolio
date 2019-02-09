@@ -9891,7 +9891,7 @@ var render = function() {
     _c("footer", { staticClass: "flex-center" }, [
       _c("p", [
         _vm._v(
-          "All Rights Reserved @ GediminasPalsys.com " +
+          "All Rights Reserved @ GediminasPalsys.com - " +
             _vm._s(new Date().getFullYear())
         )
       ])

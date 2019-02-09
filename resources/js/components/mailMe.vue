@@ -227,10 +227,6 @@
 
 <style scoped>
 
-    .modal-background {
-        background-color: transparent;
-    }
-
     .delete::before, .delete::after {
         background-color: #c33c3c;
     }

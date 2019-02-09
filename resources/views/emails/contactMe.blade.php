@@ -9,23 +9,30 @@
 <style>
 
     body{
-        background-color: rgba(133,133,133,0.8);
-        height: 100%;
+        background-color: rgba(255, 255, 255, 0.8);
+        height: 500px;
+        color: #1c1c1c;
     }
 
     .header {
         padding: 2em 0;
         height: 25%;
         width: 100%;
-        background-color: rgba(105,105,105,0.8);
+        background-color: rgb(167, 167, 167);
         border-bottom: 2px solid #97c51d;
+    }
+
+    main {
+        height: 50%;
+        padding: 1em 0;
+
     }
 
     footer {
         padding: 2em 0;
         height: 25%;
         width: 100%;
-        background-color: rgba(105,105,105,0.8);
+        background-color: rgb(167, 167, 167);
         border-top: 2px solid #97c51d;
     }
 
@@ -37,13 +44,19 @@
 
 <nav>
 
-    <p class="header">
+    <p class="header text-center">
+
         Visitor with name - <strong>{{ $name }}</strong> send message. His email address - {{ $from }}
+
     </p>
 
 </nav>
 
-{{ $body  }}
+<main class="">
+
+    <p class="text-center">{{ $body  }}</p>
+
+</main>
 
 <footer class="text-center">
 

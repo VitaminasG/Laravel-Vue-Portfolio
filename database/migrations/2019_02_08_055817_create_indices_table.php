@@ -17,7 +17,7 @@ class CreateIndicesTable extends Migration
             $table->increments('id');
             $table->string('name');
 	        $table->string('from');
-	        $table->string('message');
+	        $table->text('message');
 	        $table->string('agent');
             $table->timestamps();
         });

@@ -169,7 +169,7 @@
 
      <footer class="flex-center">
 
-         <p>All Rights Reserved @ GediminasPalsys.com {{ new Date().getFullYear() }}</p>
+         <p>All Rights Reserved @ GediminasPalsys.com - {{ new Date().getFullYear() }}</p>
 
      </footer>
 

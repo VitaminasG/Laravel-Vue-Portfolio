@@ -5,39 +5,56 @@
             <div class="d-content h-50">
 
                 <div class="d-file flex-center">
-                    <a class="my-1" @click="toggleText(true, 'text1')" v-on:mouseover="mouseOver()">
+                    <a class="my-1 flex-block" @click="toggleText(true, 'text1')" v-on:mouseover="mouseOver()">
                         <img src="../../assets/DocumentIcon.png" alt="ReadMe">
                         <p class="text-center">ReadMe.txt</p>
                     </a>
                 </div>
 
                 <div class="d-file flex-center">
-                    <a class="my-1" @click="toggleText(true, 'text2')" v-on:mouseover="mouseOver()">
+                    <a class="my-1 flex-block" @click="toggleText(true, 'text2')" v-on:mouseover="mouseOver()">
                         <img src="../../assets/DocumentIcon.png" alt="AboutMe">
                         <p class="text-center">AboutMe.txt</p>
                     </a>
                 </div>
 
                 <div class="d-file flex-center">
-                    <a class="my-1" @click="toggleMail(true)" v-on:mouseover="mouseOver()">
+                    <a class="my-1 flex-block" @click="toggleMail(true)" v-on:mouseover="mouseOver()">
                         <img src="../../assets/MailIcon.png" alt="MailMe">
-                        <p class="text-center">Inbox</p>
+                        <p class="text-center">ContactMe.exe</p>
+                    </a>
+                </div>
+
+                <div class="d-file flex-center">
+                    <a href="https://github.com/VitaminasG/Laravel-Vue-Portfolio" target="_blank" class="my-1 flex-block">
+                        <img src="../../assets/dGitHub.png" alt="GitHub">
+                        <p class="text-center">Github.link</p>
                     </a>
                 </div>
 
             </div>
 
-            <div class="d-footer">
+            <div class="d-footer flex">
 
-                <div class="task-right text-center">
+                <div class="task-left text-center w-50">
 
-                    <p class="date">
-                        {{ clock }}
-                    </p>
+                    <a class="task-item task-item-a" href="/">Log off</a>
 
-                    <p class="date">
-                        {{ date }}
-                    </p>
+                </div>
+
+                <div class="task-right text-center w-50">
+
+                    <div class="text-center task-item task-item-b">
+
+                        <p class="date">
+                            {{ clock }}
+                        </p>
+
+                        <p class="date">
+                            {{ date }}
+                        </p>
+
+                    </div>
 
                 </div>
 
@@ -104,7 +121,7 @@
         data(){
             return {
 
-                debug: true,
+                debug: false,
 
                 clock: '',
                 date: '',
@@ -285,6 +302,7 @@
         display: flex;
         flex-direction: column;
         min-height: 100vh;
+        text-shadow: 0 0 5px rgba(230, 230, 230, 0.31);
     }
 
     .d-content {
@@ -296,6 +314,11 @@
 
     .d-file {
         width: 150px;
+    }
+
+    .d-file a img{
+        margin: 0 auto;
+        width: 65%;
     }
 
     .d-content > a {
@@ -314,7 +337,7 @@
         color: #e4e4e4;
     }
 
-    a:hover {
+    .d-file a:hover {
         outline: 3px dotted #0a0a0a;
         outline-offset: 0.75rem;
         cursor: default;
@@ -322,14 +345,27 @@
 
     .d-footer {
         margin-top: auto;
-        display: flex;
-        flex-direction: row-reverse;
         background-color: #333333;
     }
 
+    .task-left{
+        height: 100%;
+        display: flex;
+    }
+
     .task-right {
-        border-left: 4px solid rgba(165, 165, 165, 0.25);
+        display: flex;
+        flex-direction: row-reverse;
+    }
+
+    .task-item-a{
+        padding: 0.25em 0.75em;
+        border-right: 4px solid rgba(165, 165, 165, 0.25);
+    }
+
+    .task-item-b{
         padding: 0 0.75em;
+        border-left: 4px solid rgba(165, 165, 165, 0.25);
     }
 
     .date {

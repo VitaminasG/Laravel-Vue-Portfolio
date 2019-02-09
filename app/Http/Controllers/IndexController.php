@@ -38,7 +38,7 @@ class IndexController extends Controller
 
 		if ( $agent->isRobot() ) {
 
-			return view( 'layouts.master' );
+			return view( 'layouts.server' );
 
 		}
 
