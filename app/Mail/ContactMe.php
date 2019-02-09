@@ -6,25 +6,24 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Http\Request;
 
 class ContactMe extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $message, $from, $name;
+    public $request;
 
     /**
-     * message for me
-     * from who I have message
+     * Create a message instance
+     *
      * @return void
      */
-    public function __construct($message, $from, $name)
+    public function __construct(Request $request)
     {
-        $this->message = $message;
 
-        $this->from = $from;
+    	$this->request = $request;
 
-        $this->name = $name;
     }
 
     /**
@@ -36,6 +35,12 @@ class ContactMe extends Mailable
 
     {
 
-        return $this->from($from)->message($message)-name($name)->markdown('emails.contactMe');
+        return $this->view('emails.contactMe')
+	        ->with([
+	        	'name' => $this->request->name,
+	        	'from' => $this->request->from,
+	        	'body' => $this->request->message,
+		        'agent' => $this->request->agent
+	        ]);
     }
 }

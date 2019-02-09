@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Index;
+use App\Mail\ContactMe;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Jenssegers\Agent\Agent;
 
 class IndexController extends Controller
@@ -53,7 +56,18 @@ class IndexController extends Controller
 
 			]);
 
-		return ['Your message Submited. Thank you!'];
+		$request->agent = $request->header('User-Agent');
+
+		$data = new Index;
+
+		$data->name = $request->name;
+		$data->from = $request->from;
+		$data->message = $request->message;
+		$data->agent = $request->agent;
+
+		$data->save();
+
+		Mail::to("05d6336008-be728c@inbox.mailtrap.io")->send(new ContactMe($request));
 
 	}
 }

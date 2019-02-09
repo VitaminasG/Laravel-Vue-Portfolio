@@ -2448,7 +2448,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.fields = {};
 
         if (response.status === 200) {
-          _this.feedback(response.data[0]);
+          _this.feedback();
         }
       }).catch(function (error) {
         if (error.response) {
@@ -2466,9 +2466,8 @@ __webpack_require__.r(__webpack_exports__);
       this.errors = {};
     },
     // animation
-    feedback: function feedback(message) {
+    feedback: function feedback() {
       this.success = true;
-      this.message = message;
       var tl = new gsap_all__WEBPACK_IMPORTED_MODULE_1__["TimelineMax"]();
       tl.fromTo(".feedback", 1, {
         y: 60,
@@ -35722,7 +35721,7 @@ var render = function() {
         ],
         staticClass: "feedback text-center"
       },
-      [_c("p", [_vm._v("Thank for contacting me!")])]
+      [_c("p", [_vm._v("Your message received. I will contact you shortly.")])]
     )
   ])
 }
@@ -52195,7 +52194,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!***************************************************************************************!*\
   !*** ./resources/js/components/mailMe.vue?vue&type=template&id=ab0c3f8c&scoped=true& ***!
   \***************************************************************************************/
-/*! no static exports found */
+/*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

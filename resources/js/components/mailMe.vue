@@ -102,7 +102,7 @@
 
         <div class="feedback text-center" v-show="success">
 
-            <p>Thank for contacting me!</p>
+            <p>Your message received. I will contact you shortly.</p>
 
         </div>
 
@@ -181,7 +181,7 @@
 
                             if(response.status === 200 ){
 
-                                this.feedback( response.data[0] );
+                                this.feedback();
 
                             }}).catch(error => {
 
@@ -210,10 +210,9 @@
 
             // animation
 
-            feedback(message){
+            feedback(){
 
                 this.success = true;
-                this.message = message;
 
                 let tl = new TimelineMax;
 

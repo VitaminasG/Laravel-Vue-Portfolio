@@ -15,6 +15,7 @@ class CreateIndicesTable extends Migration
     {
         Schema::create('indices', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name');
 	        $table->string('from');
 	        $table->string('message');
 	        $table->string('agent');
