@@ -32,7 +32,7 @@
 
         data(){
             return{
-                gui: true,
+                gui: false,
                 osStep: 1
             }
         },

@@ -3125,7 +3125,7 @@ var desktop = function desktop() {
   name: "Home",
   data: function data() {
     return {
-      gui: true,
+      gui: false,
       osStep: 1
     };
   },
