@@ -67,7 +67,9 @@
 <script>
 
     import { materials } from '../textMaterial';
-    import { TweenMax, TimelineMax } from "gsap/all";
+    import { TweenMax, TimelineMax, TextPlugin } from "gsap/all";
+
+    const plugins = [TextPlugin];
 
     export default {
 
@@ -159,7 +161,7 @@
 
                 tl2.staggerTo('.scramb', 0.2, {autoAlpha: 1, delay: 3}, 0.1)
                     .staggerTo('.scramb', 0.2, {autoAlpha: 0}, '+=0.2')
-                    .to('.letter-'+key, 0.5, {autoAlpha: 1, text: letter}, '+=0.1');
+                    .to('.letter-'+key, 0.5, {text:letter, autoAlpha: 1}, '+=0.1');
 
             },
 
