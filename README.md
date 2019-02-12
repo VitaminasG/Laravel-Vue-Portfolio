@@ -27,7 +27,7 @@ to keep all website assets and written materials as his own property.
 - Link to route: '/OS' [https://gediminaspalsys.uk/OS](https://gediminaspalsys.uk/OS).
 
 *If you using a mobile device, then you will be redirected to mobile site with modified content. 
-All that contetn redirection made by using **jenseegers/agent** - follow the link to read more -> [jenssegers/agent](https://github.com/jenssegers/agent).*
+All that content redirection made by using **jenseegers/agent** - follow the link to read more -> [jenssegers/agent](https://github.com/jenssegers/agent).*
 
 ## Re-using Code
 
