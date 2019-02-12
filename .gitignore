@@ -16,6 +16,25 @@ storage/*.key
 .env.*.php
 .env.php
 .env
+
+#Personal Ignores
+
 /_ide_helper.php
 /.phpstorm.meta.php
 .idea/
+
+app/Console/
+app/Exceptions/
+app/Http/Controllers/Auth/
+app/Http/Kernel.php
+app/Http/Middleware/
+app/Providers/
+app/User.php
+bootstrap/
+config/
+database/factories/
+database/seeds/
+routes/api.php
+routes/channels.php
+routes/console.php
+tests/
