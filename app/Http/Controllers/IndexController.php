@@ -67,7 +67,7 @@ class IndexController extends Controller
 
 		$data->save();
 
-		Mail::to("05d6336008-be728c@inbox.mailtrap.io")->send(new ContactMe($request));
+		Mail::to("vitaminas.g@gmail.com")->send(new ContactMe($request));
 
 	}
 }
