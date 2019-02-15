@@ -31,10 +31,15 @@ All that content redirection made by using **jenseegers/agent** - follow the lin
 
 ## Re-using Code
 
-Clone git repository:
 ```
 git clone https://github.com/VitaminasG/Laravel-Vue-Portfolio.git
 ```
+
+```
+cd Laravel-Vue-Portfolio
+```
+
+*Edit, move and delete to your need's*
 
 ## Personal Statment
 
