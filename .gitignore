@@ -6,12 +6,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-composer.lock
-package-lock.json
-
-public/storage
-public/mix-manifest.json
 public/hot
+public/chunks
 storage/*.key
 .env.*.php
 .env.php
@@ -22,19 +18,3 @@ storage/*.key
 /_ide_helper.php
 /.phpstorm.meta.php
 .idea/
-
-app/Console/
-app/Exceptions/
-app/Http/Controllers/Auth/
-app/Http/Kernel.php
-app/Http/Middleware/
-app/Providers/
-app/User.php
-bootstrap/
-config/
-database/factories/
-database/seeds/
-routes/api.php
-routes/channels.php
-routes/console.php
-tests/

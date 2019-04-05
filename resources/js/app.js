@@ -1,6 +1,8 @@
-import './bootstrap';
-import router from './routes';
+require('./bootstrap');
 
+Vue.component('TestingComponent', () => import('./components/testing'));
+
+import router from './routes';
 import { TimelineMax} from "gsap/TweenMax";
 
 new Vue({

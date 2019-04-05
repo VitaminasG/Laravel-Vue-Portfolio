@@ -1,1 +1,350 @@
-@font-face{font-family:Computer;font-weight:400;src:url(/fonts/clacon.ttf?f2f97095d1105880c85067557fb1e311)}.fontSize-1{font-size:1em}.fontSize-1h{font-size:1.5em}.fontSize-2{font-size:2em}.fontSize-2h{font-size:2.5em}.fontSize-3{font-size:3em}.mx-1{margin-left:1em;margin-right:1em}.mx-2{margin-left:2em;margin-right:2em}.mx-3{margin-left:3em;margin-right:3em}.mx-4{margin-left:4em;margin-right:4em}.my-1{margin-top:1em;margin-bottom:1em}.my-2{margin-top:2em;margin-bottom:2em}.my-3{margin-top:3em;margin-bottom:3em}.my-4{margin-top:4em;margin-bottom:4em}.mt-1{margin-top:1em}.mt-2{margin-top:2em}.mt-3{margin-top:3em}.mt-4{margin-top:4em}.mb-1{margin-bottom:1em}.mb-2{margin-bottom:2em}.mb-3{margin-bottom:3em}.mb-4{margin-bottom:4em}.px-1{padding-left:1em;padding-right:1em}.px-2{padding-left:2em;padding-right:2em}.px-3{padding-left:3em;padding-right:3em}.px-4{padding-left:4em;padding-right:4em}.py-1{padding-top:1em;padding-bottom:1em}.py-2{padding-top:2em;padding-bottom:2em}.py-3{padding-top:3em;padding-bottom:3em}.py-4{padding-top:4em;padding-bottom:4em}.pt-1{padding-top:1em}.pt-2{padding-top:2em}.pt-3{padding-top:3em}.pt-4{padding-top:4em}.pb-1{padding-bottom:1em}.pb-2{padding-bottom:2em}.pb-3{padding-bottom:3em}.pb-4{padding-bottom:4em}.w-25{width:25%}.w-50{width:50%}.w-75{width:75%}.w-100{width:100%}.h-25{height:25%}.h-50{height:50%}.h-75{height:75%}.h-100{height:100%}body p{line-height:1}a{color:#86c60b}a,a:hover{font-family:Computer,Courier New;font-size:1.25em;text-decoration:none}a:hover{color:#e4c921}input,label{font-size:1.25em;background:transparent;border:none;font-family:Computer,Courier New;color:#86c60b}input:-webkit-autofill,input:-webkit-autofill:focus,input:-webkit-autofill:hover,select:-webkit-autofill,select:-webkit-autofill:focus,select:-webkit-autofill:hover,textarea:-webkit-autofill,textarea:-webkit-autofill:focus,textarea:-webkit-autofill:hover{border:none;-webkit-text-fill-color:#86c60b}button:focus,input:focus,select:focus,textarea:focus{outline:none}input:-webkit-autofill,input:-webkit-autofill:active,input:-webkit-autofill:focus,input:-webkit-autofill:hover{-webkit-box-shadow:0 0 0 30px #121212 inset!important}body,html{margin:0;padding:0}html{background-color:#121212;background-image:url(/images/Bg_trans.png?7d69311974b0b3867ee3723383c88f55);background-repeat:repeat;opacity:.9;position:relative;z-index:9999;height:100%}body{font-family:Computer,Courier New;text-shadow:0 0 5px rgba(134,198,11,.6);color:#86c60b}.a-box{position:absolute;z-index:5;width:100%;height:200vh}.a-line{background-image:url(/images/Bg_trans.png?7d69311974b0b3867ee3723383c88f55);background-repeat:repeat;height:10px;opacity:.1;top:0;-webkit-filter:drop-shadow(0 0 10px #97c51d);filter:drop-shadow(0 0 10px #97c51d)}.flex{display:flex;justify-content:space-evenly}.flex-center{display:flex;align-items:center;justify-content:center}.flex-block{display:flex;flex-direction:column;justify-content:space-around;align-items:stretch}.grow-one{flex-grow:1}.grow-two{flex-grow:2}.grow-three{flex-grow:3}.text-underline{text-decoration:underline}.text-center{text-align:center}.text-alert{color:#e4c921}.text-justify{text-align:justify}.container{height:100vh;padding:1rem}
+@font-face {
+  font-family: "Computer";
+  font-weight: normal;
+  src: url(/fonts/clacon.ttf?f2f97095d1105880c85067557fb1e311);
+}
+
+.fontSize-1 {
+  font-size: 1em;
+}
+
+.fontSize-1h {
+  font-size: 1.5em;
+}
+
+.fontSize-2 {
+  font-size: 2em;
+}
+
+.fontSize-2h {
+  font-size: 2.5em;
+}
+
+.fontSize-3 {
+  font-size: 3em;
+}
+
+.mx-1 {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.mx-2 {
+  margin-left: 2em;
+  margin-right: 2em;
+}
+
+.mx-3 {
+  margin-left: 3em;
+  margin-right: 3em;
+}
+
+.mx-4 {
+  margin-left: 4em;
+  margin-right: 4em;
+}
+
+.my-1 {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.my-2 {
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+.my-3 {
+  margin-top: 3em;
+  margin-bottom: 3em;
+}
+
+.my-4 {
+  margin-top: 4em;
+  margin-bottom: 4em;
+}
+
+.mt-1 {
+  margin-top: 1em;
+}
+
+.mt-2 {
+  margin-top: 2em;
+}
+
+.mt-3 {
+  margin-top: 3em;
+}
+
+.mt-4 {
+  margin-top: 4em;
+}
+
+.mb-1 {
+  margin-bottom: 1em;
+}
+
+.mb-2 {
+  margin-bottom: 2em;
+}
+
+.mb-3 {
+  margin-bottom: 3em;
+}
+
+.mb-4 {
+  margin-bottom: 4em;
+}
+
+.px-1 {
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.px-2 {
+  padding-left: 2em;
+  padding-right: 2em;
+}
+
+.px-3 {
+  padding-left: 3em;
+  padding-right: 3em;
+}
+
+.px-4 {
+  padding-left: 4em;
+  padding-right: 4em;
+}
+
+.py-1 {
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+.py-2 {
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+
+.py-3 {
+  padding-top: 3em;
+  padding-bottom: 3em;
+}
+
+.py-4 {
+  padding-top: 4em;
+  padding-bottom: 4em;
+}
+
+.pt-1 {
+  padding-top: 1em;
+}
+
+.pt-2 {
+  padding-top: 2em;
+}
+
+.pt-3 {
+  padding-top: 3em;
+}
+
+.pt-4 {
+  padding-top: 4em;
+}
+
+.pb-1 {
+  padding-bottom: 1em;
+}
+
+.pb-2 {
+  padding-bottom: 2em;
+}
+
+.pb-3 {
+  padding-bottom: 3em;
+}
+
+.pb-4 {
+  padding-bottom: 4em;
+}
+
+.w-25 {
+  width: 25%;
+}
+
+.w-50 {
+  width: 50%;
+}
+
+.w-75 {
+  width: 75%;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.h-25 {
+  height: 25%;
+}
+
+.h-50 {
+  height: 50%;
+}
+
+.h-75 {
+  height: 75%;
+}
+
+.h-100 {
+  height: 100%;
+}
+
+body p {
+  line-height: 1;
+}
+
+a {
+  font-family: "Computer", Courier New;
+  color: #86c60b;
+  font-size: 1.25em;
+  text-decoration: none;
+}
+
+a:hover {
+  font-family: "Computer", Courier New;
+  color: #e4c921;
+  font-size: 1.25em;
+  text-decoration: none;
+}
+
+input,
+label {
+  font-size: 1.25em;
+  background: transparent;
+  border: none;
+  font-family: "Computer", Courier New;
+  color: #86c60b;
+}
+
+/* Change Autocomplete styles in Chrome */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border: none;
+  -webkit-text-fill-color: #86c60b;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+}
+
+/* Change autofill background colour */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #121212 inset !important;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background-color: #121212;
+  background-image: url(/images/Bg_trans.png?7d69311974b0b3867ee3723383c88f55);
+  background-repeat: repeat;
+  opacity: 0.9;
+  position: relative;
+  z-index: 9999;
+  height: 100%;
+}
+
+body {
+  font-family: "Computer", Courier New;
+  text-shadow: 0 0 5px rgba(134, 198, 11, 0.6);
+  color: #86c60b;
+}
+
+.a-box {
+  position: absolute;
+  z-index: 5;
+  width: 100%;
+  height: 200vh;
+}
+
+.a-line {
+  background-image: url(/images/Bg_trans.png?7d69311974b0b3867ee3723383c88f55);
+  background-repeat: repeat;
+  height: 10px;
+  opacity: 0.1;
+  top: 0;
+  -webkit-filter: drop-shadow(0px 0px 10px #97c51d);
+          filter: drop-shadow(0px 0px 10px #97c51d);
+}
+
+.flex {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: stretch;
+}
+
+.grow-one {
+  flex-grow: 1;
+}
+
+.grow-two {
+  flex-grow: 2;
+}
+
+.grow-three {
+  flex-grow: 3;
+}
+
+.text-underline {
+  text-decoration: underline;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-alert {
+  color: #e4c921;
+}
+
+.text-justify {
+  text-align: justify;
+}
+
+.container {
+  height: 100vh;
+  padding: 1rem;
+}
+

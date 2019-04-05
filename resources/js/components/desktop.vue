@@ -191,7 +191,8 @@
                                 'the client and providing the best solution to minimise the cost. I speak and\n' +
                                 'write in three languages – English, Lithuanian and Russian.'
 
-                        }}
+                        }
+                    }
 
                 },
 
@@ -232,10 +233,10 @@
                 let cd =  new Date;
 
                 this.date = ('0' + cd.getDate()).slice(-2) + '/'
-                    + ( '0' + cd.getMonth()+1).slice(-2) + '/' + cd.getFullYear();
+                    + ( '0' + cd.getMonth()).slice(-2) + '/' + cd.getFullYear();
 
-                this.clock = ('0' + cd.getHours()).slice(-2) + ' : ' + ('0' + cd.getMinutes()).slice(-2)
-                    + ' : ' + ('0' + cd.getSeconds()).slice(-2);
+                this.clock = ('0' + cd.getHours()).slice(-2) + ':' + ('0' + cd.getMinutes()).slice(-2)
+                    + ':' + ('0' + cd.getSeconds()).slice(-2);
             },
 
             toggleText(event, target){

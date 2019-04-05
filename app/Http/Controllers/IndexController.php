@@ -10,7 +10,12 @@ use Jenssegers\Agent\Agent;
 
 class IndexController extends Controller
 {
-	public function index()
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+
+    public function index()
 
 	{
 
@@ -44,7 +49,13 @@ class IndexController extends Controller
 
 	}
 
-	public function store(Request $request){
+
+    /**
+     * @param Request $request
+     * @throws \Illuminate\Validation\ValidationException
+     */
+
+    public function store(Request $request){
 
 		$this->validate(request(), [
 
@@ -70,4 +81,9 @@ class IndexController extends Controller
 		Mail::to("vitaminas.g@gmail.com")->send(new ContactMe($request));
 
 	}
+
+	public function test(){
+
+        return view('layouts.test');
+    }
 }

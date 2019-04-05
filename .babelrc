@@ -1,3 +1,3 @@
 {
-  "plugins": ["dynamic-import-node"]
+  "plugins": ["@babel/plugin-syntax-dynamic-import"]
 }
