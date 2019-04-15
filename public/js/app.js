@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "chunks/" + ({}[chunkId]||chunkId) + "." + {"0":"144e8f71383bf02beef3","3":"0517bb7927b26df9f196","5":"8a1a31720b5c853f8745","6":"2de194ed32bc6eb55a3c","7":"d89220eab1a3f4500a8a","8":"2e64a3457f18383b38ab","9":"4f21ad2471d7b32ab69a","10":"492164169c16de21e3a3","11":"f89b32d1953ed3722465","12":"cdfa5cb981f2780a507f","13":"d8c314ea3f420b933d36","14":"668c9e3fe19414e93daa"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "chunks/" + ({}[chunkId]||chunkId) + "." + {"0":"ff8c867b7bca81e08869","1":"1b7711662aaabb125310","3":"fb1427c450445c344898","5":"69d20972adb5948aa429","6":"2de194ed32bc6eb55a3c","7":"d89220eab1a3f4500a8a","8":"2e64a3457f18383b38ab","9":"4f21ad2471d7b32ab69a","10":"492164169c16de21e3a3","11":"f89b32d1953ed3722465","12":"cdfa5cb981f2780a507f","13":"03583222be8b79689f31","14":"668c9e3fe19414e93daa"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -42897,14 +42897,24 @@ var routes = [{
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
+	"./Dashboard": [
+		"./resources/js/views/Dashboard.vue",
+		0,
+		1
+	],
+	"./Dashboard.vue": [
+		"./resources/js/views/Dashboard.vue",
+		0,
+		1
+	],
 	"./Error": [
 		"./resources/js/views/Error.vue",
-		3,
+		0,
 		12
 	],
 	"./Error.vue": [
 		"./resources/js/views/Error.vue",
-		3,
+		0,
 		12
 	],
 	"./Home": [
@@ -42921,22 +42931,22 @@ var map = {
 	],
 	"./OS": [
 		"./resources/js/views/OS.vue",
-		3,
+		0,
 		13
 	],
 	"./OS.vue": [
 		"./resources/js/views/OS.vue",
-		3,
+		0,
 		13
 	],
 	"./mHome": [
 		"./resources/js/views/mHome.vue",
-		3,
+		0,
 		11
 	],
 	"./mHome.vue": [
 		"./resources/js/views/mHome.vue",
-		3,
+		0,
 		11
 	]
 };
