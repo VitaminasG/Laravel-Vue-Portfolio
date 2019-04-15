@@ -232,8 +232,22 @@
 
                 let cd =  new Date;
 
+                let month = [];
+                month[0] = "Jan";
+                month[1] = "Feb";
+                month[2] = "Mar";
+                month[3] = "Apr";
+                month[4] = "May";
+                month[5] = "Jun";
+                month[6] = "Jul";
+                month[7] = "Aug";
+                month[8] = "Sep";
+                month[9] = "Oct";
+                month[10] = "Nov";
+                month[11] = "Dec";
+
                 this.date = ('0' + cd.getDate()).slice(-2) + '/'
-                    + ( '0' + cd.getMonth()).slice(-2) + '/' + cd.getFullYear();
+                    + month[cd.getMonth()] + '/' + cd.getFullYear();
 
                 this.clock = ('0' + cd.getHours()).slice(-2) + ':' + ('0' + cd.getMinutes()).slice(-2)
                     + ':' + ('0' + cd.getSeconds()).slice(-2);

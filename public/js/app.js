@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "chunks/" + ({}[chunkId]||chunkId) + "." + {"0":"144e8f71383bf02beef3","1":"db66d982dffe9a4e954e","3":"0517bb7927b26df9f196","5":"2385a02991b8083202de","6":"2de194ed32bc6eb55a3c","7":"442c687193885df5145c","8":"50d249cf7bcba0e262da","9":"2dab72dafe2a8623f17d","10":"7a4268e9938b052b61ca","11":"b665e4a37256125227c6","12":"6530a372bc49d07dea1d","13":"0e4568ac2a1a4a92613f","14":"c2ba918372db64f45670"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "chunks/" + ({}[chunkId]||chunkId) + "." + {"0":"144e8f71383bf02beef3","3":"0517bb7927b26df9f196","5":"8a1a31720b5c853f8745","6":"2de194ed32bc6eb55a3c","7":"d89220eab1a3f4500a8a","8":"2e64a3457f18383b38ab","9":"4f21ad2471d7b32ab69a","10":"492164169c16de21e3a3","11":"f89b32d1953ed3722465","12":"cdfa5cb981f2780a507f","13":"d8c314ea3f420b933d36","14":"668c9e3fe19414e93daa"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -28051,8 +28051,8 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /*!
-  * vue-router v3.0.2
-  * (c) 2018 Evan You
+  * vue-router v3.0.4
+  * (c) 2019 Evan You
   * @license MIT
   */
 /*  */
@@ -29134,16 +29134,24 @@ function fillParams (
   params,
   routeMsg
 ) {
+  params = params || {};
   try {
     var filler =
       regexpCompileCache[path] ||
       (regexpCompileCache[path] = pathToRegexp_1.compile(path));
-    return filler(params || {}, { pretty: true })
+
+    // Fix #2505 resolving asterisk routes { name: 'not-found', params: { pathMatch: '/not-found' }}
+    if (params.pathMatch) { params[0] = params.pathMatch; }
+
+    return filler(params, { pretty: true })
   } catch (e) {
     if (true) {
       warn(false, ("missing param for " + routeMsg + ": " + (e.message)));
     }
     return ''
+  } finally {
+    // delete the 0 if it was added
+    delete params[0];
   }
 }
 
@@ -29322,8 +29330,10 @@ function normalizeLocation (
 ) {
   var next = typeof raw === 'string' ? { path: raw } : raw;
   // named target
-  if (next.name || next._normalized) {
+  if (next._normalized) {
     return next
+  } else if (next.name) {
+    return extend({}, raw)
   }
 
   // relative params
@@ -30180,7 +30190,7 @@ function poll (
 
 /*  */
 
-var HTML5History = (function (History$$1) {
+var HTML5History = /*@__PURE__*/(function (History$$1) {
   function HTML5History (router, base) {
     var this$1 = this;
 
@@ -30268,7 +30278,7 @@ function getLocation (base) {
 
 /*  */
 
-var HashHistory = (function (History$$1) {
+var HashHistory = /*@__PURE__*/(function (History$$1) {
   function HashHistory (router, base, fallback) {
     History$$1.call(this, router, base);
     // check history fallback deeplinking
@@ -30377,7 +30387,23 @@ function getHash () {
   // consistent across browsers - Firefox will pre-decode it!
   var href = window.location.href;
   var index = href.indexOf('#');
-  return index === -1 ? '' : decodeURI(href.slice(index + 1))
+  // empty path
+  if (index < 0) { return '' }
+
+  href = href.slice(index + 1);
+  // decode the hash but not the search or hash
+  // as search(query) is already decoded
+  // https://github.com/vuejs/vue-router/issues/2708
+  var searchIndex = href.indexOf('?');
+  if (searchIndex < 0) {
+    var hashIndex = href.indexOf('#');
+    if (hashIndex > -1) { href = decodeURI(href.slice(0, hashIndex)) + href.slice(hashIndex); }
+    else { href = decodeURI(href); }
+  } else {
+    if (searchIndex > -1) { href = decodeURI(href.slice(0, searchIndex)) + href.slice(searchIndex); }
+  }
+
+  return href
 }
 
 function getUrl (path) {
@@ -30405,7 +30431,7 @@ function replaceHash (path) {
 
 /*  */
 
-var AbstractHistory = (function (History$$1) {
+var AbstractHistory = /*@__PURE__*/(function (History$$1) {
   function AbstractHistory (router, base) {
     History$$1.call(this, router, base);
     this.stack = [];
@@ -30528,7 +30554,19 @@ VueRouter.prototype.init = function init (app /* Vue component instance */) {
 
   this.apps.push(app);
 
-  // main app already initialized.
+  // set up app destroyed handler
+  // https://github.com/vuejs/vue-router/issues/2639
+  app.$once('hook:destroyed', function () {
+    // clean out app from this.apps array once destroyed
+    var index = this$1.apps.indexOf(app);
+    if (index > -1) { this$1.apps.splice(index, 1); }
+    // ensure we still have a main app or null if no apps
+    // we do not release the router so it can be reused
+    if (this$1.app === app) { this$1.app = this$1.apps[0] || null; }
+  });
+
+  // main app previously initialized
+  // return as we don't need to set up new history listener
   if (this.app) {
     return
   }
@@ -30618,9 +30656,10 @@ VueRouter.prototype.resolve = function resolve (
   current,
   append
 ) {
+  current = current || this.history.current;
   var location = normalizeLocation(
     to,
-    current || this.history.current,
+    current,
     append,
     this
   );
@@ -30661,7 +30700,7 @@ function createHref (base, fullPath, mode) {
 }
 
 VueRouter.install = install;
-VueRouter.version = '3.0.2';
+VueRouter.version = '3.0.4';
 
 if (inBrowser && window.Vue) {
   window.Vue.use(VueRouter);
@@ -42749,9 +42788,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var gsap_TweenMax__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! gsap/TweenMax */ "./node_modules/gsap/TweenMax.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-Vue.component('TestingComponent', function () {
-  return __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.bind(null, /*! ./components/testing */ "./resources/js/components/testing.vue"));
-});
 
 
 new Vue({
@@ -42864,44 +42900,44 @@ var map = {
 	"./Error": [
 		"./resources/js/views/Error.vue",
 		3,
-		13
+		12
 	],
 	"./Error.vue": [
 		"./resources/js/views/Error.vue",
 		3,
-		13
+		12
 	],
 	"./Home": [
 		"./resources/js/views/Home.vue",
 		0,
 		3,
-		11
+		10
 	],
 	"./Home.vue": [
 		"./resources/js/views/Home.vue",
 		0,
 		3,
-		11
+		10
 	],
 	"./OS": [
 		"./resources/js/views/OS.vue",
 		3,
-		14
+		13
 	],
 	"./OS.vue": [
 		"./resources/js/views/OS.vue",
 		3,
-		14
+		13
 	],
 	"./mHome": [
 		"./resources/js/views/mHome.vue",
 		3,
-		12
+		11
 	],
 	"./mHome.vue": [
 		"./resources/js/views/mHome.vue",
 		3,
-		12
+		11
 	]
 };
 function webpackAsyncContext(req) {

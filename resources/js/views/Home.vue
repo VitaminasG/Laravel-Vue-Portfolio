@@ -480,7 +480,7 @@
     }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
     .main {
         display: flex;

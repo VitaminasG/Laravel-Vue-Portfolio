@@ -1,5 +1,6 @@
 <?php
 
+use App\User;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -17,11 +18,19 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('type')->default('user');
+            $table->string('verified')->default('no');
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
         });
+
+        User::create([
+            'name' => 'admin',
+            'email' => 'admin@example.com',
+            'type' => User::admin(),
+            'password' => Hash::make('12345678')
+        ]);
     }
 
     /**

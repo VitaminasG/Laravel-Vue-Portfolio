@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'type'
     ];
 
     /**
@@ -27,4 +27,45 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    protected $roles = [
+        'su' => 'admin',
+        'author' => 'author'
+    ];
+
+    public function returnRole($type){
+        return $this->roles[$type];
+    }
+    /**
+     * Check if User Type is Admin
+     *
+     * @return boolean
+     */
+    public function isAdmin(){
+        return $this->type === $this->returnRole('su');
+    }
+    /**
+     * Check if User Type is Author
+     *
+     * @return boolean
+     */
+    public function isAuthor(){
+        return $this->type === $this->returnRole('author');
+    }
+    /**
+     * Return Default Type
+     *
+     * @return string
+     */
+    public static function default(){
+        return $default = 'user';
+    }
+    /**
+     * Return Admin Type
+     *
+     * @return string
+     */
+    public static function admin(){
+        return $admin = 'admin';
+    }
 }
