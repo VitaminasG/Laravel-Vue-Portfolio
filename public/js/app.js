@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "chunks/" + ({}[chunkId]||chunkId) + "." + {"0":"ff8c867b7bca81e08869","1":"1b7711662aaabb125310","3":"fb1427c450445c344898","5":"69d20972adb5948aa429","6":"2de194ed32bc6eb55a3c","7":"d89220eab1a3f4500a8a","8":"2e64a3457f18383b38ab","9":"4f21ad2471d7b32ab69a","10":"492164169c16de21e3a3","11":"f89b32d1953ed3722465","12":"cdfa5cb981f2780a507f","13":"03583222be8b79689f31","14":"668c9e3fe19414e93daa"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "chunks/" + ({}[chunkId]||chunkId) + "." + {"0":"144e8f71383bf02beef3","1":"68467e4019e51f72a3cb","2":"6231dac7f306de70f92c","3":"cd34d917ac7615834991","4":"973ac52cd6b0d0b4ab02","5":"bd1a4ffe24ea4184b55c","6":"c71af249d87eaa5cb678","7":"e21fe515246143b7bad7","8":"4d720e48898fc64aab7d","9":"46ba40415e216dc434c7","10":"cd9a04fa02d53b7794e4","11":"63aea6e85ed1d45c8c67"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -42899,55 +42899,45 @@ var routes = [{
 var map = {
 	"./Dashboard": [
 		"./resources/js/views/Dashboard.vue",
-		0,
-		1
+		3
 	],
 	"./Dashboard.vue": [
 		"./resources/js/views/Dashboard.vue",
-		0,
-		1
+		3
 	],
 	"./Error": [
 		"./resources/js/views/Error.vue",
-		0,
-		12
+		4
 	],
 	"./Error.vue": [
 		"./resources/js/views/Error.vue",
-		0,
-		12
+		4
 	],
 	"./Home": [
 		"./resources/js/views/Home.vue",
 		0,
-		3,
-		10
+		1
 	],
 	"./Home.vue": [
 		"./resources/js/views/Home.vue",
 		0,
-		3,
-		10
+		1
 	],
 	"./OS": [
 		"./resources/js/views/OS.vue",
-		0,
-		13
+		5
 	],
 	"./OS.vue": [
 		"./resources/js/views/OS.vue",
-		0,
-		13
+		5
 	],
 	"./mHome": [
 		"./resources/js/views/mHome.vue",
-		0,
-		11
+		2
 	],
 	"./mHome.vue": [
 		"./resources/js/views/mHome.vue",
-		0,
-		11
+		2
 	]
 };
 function webpackAsyncContext(req) {
