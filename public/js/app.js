@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "chunks/" + ({}[chunkId]||chunkId) + "." + {"1":"268286a9af9619157ae0","3":"0517bb7927b26df9f196","6":"046c3b79355b39f9985f","7":"e21fe515246143b7bad7","8":"4d720e48898fc64aab7d","9":"46ba40415e216dc434c7","10":"cd9a04fa02d53b7794e4","11":"63aea6e85ed1d45c8c67","12":"fb1afa26301f31e38a8b","13":"fc909ea04d24ece29888","14":"f6377ab3a3dc07f16f68","15":"fc94a09f9e4d7b3b018e","16":"69f418dd650e21bb77ca"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "chunks/" + ({}[chunkId]||chunkId) + "." + {"0":"b172e9d16c5ac5736061","1":"268286a9af9619157ae0","3":"0517bb7927b26df9f196","6":"046c3b79355b39f9985f","7":"e21fe515246143b7bad7","8":"4d720e48898fc64aab7d","9":"46ba40415e216dc434c7","10":"cd9a04fa02d53b7794e4","11":"63aea6e85ed1d45c8c67","12":"fb1afa26301f31e38a8b","13":"fc909ea04d24ece29888","14":"f6377ab3a3dc07f16f68","15":"fc94a09f9e4d7b3b018e","16":"69f418dd650e21bb77ca"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -42884,12 +42884,18 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
     name: 'OS',
     component: loadView('OS')
   }, {
+    patch: '/Login',
+    name: 'apiLogin',
+    component: loadView('ApiLogin'),
+    meta: {
+      freshLogin: true
+    }
+  }, {
     path: '/Dashboard',
     name: 'Dashboard',
     component: loadView('Dashboard'),
     meta: {
-      requiresAuth: true,
-      freshLogin: true
+      requiresAuth: true
     }
   }]
 });
@@ -42908,6 +42914,16 @@ router.beforeEach(function (to, from, next) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
+	"./ApiLogin": [
+		"./resources/js/views/ApiLogin.vue",
+		3,
+		0
+	],
+	"./ApiLogin.vue": [
+		"./resources/js/views/ApiLogin.vue",
+		3,
+		0
+	],
 	"./Dashboard": [
 		"./resources/js/views/Dashboard.vue",
 		3,

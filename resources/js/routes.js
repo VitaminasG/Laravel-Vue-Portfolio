@@ -28,12 +28,21 @@ let router = new VueRouter({
         },
 
         {
+            patch:'/Login',
+            name: 'apiLogin',
+            component: loadView('ApiLogin'),
+            meta: {
+                freshLogin: true
+            }
+
+        },
+
+        {
             path: '/Dashboard',
             name: 'Dashboard',
             component: loadView('Dashboard'),
             meta: {
-                requiresAuth: true,
-                freshLogin: true,
+                requiresAuth: true
             }
         },
     ]
