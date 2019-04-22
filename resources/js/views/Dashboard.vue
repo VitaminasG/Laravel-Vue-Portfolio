@@ -1,11 +1,11 @@
 <template>
     <div>
 
-    <div id="_dash" v-if="authenticated && user">
+    <div id="_dash">
 
         <!-- Login Links -->
         <div class="flex py-1 px-1">
-            <p>Hello, {{ user.name }}</p>
+            <p>Hello, user name</p>
             <router-link to="/logout">Logout</router-link>
         </div>
 
@@ -38,7 +38,7 @@
         </div>
     </div>
 
-        <article v-else class="_box flex-block">
+        <article class="_box flex-block">
             <div class="_box-header flex">
                 <p>Access Denied</p>
             </div>
@@ -53,18 +53,8 @@
         name: "Dashboard",
         data(){
             return{
-                authenticated: auth.check(),
-                user: auth.user,
-            }
-        },
-        components: {
 
-        },
-        mounted() {
-            Event.$on('userLoggedIn', () =>{
-                this.authenticated = true;
-                this.user = auth.user;
-            });
+            }
         }
     }
 </script>

@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "chunks/" + ({}[chunkId]||chunkId) + "." + {"0":"144e8f71383bf02beef3","1":"68467e4019e51f72a3cb","2":"6231dac7f306de70f92c","3":"cd34d917ac7615834991","4":"973ac52cd6b0d0b4ab02","5":"bd1a4ffe24ea4184b55c","6":"c71af249d87eaa5cb678","7":"e21fe515246143b7bad7","8":"4d720e48898fc64aab7d","9":"46ba40415e216dc434c7","10":"cd9a04fa02d53b7794e4","11":"63aea6e85ed1d45c8c67"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "chunks/" + ({}[chunkId]||chunkId) + "." + {"1":"268286a9af9619157ae0","3":"0517bb7927b26df9f196","6":"046c3b79355b39f9985f","7":"e21fe515246143b7bad7","8":"4d720e48898fc64aab7d","9":"46ba40415e216dc434c7","10":"cd9a04fa02d53b7794e4","11":"63aea6e85ed1d45c8c67","12":"fb1afa26301f31e38a8b","13":"fc909ea04d24ece29888","14":"f6377ab3a3dc07f16f68","15":"fc94a09f9e4d7b3b018e","16":"69f418dd650e21bb77ca"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -42869,23 +42869,34 @@ function loadView(view) {
   };
 }
 
-var routes = [{
-  path: '*',
-  name: 'Error',
-  component: loadView('Error')
-}, {
-  path: '/',
-  name: 'Home',
-  component: loadView('Home')
-}, {
-  path: '/OS',
-  name: 'OS',
-  component: loadView('OS')
-}];
-/* harmony default export */ __webpack_exports__["default"] = (new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   mode: 'history',
-  routes: routes
-}));
+  routes: [{
+    path: '*',
+    name: 'Error',
+    component: loadView('Error')
+  }, {
+    path: '/',
+    name: 'Home',
+    component: loadView('Home')
+  }, {
+    path: '/OS',
+    name: 'OS',
+    component: loadView('OS')
+  }, {
+    path: '/Dashboard',
+    name: 'Dashboard',
+    component: loadView('Dashboard'),
+    meta: {
+      requiresAuth: true,
+      freshLogin: true
+    }
+  }]
+});
+router.beforeEach(function (to, from, next) {
+  next();
+});
+/* harmony default export */ __webpack_exports__["default"] = (router);
 
 /***/ }),
 
@@ -42899,45 +42910,55 @@ var routes = [{
 var map = {
 	"./Dashboard": [
 		"./resources/js/views/Dashboard.vue",
-		3
+		3,
+		14
 	],
 	"./Dashboard.vue": [
 		"./resources/js/views/Dashboard.vue",
-		3
+		3,
+		14
 	],
 	"./Error": [
 		"./resources/js/views/Error.vue",
-		4
+		3,
+		15
 	],
 	"./Error.vue": [
 		"./resources/js/views/Error.vue",
-		4
+		3,
+		15
 	],
 	"./Home": [
 		"./resources/js/views/Home.vue",
-		0,
-		1
+		3,
+		1,
+		12
 	],
 	"./Home.vue": [
 		"./resources/js/views/Home.vue",
-		0,
-		1
+		3,
+		1,
+		12
 	],
 	"./OS": [
 		"./resources/js/views/OS.vue",
-		5
+		3,
+		16
 	],
 	"./OS.vue": [
 		"./resources/js/views/OS.vue",
-		5
+		3,
+		16
 	],
 	"./mHome": [
 		"./resources/js/views/mHome.vue",
-		2
+		3,
+		13
 	],
 	"./mHome.vue": [
 		"./resources/js/views/mHome.vue",
-		2
+		3,
+		13
 	]
 };
 function webpackAsyncContext(req) {

@@ -2,6 +2,12 @@
 
     <div class="container is-fluid" v-cloak>
 
+        <div class="__link">
+            <router-link to="/dashboard">
+                <a class=""><img src="../../assets/dashboard.svg"></a>
+            </router-link>
+        </div>
+
         <div class="main section h-100">
 
                 <div class="flex-block loading w-100" v-if="loading">
@@ -481,6 +487,18 @@
 </script>
 
 <style scoped>
+
+    .__link{
+        position: absolute;
+        top: 0.5rem;
+        right: 0;
+    }
+
+    .__link a:hover {
+
+        filter: drop-shadow(0px 0px 2px rgba(151, 197, 29, 0.31)) invert(10%);
+
+    }
 
     .main {
         display: flex;

@@ -4,32 +4,44 @@ function loadView(view) {
     return () => import('./views/'+ view);
 }
 
-let routes =  [
-
-    {
-        path: '*',
-        name: 'Error',
-        component: loadView('Error')
-    },
-
-    {
-        path: '/',
-        name: 'Home',
-        component: loadView('Home')
-    },
-
-    {
-
-        path: '/OS',
-        name: 'OS',
-        component: loadView('OS')
-
-    }
-];
-
-export default new VueRouter({
+let router = new VueRouter({
 
     mode: 'history',
-    routes
+    routes: [
+
+        {
+            path: '*',
+            name: 'Error',
+            component: loadView('Error')
+        },
+
+        {
+            path: '/',
+            name: 'Home',
+            component: loadView('Home')
+        },
+
+        {
+            path: '/OS',
+            name: 'OS',
+            component: loadView('OS')
+        },
+
+        {
+            path: '/Dashboard',
+            name: 'Dashboard',
+            component: loadView('Dashboard'),
+            meta: {
+                requiresAuth: true,
+                freshLogin: true,
+            }
+        },
+    ]
 
 });
+
+router.beforeEach((to, from, next) =>{
+    next();
+});
+
+export default router;
