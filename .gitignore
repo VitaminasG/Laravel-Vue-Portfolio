@@ -8,6 +8,7 @@ yarn-error.log*
 
 public/hot
 public/chunks
+public/js/app.js
 storage/*.key
 .env.*.php
 .env.php

@@ -13,10 +13,15 @@ class ApiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function login(Request $request)
+    public function login()
     {
 
-       //
+         $admin = User::where('type', 'admin')->first();
+
+        return response()->json([
+            'message' => $admin,
+            'status' => 200
+        ]);
 
     }
 

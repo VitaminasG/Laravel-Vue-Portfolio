@@ -1,8 +1,9 @@
 <?php
 
+Route::get('/login', 'API\ApiController@login');
 
 Route::middleware('auth:api')->group(function(){
 
-    // Route::get('login', 'API/ApiController@view');
+     //
 
 });

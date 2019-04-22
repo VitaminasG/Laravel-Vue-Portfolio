@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "chunks/" + ({}[chunkId]||chunkId) + "." + {"0":"b172e9d16c5ac5736061","1":"268286a9af9619157ae0","3":"0517bb7927b26df9f196","6":"046c3b79355b39f9985f","7":"e21fe515246143b7bad7","8":"4d720e48898fc64aab7d","9":"46ba40415e216dc434c7","10":"cd9a04fa02d53b7794e4","11":"63aea6e85ed1d45c8c67","12":"fb1afa26301f31e38a8b","13":"fc909ea04d24ece29888","14":"f6377ab3a3dc07f16f68","15":"fc94a09f9e4d7b3b018e","16":"69f418dd650e21bb77ca"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "chunks/" + ({}[chunkId]||chunkId) + "." + {"1":"268286a9af9619157ae0","3":"0517bb7927b26df9f196","7":"f80577b0485166c08d04","8":"119123ae9f11787ae4bb","9":"9ff0cf358b82bb6c685f","10":"3becba4d701bb3eb3fb6","11":"f8849979ef3b333c48e1","12":"7631bf5bfb33c79e98d1","13":"40006bf21f6c355e35c7","14":"b751889431a255dd9580","15":"7cf562c44f39c64969ac","16":"95fdbef0b9386439e257","17":"3fb953cdc7b14742b2d7","18":"67bb81d5f4cc5dafa956"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -42884,7 +42884,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
     name: 'OS',
     component: loadView('OS')
   }, {
-    patch: '/Login',
+    path: '/Login',
     name: 'apiLogin',
     component: loadView('ApiLogin'),
     meta: {
@@ -42917,64 +42917,64 @@ var map = {
 	"./ApiLogin": [
 		"./resources/js/views/ApiLogin.vue",
 		3,
-		0
+		15
 	],
 	"./ApiLogin.vue": [
 		"./resources/js/views/ApiLogin.vue",
 		3,
-		0
+		15
 	],
 	"./Dashboard": [
 		"./resources/js/views/Dashboard.vue",
 		3,
-		14
+		16
 	],
 	"./Dashboard.vue": [
 		"./resources/js/views/Dashboard.vue",
 		3,
-		14
+		16
 	],
 	"./Error": [
 		"./resources/js/views/Error.vue",
 		3,
-		15
+		17
 	],
 	"./Error.vue": [
 		"./resources/js/views/Error.vue",
 		3,
-		15
+		17
 	],
 	"./Home": [
 		"./resources/js/views/Home.vue",
 		3,
 		1,
-		12
+		13
 	],
 	"./Home.vue": [
 		"./resources/js/views/Home.vue",
 		3,
 		1,
-		12
+		13
 	],
 	"./OS": [
 		"./resources/js/views/OS.vue",
 		3,
-		16
+		18
 	],
 	"./OS.vue": [
 		"./resources/js/views/OS.vue",
 		3,
-		16
+		18
 	],
 	"./mHome": [
 		"./resources/js/views/mHome.vue",
 		3,
-		13
+		14
 	],
 	"./mHome.vue": [
 		"./resources/js/views/mHome.vue",
 		3,
-		13
+		14
 	]
 };
 function webpackAsyncContext(req) {

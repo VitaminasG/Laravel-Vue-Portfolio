@@ -28,7 +28,7 @@ let router = new VueRouter({
         },
 
         {
-            patch:'/Login',
+            path:'/Login',
             name: 'apiLogin',
             component: loadView('ApiLogin'),
             meta: {

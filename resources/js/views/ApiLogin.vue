@@ -47,8 +47,15 @@
                 username:'',
                 password:'',
                 error: false,
-                message:'',
+                message:{},
             }
+        },
+        mounted(){
+          axios.get('/api/login')
+              .then(({data})=>{
+                this.message = data;
+                console.log(this.message);
+            })
         },
         methods:{
             login(){
