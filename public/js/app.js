@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "chunks/" + ({}[chunkId]||chunkId) + "." + {"1":"268286a9af9619157ae0","3":"0517bb7927b26df9f196","7":"f80577b0485166c08d04","8":"119123ae9f11787ae4bb","9":"9ff0cf358b82bb6c685f","10":"3becba4d701bb3eb3fb6","11":"f8849979ef3b333c48e1","12":"7631bf5bfb33c79e98d1","13":"40006bf21f6c355e35c7","14":"b751889431a255dd9580","15":"7cf562c44f39c64969ac","16":"95fdbef0b9386439e257","17":"3fb953cdc7b14742b2d7","18":"67bb81d5f4cc5dafa956"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "chunks/" + ({}[chunkId]||chunkId) + "." + {"1":"268286a9af9619157ae0","3":"0517bb7927b26df9f196","7":"f80577b0485166c08d04","8":"119123ae9f11787ae4bb","9":"9ff0cf358b82bb6c685f","10":"3becba4d701bb3eb3fb6","11":"f8849979ef3b333c48e1","12":"7631bf5bfb33c79e98d1","13":"773d2d15dcbb83c23baa","14":"b751889431a255dd9580","15":"d64d2bbe49d739be58d2","16":"95fdbef0b9386439e257","17":"3fb953cdc7b14742b2d7","18":"67bb81d5f4cc5dafa956"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -28051,7 +28051,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /*!
-  * vue-router v3.0.4
+  * vue-router v3.0.6
   * (c) 2019 Evan You
   * @license MIT
   */
@@ -28110,11 +28110,14 @@ var View = {
     var depth = 0;
     var inactive = false;
     while (parent && parent._routerRoot !== parent) {
-      if (parent.$vnode && parent.$vnode.data.routerView) {
-        depth++;
-      }
-      if (parent._inactive) {
-        inactive = true;
+      var vnodeData = parent.$vnode && parent.$vnode.data;
+      if (vnodeData) {
+        if (vnodeData.routerView) {
+          depth++;
+        }
+        if (vnodeData.keepAlive && parent._inactive) {
+          inactive = true;
+        }
       }
       parent = parent.$parent;
     }
@@ -28151,6 +28154,17 @@ var View = {
     // in case the same component instance is reused across different routes
     ;(data.hook || (data.hook = {})).prepatch = function (_, vnode) {
       matched.instances[name] = vnode.componentInstance;
+    };
+
+    // register instance in init hook
+    // in case kept-alive component be actived when routes changed
+    data.hook.init = function (vnode) {
+      if (vnode.data.keepAlive &&
+        vnode.componentInstance &&
+        vnode.componentInstance !== matched.instances[name]
+      ) {
+        matched.instances[name] = vnode.componentInstance;
+      }
     };
 
     // resolve props
@@ -30700,7 +30714,7 @@ function createHref (base, fullPath, mode) {
 }
 
 VueRouter.install = install;
-VueRouter.version = '3.0.4';
+VueRouter.version = '3.0.6';
 
 if (inBrowser && window.Vue) {
   window.Vue.use(VueRouter);

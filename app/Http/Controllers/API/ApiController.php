@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
+use Hash;
 
 class ApiController extends Controller
 {
@@ -16,12 +17,33 @@ class ApiController extends Controller
     public function login()
     {
 
-         $admin = User::where('type', 'admin')->first();
+        $admin = new User();
 
-        return response()->json([
-            'message' => $admin,
-            'status' => 200
-        ]);
+        $user = User::where('email', request('email'))->first();
+
+        if(!$user){
+            return response()->json([
+                'message' => 'Wrong email address'
+            ], 401);
+        }
+
+        if(!Hash::check(request('password'), $user->password)) {
+            return response()->json([
+                'message' => 'Wrong password',
+            ], 401);
+        }
+
+        if($user->type === $admin->isAdmin()){
+            return response()->json([
+                'message' => $user,
+                'status' => 200
+            ], 200);
+        } else {
+            return response()->json([
+               'message' => 'You are not admin!',
+               'status' => 401
+            ], 401);
+        }
 
     }
 

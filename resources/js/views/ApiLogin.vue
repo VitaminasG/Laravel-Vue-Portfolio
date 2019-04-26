@@ -16,7 +16,7 @@
             <div class="field">
                 <label>Email</label>
                 <div class="">
-                    <input class="_input" type="email" name="username" v-model="username">
+                    <input class="_input" type="email" name="email" v-model="email">
                 </div>
             </div>
 
@@ -44,7 +44,7 @@
         name: "login",
         data(){
             return {
-                username:'',
+                email:'',
                 password:'',
                 error: false,
                 message:{},
@@ -60,7 +60,7 @@
         methods:{
             login(){
                 let data = {
-                    username: this.username,
+                    email: this.email,
                     password: this.password
                 };
 
@@ -68,8 +68,8 @@
                     .then(({data})=>{
                         this.error = false;
                         this.message = '';
-                        auth.login(data.token, data.user);
-                        this.$router.push('/dashboard');
+                        // auth.login(data.token, data.user);
+                        // this.$router.push('/Dashboard');
                     })
                     .catch(({response})=>{
                         this.error = true;

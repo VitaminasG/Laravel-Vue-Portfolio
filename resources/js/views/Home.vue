@@ -3,7 +3,7 @@
     <div class="container is-fluid" v-cloak>
 
         <div class="__link">
-            <router-link to="/dashboard">
+            <router-link to="/login">
                 <a class=""><img src="../../assets/dashboard.svg"></a>
             </router-link>
         </div>
