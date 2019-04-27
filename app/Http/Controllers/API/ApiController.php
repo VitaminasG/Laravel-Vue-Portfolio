@@ -9,6 +9,29 @@ use Hash;
 
 class ApiController extends Controller
 {
+
+    /**
+     * Check Fresh Login
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function verify()
+    {
+        $user= new User();
+
+        $admin = User::where('type', $user->isAdmin())->first();
+
+        if(!$admin->verified){
+            return response()->json([
+                false,
+            ], 418);
+        } else {
+            return response()->json([
+                true,
+            ], 307);
+        }
+    }
+
     /**
      * Login the Admin.
      *
@@ -23,13 +46,13 @@ class ApiController extends Controller
 
         if(!$user){
             return response()->json([
-                'message' => 'Wrong email address'
+                'message' => 'Wrong email address!'
             ], 401);
         }
 
         if(!Hash::check(request('password'), $user->password)) {
             return response()->json([
-                'message' => 'Wrong password',
+                'message' => 'Wrong password!',
             ], 401);
         }
 
@@ -49,13 +72,27 @@ class ApiController extends Controller
 
 
     /**
-     * Register the Admin.
+     * Change Admin credentials.
      *
      */
     public function register()
     {
 
-        //
+        $user = User::where('email', request('oldEmail'))->first();
+
+        if(!$user){
+            return response()->json([
+                'message' => 'Wrong email address!'
+            ], 401);
+        }
+
+        if(!Hash::check(request('password'), $user->oldPassword)) {
+            return response()->json([
+                'message' => 'Wrong password!',
+            ], 401);
+        }
+
+
     }
 
     /**

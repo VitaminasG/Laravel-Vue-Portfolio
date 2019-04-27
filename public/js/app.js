@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "chunks/" + ({}[chunkId]||chunkId) + "." + {"1":"268286a9af9619157ae0","3":"0517bb7927b26df9f196","7":"f80577b0485166c08d04","8":"119123ae9f11787ae4bb","9":"9ff0cf358b82bb6c685f","10":"3becba4d701bb3eb3fb6","11":"f8849979ef3b333c48e1","12":"7631bf5bfb33c79e98d1","13":"773d2d15dcbb83c23baa","14":"b751889431a255dd9580","15":"d64d2bbe49d739be58d2","16":"95fdbef0b9386439e257","17":"3fb953cdc7b14742b2d7","18":"67bb81d5f4cc5dafa956"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "chunks/" + ({}[chunkId]||chunkId) + "." + {"1":"268286a9af9619157ae0","2":"a6b86bdc7c09efa585ae","3":"0517bb7927b26df9f196","7":"f80577b0485166c08d04","8":"119123ae9f11787ae4bb","9":"9ff0cf358b82bb6c685f","10":"3becba4d701bb3eb3fb6","11":"f8849979ef3b333c48e1","12":"7631bf5bfb33c79e98d1","13":"773d2d15dcbb83c23baa","14":"b751889431a255dd9580","15":"29f6cfd806f7214b7d24","16":"95fdbef0b9386439e257","17":"3fb953cdc7b14742b2d7","18":"67bb81d5f4cc5dafa956"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -42826,6 +42826,69 @@ new Vue({
 
 /***/ }),
 
+/***/ "./resources/js/auth.js":
+/*!******************************!*\
+  !*** ./resources/js/auth.js ***!
+  \******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Auth =
+/*#__PURE__*/
+function () {
+  function Auth() {
+    _classCallCheck(this, Auth);
+
+    this.token = null;
+    this.user = null;
+    this.verified = false;
+    this.confirmed = false;
+  } // login(token, user) {
+  //
+  //     window.localStorage.setItem('token', token);
+  //     window.localStorage.setItem('user', JSON.stringify(user));
+  //
+  //     axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+  // };
+
+
+  _createClass(Auth, [{
+    key: "verify",
+    value: function verify() {
+      var _this = this;
+
+      this.verified = false;
+      axios.get('/api/verify').then(function (_ref) {
+        var data = _ref.data;
+        _this.verified = data;
+      })["catch"](function (_ref2) {
+        var response = _ref2.response;
+        console.log(response.statusText);
+      });
+      return this.verified;
+    }
+  }, {
+    key: "confirm",
+    value: function confirm() {
+      return this.confirmed;
+    }
+  }]);
+
+  return Auth;
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (new Auth());
+
+/***/ }),
+
 /***/ "./resources/js/bootstrap.js":
 /*!***********************************!*\
   !*** ./resources/js/bootstrap.js ***!
@@ -42875,6 +42938,8 @@ window.gsap = gsap__WEBPACK_IMPORTED_MODULE_3__["default"];
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var _auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./auth */ "./resources/js/auth.js");
+
 
 
 function loadView(view) {
@@ -42898,6 +42963,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
     name: 'OS',
     component: loadView('OS')
   }, {
+    path: '/Register',
+    name: 'apiRegister',
+    component: loadView('ApiRegister')
+  }, {
     path: '/Login',
     name: 'apiLogin',
     component: loadView('ApiLogin'),
@@ -42914,7 +42983,40 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   }]
 });
 router.beforeEach(function (to, from, next) {
-  next();
+  if (to.matched.some(function (record) {
+    return record.meta.freshLogin;
+  })) {
+    if (!_auth__WEBPACK_IMPORTED_MODULE_1__["default"].verify()) {
+      next({
+        path: '/Register',
+        query: {
+          redirect: to.fullPath
+        }
+      });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
+router.beforeEach(function (to, from, next) {
+  if (to.matched.some(function (record) {
+    return record.meta.requiresAuth;
+  })) {
+    if (!_auth__WEBPACK_IMPORTED_MODULE_1__["default"].confirm()) {
+      next({
+        path: '/Login',
+        query: {
+          redirect: to.fullPath
+        }
+      });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
 });
 /* harmony default export */ __webpack_exports__["default"] = (router);
 
@@ -42937,6 +43039,16 @@ var map = {
 		"./resources/js/views/ApiLogin.vue",
 		3,
 		15
+	],
+	"./ApiRegister": [
+		"./resources/js/views/ApiRegister.vue",
+		3,
+		2
+	],
+	"./ApiRegister.vue": [
+		"./resources/js/views/ApiRegister.vue",
+		3,
+		2
 	],
 	"./Dashboard": [
 		"./resources/js/views/Dashboard.vue",

@@ -3,6 +3,7 @@
 
 // Variables
 @import 'variables';
+@import 'setup/util';
 @import 'reset';
 
 html,
@@ -42,53 +43,6 @@ body {
   opacity: 0;
   top: 0;
   filter: drop-shadow(0px 0px 10px #97c51d);
-}
-
-// Flex rules
-
-.flex{
-  display: flex;
-  justify-content: space-evenly;
-}
-
-.flex- {
-
-  &center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  &block {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-  }
-
-}
-
-.text- {
-
-    &underline {
-      text-decoration: underline;
-    }
-
-    &center {
-      text-align: center;
-    }
-
-    &alert {
-      color: $spanAlert;
-    }
-
-    &success {
-      color: $success;
-    }
-
-    &justify {
-      text-align: justify;
-    }
-
 }
 
 .title {

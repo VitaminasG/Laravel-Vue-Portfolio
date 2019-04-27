@@ -1,7 +1,7 @@
 <?php
 
 /*
- * TODO : Make Login route to check if admin and if loging for first time...
+ * TODO : Make Registration route with Validation...
  */
 
 

@@ -8,7 +8,7 @@
                 <div class="_box-header flex">
                     <p>Access Denied</p>
                 </div>
-                <div class="_box-body">
+                <div class="_box-body text-center">
                     {{ message }}
                 </div>
             </article>
@@ -28,7 +28,7 @@
             </div>
 
             <div class="flex-center">
-                <button class="_box-button" @click="login">Login</button>
+                <button class="_box-button" @click.prevent="login">Login</button>
             </div>
         </div>
 
@@ -38,7 +38,7 @@
 
 <script>
 
-    import axios from 'axios/index';
+    import axios from 'axios';
 
     export default {
         name: "login",
@@ -49,13 +49,6 @@
                 error: false,
                 message:{},
             }
-        },
-        mounted(){
-          axios.get('/api/login')
-              .then(({data})=>{
-                this.message = data;
-                console.log(this.message);
-            })
         },
         methods:{
             login(){

@@ -1,0 +1,160 @@
+// My Container
+
+.my-container{
+  &-full{
+    height: 100vh;
+  }
+}
+
+// Font Size
+
+$FontSize: '1' 1em, '1h' 1.5em, '2' 2em, '2h' 2.5em, '3' 3em;
+
+@each $size in $FontSize{
+  .fontSize-#{nth($size, 1)}{
+    font-size: nth($size, 2);
+  }
+}
+
+// Margin & Padding
+
+$lSize: '1' 1em, '2' 2em, '3' 3em, '4' 4em;
+
+.m {
+
+  @each $size in $lSize {
+
+    &-#{nth($size, 1)}{
+      padding: nth($size, 2);
+    }
+
+    &x-#{nth($size, 1)}{
+      margin-left: nth($size, 2);
+      margin-right: nth($size, 2);
+    }
+
+    &l-#{nth($size, 1)}{
+      margin-left: nth($size, 2);
+    }
+
+    &r-#{nth($size, 1)}{
+      margin-right: nth($size, 2);
+    }
+
+    &y-#{nth($size, 1)}{
+      margin-top: nth($size, 2);
+      margin-bottom: nth($size, 2);
+    }
+
+    &t-#{nth($size, 1)}{
+      margin-top: nth($size, 2);
+    }
+
+    &b-#{nth($size, 1)}{
+      margin-bottom: nth($size, 2);
+    }
+
+  }
+
+}
+
+.p {
+
+  @each $size in $lSize {
+
+    &-#{nth($size, 1)}{
+      padding: nth($size, 2);
+    }
+
+    &x-#{nth($size, 1)}{
+      padding-left: nth($size, 2);
+      padding-right: nth($size, 2);
+    }
+
+    &l-#{nth($size, 1)}{
+      padding-left: nth($size, 2);
+    }
+
+    &r-#{nth($size, 1)}{
+      padding-right: nth($size, 2);
+    }
+
+    &y-#{nth($size, 1)}{
+      padding-top: nth($size, 2);
+      padding-bottom: nth($size, 2);
+    }
+
+    &t-#{nth($size, 1)}{
+      padding-top: nth($size, 2);
+    }
+
+    &b-#{nth($size, 1)}{
+      padding-bottom: nth($size, 2);
+    }
+
+  }
+
+}
+
+$percents: '25' 25%, '50' 50%, '75' 75%, '100' 100%;
+
+// Width
+
+@each $size in $percents{
+  .w-#{nth($size, 1)}{
+    width: nth($size, 2);
+  }
+}
+
+// Height
+
+@each $size in $percents{
+  .h-#{nth($size, 1)}{
+    height: nth($size, 2);
+  }
+}
+
+// Flex rules
+
+.flex {
+
+  display: flex;
+  justify-content: space-evenly;
+
+  &-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+}
+
+.text- {
+
+  &underline {
+    text-decoration: underline;
+  }
+
+  &center {
+    text-align: center;
+  }
+
+  &alert {
+    color: $spanAlert;
+  }
+
+  &success {
+    color: $success;
+  }
+
+  &justify {
+    text-align: justify;
+  }
+
+}
