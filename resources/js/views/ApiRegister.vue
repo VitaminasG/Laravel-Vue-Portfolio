@@ -12,22 +12,6 @@
                 </div>
             </article>
 
-            <article class="_box flex-block mb-1">
-                <div class="_box-header flex">
-                    <div class="flex-block">
-                        <p class="fontSize-1h px-1">
-                            If you here for a first time then:
-                        </p>
-                        <p class="fontSize-1h px-2">
-                            Old Email: admin@example.com
-                        </p>
-                        <p class="fontSize-1h px-2">
-                            Old Password: 12345678
-                        </p>
-                    </div>
-                </div>
-            </article>
-
             <article v-if="error" class="_box-error flex-block">
                 <div class="_box-header flex">
                     <p>Access Denied</p>
@@ -43,6 +27,11 @@
                 </div>
                 <div class="_box-body text-center flex-block">
                     {{ message }}
+                    <div class="__link">
+                        <router-link to="/login">
+                            <a class="text-underline text-alert">Go to Login Page</a>
+                        </router-link>
+                    </div>
                 </div>
             </article>
 

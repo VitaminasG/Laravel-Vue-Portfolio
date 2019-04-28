@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "chunks/" + ({}[chunkId]||chunkId) + "." + {"1":"268286a9af9619157ae0","3":"0517bb7927b26df9f196","8":"8a5e702a2216c5531fed","9":"5f688a1932bb30793f5d","10":"f725bcdc801fb25240c8","11":"3766c10ddcdebd85ddf8","12":"779a9cd899677ed0b88c","13":"dfb1c1665181e6341433","14":"8c2851e3a94ae9978758","15":"e84f14f9cc6617c0d233","16":"620779895add1b6ec3c4","17":"7cce47a19161f422be3d","18":"c4050e51c95fc30c18ca","19":"2aa6976ded42f441ae85","20":"dc6434d44a707714b451"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "chunks/" + ({}[chunkId]||chunkId) + "." + {"1":"268286a9af9619157ae0","3":"0517bb7927b26df9f196","8":"8a5e702a2216c5531fed","9":"5f688a1932bb30793f5d","10":"f725bcdc801fb25240c8","11":"3766c10ddcdebd85ddf8","12":"779a9cd899677ed0b88c","13":"dfb1c1665181e6341433","14":"8c2851e3a94ae9978758","15":"e84f14f9cc6617c0d233","16":"620779895add1b6ec3c4","17":"79a7ee529c730cf41a25","18":"c4050e51c95fc30c18ca","19":"2aa6976ded42f441ae85","20":"dc6434d44a707714b451"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -42851,33 +42851,77 @@ function () {
   function Auth() {
     _classCallCheck(this, Auth);
 
+    // Change to True for debug
+    this.debug = true;
     this.token = null;
     this.user = null;
-    this.verified = false;
+    this.verified = '';
     this.confirmed = false;
-  } // login(token, user) {
-  //
-  //     window.localStorage.setItem('token', token);
-  //     window.localStorage.setItem('user', JSON.stringify(user));
-  //
-  //     axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-  // };
-
+  }
 
   _createClass(Auth, [{
-    key: "verify",
-    value: function verify() {
+    key: "freshLog",
+    value: function freshLog() {
       var _this = this;
 
-      this.verified = false;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/verify').then(function (_ref) {
-        var data = _ref.data;
-        _this.verified = data;
-      })["catch"](function (_ref2) {
-        var response = _ref2.response;
-        console.log(response.statusText);
+      // AJAX get request to check if user is verified credentials
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/verify') // onFulFilled
+      .then(function (success) {
+        // Clear all items
+        localStorage.clear();
+
+        if (_this.debug) {
+          console.log('Success!');
+          console.log(success);
+          console.log(success.statusText);
+        }
+
+        _this.verified = success.data.check;
+
+        _this.setLoc('verified', _this.verified);
+
+        if (_this.debug) {
+          console.log('Verify() will return value: ' + _this.getLoc('verified'));
+        }
+      }) // onRejected
+      ["catch"](function (_ref) {
+        var response = _ref.response;
+        // Clear all items
+        localStorage.clear();
+
+        if (_this.debug) {
+          console.log('Reject!');
+          console.log(response);
+          console.log(response.statusText);
+        }
+
+        _this.verified = response.data.check;
+
+        _this.setLoc('verified', response.data.check);
       });
-      return this.verified;
+    }
+  }, {
+    key: "setLoc",
+    value: function setLoc(name, i) {
+      localStorage.setItem(name, JSON.stringify(i));
+
+      if (this.debug) {
+        console.log('LocalStorage was set for: ' + name);
+        console.log('with value: ' + i);
+      }
+    }
+  }, {
+    key: "getLoc",
+    value: function getLoc(name) {
+      if (localStorage.getItem(name) === null) {
+        console.log('Storage with name: ' + name + ' is empty!');
+      } else {
+        if (this.debug) {
+          console.log('Get localStorage with name: ' + name + ' , value: ' + JSON.parse(window.localStorage.getItem(name)));
+        }
+
+        return JSON.parse(window.localStorage.getItem(name));
+      }
     }
   }, {
     key: "confirm",
@@ -42990,12 +43034,13 @@ router.beforeEach(function (to, from, next) {
   if (to.matched.some(function (record) {
     return record.meta.freshLogin;
   })) {
-    if (!_auth__WEBPACK_IMPORTED_MODULE_1__["default"].verify()) {
+    _auth__WEBPACK_IMPORTED_MODULE_1__["default"].freshLog();
+
+    if (!_auth__WEBPACK_IMPORTED_MODULE_1__["default"].getLoc('verified')) {
+      console.log('I was fired!');
       next({
         path: '/Register',
-        query: {
-          redirect: to.fullPath
-        }
+        redirect: to.fullPath
       });
     } else {
       next();
@@ -43011,9 +43056,7 @@ router.beforeEach(function (to, from, next) {
     if (!_auth__WEBPACK_IMPORTED_MODULE_1__["default"].confirm()) {
       next({
         path: '/Login',
-        query: {
-          redirect: to.fullPath
-        }
+        redirect: to.fullPath
       });
     } else {
       next();

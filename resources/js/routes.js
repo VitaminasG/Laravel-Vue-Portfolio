@@ -1,5 +1,5 @@
 import VueRouter from 'vue-router';
-import Auth from './auth';
+import auth from './auth';
 
 function loadView(view) {
     return () => import('./views/'+ view);
@@ -58,10 +58,16 @@ let router = new VueRouter({
 
 router.beforeEach((to, from, next) =>{
     if(to.matched.some(record => record.meta.freshLogin)){
-        if(!Auth.verify()){
+
+        auth.freshLog();
+
+        if(!auth.getLoc('verified')){
+
+            console.log('I was fired!');
+
             next({
                 path: '/Register',
-                query: { redirect: to.fullPath }
+                redirect: to.fullPath
             })
         } else {
             next()
@@ -74,10 +80,10 @@ router.beforeEach((to, from, next) =>{
 
 router.beforeEach((to, from, next) =>{
    if(to.matched.some(record => record.meta.requiresAuth)){
-       if(!Auth.confirm()){
+       if(!auth.confirm()){
            next({
                path: '/Login',
-               query: { redirect: to.fullPath }
+               redirect: to.fullPath
            })
        } else {
            next()
