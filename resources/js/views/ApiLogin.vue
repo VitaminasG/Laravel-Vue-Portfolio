@@ -4,7 +4,7 @@
 
         <div id="_panel" class="flex-block h-50">
 
-            <article v-if="error" class="_box flex-block">
+            <article v-if="error" class="_box-error flex-block">
                 <div class="_box-header flex">
                     <p>Access Denied</p>
                 </div>
@@ -47,7 +47,7 @@
                 email:'',
                 password:'',
                 error: false,
-                message:{},
+                message:'',
             }
         },
         methods:{
@@ -81,11 +81,18 @@
         min-height: 100vh;
     }
 
-    ._box{
+    ._box-error{
         padding: 0.5rem;
         border: 2px dashed #c63a42;
         color: #c63a42;
         text-shadow: 0 0 5px rgba(198, 58, 66, 0.6);
+    }
+
+    ._box-success{
+        padding: 0.5rem;
+        border: 2px dashed #86c60b;
+        color: #86c60b;
+        box-shadow: 0 0 5px rgba(134, 198, 11, 0.60);
     }
 
     ._input{
@@ -98,6 +105,11 @@
         background: none;
         color: #86c60b;
         width: 50%;
+    }
+
+    ._box-button:hover {
+        border: 1px dashed #86c60b;
+        box-shadow: 0 0 3px rgba(134, 198, 11, 0.60);
     }
 
 </style>

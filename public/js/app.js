@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "chunks/" + ({}[chunkId]||chunkId) + "." + {"1":"268286a9af9619157ae0","2":"a6b86bdc7c09efa585ae","3":"0517bb7927b26df9f196","7":"f80577b0485166c08d04","8":"119123ae9f11787ae4bb","9":"9ff0cf358b82bb6c685f","10":"3becba4d701bb3eb3fb6","11":"f8849979ef3b333c48e1","12":"7631bf5bfb33c79e98d1","13":"773d2d15dcbb83c23baa","14":"b751889431a255dd9580","15":"29f6cfd806f7214b7d24","16":"95fdbef0b9386439e257","17":"3fb953cdc7b14742b2d7","18":"67bb81d5f4cc5dafa956"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "chunks/" + ({}[chunkId]||chunkId) + "." + {"1":"268286a9af9619157ae0","3":"0517bb7927b26df9f196","8":"8a5e702a2216c5531fed","9":"5f688a1932bb30793f5d","10":"f725bcdc801fb25240c8","11":"3766c10ddcdebd85ddf8","12":"779a9cd899677ed0b88c","13":"dfb1c1665181e6341433","14":"8c2851e3a94ae9978758","15":"e84f14f9cc6617c0d233","16":"620779895add1b6ec3c4","17":"7cce47a19161f422be3d","18":"c4050e51c95fc30c18ca","19":"2aa6976ded42f441ae85","20":"dc6434d44a707714b451"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -42835,11 +42835,15 @@ new Vue({
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
 
 var Auth =
 /*#__PURE__*/
@@ -42866,7 +42870,7 @@ function () {
       var _this = this;
 
       this.verified = false;
-      axios.get('/api/verify').then(function (_ref) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/verify').then(function (_ref) {
         var data = _ref.data;
         _this.verified = data;
       })["catch"](function (_ref2) {
@@ -43033,74 +43037,74 @@ var map = {
 	"./ApiLogin": [
 		"./resources/js/views/ApiLogin.vue",
 		3,
-		15
+		16
 	],
 	"./ApiLogin.vue": [
 		"./resources/js/views/ApiLogin.vue",
 		3,
-		15
+		16
 	],
 	"./ApiRegister": [
 		"./resources/js/views/ApiRegister.vue",
 		3,
-		2
+		17
 	],
 	"./ApiRegister.vue": [
 		"./resources/js/views/ApiRegister.vue",
 		3,
-		2
+		17
 	],
 	"./Dashboard": [
 		"./resources/js/views/Dashboard.vue",
 		3,
-		16
+		18
 	],
 	"./Dashboard.vue": [
 		"./resources/js/views/Dashboard.vue",
 		3,
-		16
+		18
 	],
 	"./Error": [
 		"./resources/js/views/Error.vue",
 		3,
-		17
+		19
 	],
 	"./Error.vue": [
 		"./resources/js/views/Error.vue",
 		3,
-		17
+		19
 	],
 	"./Home": [
 		"./resources/js/views/Home.vue",
 		3,
 		1,
-		13
+		14
 	],
 	"./Home.vue": [
 		"./resources/js/views/Home.vue",
 		3,
 		1,
-		13
+		14
 	],
 	"./OS": [
 		"./resources/js/views/OS.vue",
 		3,
-		18
+		20
 	],
 	"./OS.vue": [
 		"./resources/js/views/OS.vue",
 		3,
-		18
+		20
 	],
 	"./mHome": [
 		"./resources/js/views/mHome.vue",
 		3,
-		14
+		15
 	],
 	"./mHome.vue": [
 		"./resources/js/views/mHome.vue",
 		3,
-		14
+		15
 	]
 };
 function webpackAsyncContext(req) {

@@ -46,13 +46,15 @@ class ApiController extends Controller
 
         if(!$user){
             return response()->json([
-                'message' => 'Wrong email address!'
+                'message' => 'Wrong email address!',
+                'status' => 401,
             ], 401);
         }
 
         if(!Hash::check(request('password'), $user->password)) {
             return response()->json([
                 'message' => 'Wrong password!',
+                'status' => 401,
             ], 401);
         }
 
@@ -82,17 +84,33 @@ class ApiController extends Controller
 
         if(!$user){
             return response()->json([
-                'message' => 'Wrong email address!'
+                'message' => 'Wrong email address!',
+                'status' => 401,
             ], 401);
         }
 
-        if(!Hash::check(request('password'), $user->oldPassword)) {
+        if(!Hash::check(request('oldPassword'), $user->password)) {
             return response()->json([
                 'message' => 'Wrong password!',
+                'status' => 401,
             ], 401);
         }
 
+        $validateData = request()->validate([
+           'email' => 'bail|required|unique:users|email',
+           'password' => 'required|min:8'
+        ]);
 
+        $user->email = $validateData['email'];
+        $user->password = Hash::make(htmlentities($validateData['password']));
+        $user->verified = true;
+
+        $user->save();
+
+        return response()->json([
+            'message' => 'The credentials was changed!',
+            'status' => 201,
+        ], 201);
     }
 
     /**
