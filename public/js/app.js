@@ -42852,7 +42852,7 @@ function () {
     _classCallCheck(this, Auth);
 
     // Change to True for debug
-    this.debug = true;
+    this.debug = false;
     this.token = null;
     this.user = null;
     this.verified = '';
@@ -42906,7 +42906,7 @@ function () {
       localStorage.setItem(name, JSON.stringify(i));
 
       if (this.debug) {
-        console.log('LocalStorage was set for: ' + name);
+        console.log('LocalStorage with name: ' + name);
         console.log('with value: ' + i);
       }
     }
@@ -42922,6 +42922,12 @@ function () {
 
         return JSON.parse(window.localStorage.getItem(name));
       }
+    }
+  }, {
+    key: "verify",
+    value: function verify() {
+      this.freshLog();
+      return this.getLoc('verified');
     }
   }, {
     key: "confirm",
@@ -43034,20 +43040,18 @@ router.beforeEach(function (to, from, next) {
   if (to.matched.some(function (record) {
     return record.meta.freshLogin;
   })) {
-    _auth__WEBPACK_IMPORTED_MODULE_1__["default"].freshLog();
-
-    if (!_auth__WEBPACK_IMPORTED_MODULE_1__["default"].getLoc('verified')) {
-      console.log('I was fired!');
+    if (!_auth__WEBPACK_IMPORTED_MODULE_1__["default"].verify()) {
       next({
         path: '/Register',
-        redirect: to.fullPath
+        query: {
+          redirect: to.fullPath
+        }
       });
-    } else {
-      next();
+      return;
     }
-  } else {
-    next();
   }
+
+  next();
 });
 router.beforeEach(function (to, from, next) {
   if (to.matched.some(function (record) {
@@ -43058,12 +43062,11 @@ router.beforeEach(function (to, from, next) {
         path: '/Login',
         redirect: to.fullPath
       });
-    } else {
-      next();
+      return;
     }
-  } else {
-    next();
   }
+
+  next();
 });
 /* harmony default export */ __webpack_exports__["default"] = (router);
 

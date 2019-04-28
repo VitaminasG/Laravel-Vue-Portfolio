@@ -5,7 +5,7 @@ class Auth {
     constructor() {
 
         // Change to True for debug
-        this.debug = true;
+        this.debug = false;
 
         this.token = null;
         this.user = null;
@@ -61,7 +61,7 @@ class Auth {
         localStorage.setItem(name, JSON.stringify(i));
 
         if(this.debug){
-            console.log('LocalStorage was set for: ' + name);
+            console.log('LocalStorage with name: ' + name);
             console.log('with value: ' + i)
         }
 
@@ -86,6 +86,13 @@ class Auth {
 
 
     };
+
+    verify(){
+
+        this.freshLog();
+
+        return this.getLoc('verified');
+    }
 
     confirm() {
 

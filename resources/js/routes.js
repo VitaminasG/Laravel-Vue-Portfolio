@@ -38,19 +38,14 @@ let router = new VueRouter({
             path:'/Login',
             name: 'apiLogin',
             component: loadView('ApiLogin'),
-            meta: {
-                freshLogin: true
-            }
-
+            meta: { freshLogin: true }
         },
 
         {
             path: '/Dashboard',
             name: 'Dashboard',
             component: loadView('Dashboard'),
-            meta: {
-                requiresAuth: true
-            }
+            meta: { requiresAuth: true }
         },
     ]
 
@@ -58,24 +53,16 @@ let router = new VueRouter({
 
 router.beforeEach((to, from, next) =>{
     if(to.matched.some(record => record.meta.freshLogin)){
-
-        auth.freshLog();
-
-        if(!auth.getLoc('verified')){
-
-            console.log('I was fired!');
-
+        if(!auth.verify()){
             next({
                 path: '/Register',
-                redirect: to.fullPath
-            })
-        } else {
-            next()
-        }
-    } else {
-        next()
-    }
+                query: { redirect: to.fullPath },
+            });
 
+            return;
+        }
+    }
+    next();
 });
 
 router.beforeEach((to, from, next) =>{
@@ -84,13 +71,12 @@ router.beforeEach((to, from, next) =>{
            next({
                path: '/Login',
                redirect: to.fullPath
-           })
-       } else {
-           next()
+           });
+
+           return;
        }
-   } else {
-       next()
    }
+    next();
 });
 
 export default router;
