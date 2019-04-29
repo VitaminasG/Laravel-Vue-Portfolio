@@ -4,12 +4,20 @@
 
         <div id="_panel" class="flex-block h-50 w-25">
 
-            <article v-if="error" class="_box-error flex-block">
+            <article v-if="error" class="_box-error flex-block mb-1">
                 <div class="_box-header flex fontSize-1h">
                     <p>Access Denied</p>
                 </div>
                 <div class="_box-body text-center fontSize-1h">
                     {{ message }}
+                </div>
+            </article>
+
+            <article class="_box flex-block mb-1">
+                <div class="_box-header flex">
+                    <p class="p-1 fontSize-1h w-75 text-center text-underline">
+                        SignIn Page
+                    </p>
                 </div>
             </article>
 
@@ -82,18 +90,17 @@
         min-height: 100vh;
     }
 
+    ._box{
+        border: 2px dashed #c6c327;
+        color: #eae728;
+        text-shadow: 0 0 5px rgba(134, 198, 11, 0.60);
+    }
+
     ._box-error{
         padding: 0.5rem;
         border: 2px dashed #c63a42;
         color: #c63a42;
         text-shadow: 0 0 5px rgba(198, 58, 66, 0.6);
-    }
-
-    ._box-success{
-        padding: 0.5rem;
-        border: 2px dashed #86c60b;
-        color: #86c60b;
-        box-shadow: 0 0 5px rgba(134, 198, 11, 0.60);
     }
 
     ._input{

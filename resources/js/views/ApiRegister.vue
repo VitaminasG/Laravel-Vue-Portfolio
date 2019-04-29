@@ -4,15 +4,7 @@
 
         <div id="_panel" class="flex-block h-50 w-25">
 
-            <article class="_box flex-block mb-1">
-                <div class="_box-header flex">
-                    <p class="p-1 fontSize-1h w-75">
-                        You are here because you have been forced to do it or you want to change your credentials...
-                    </p>
-                </div>
-            </article>
-
-            <article v-if="error" class="_box-error flex-block">
+            <article v-if="error" class="_box-error flex-block mb-1">
                 <div class="_box-header flex">
                     <p>Access Denied</p>
                 </div>
@@ -21,7 +13,7 @@
                 </div>
             </article>
 
-            <article v-if="success" class="_box-success flex-block">
+            <article v-if="success" class="_box-success flex-block mb-1">
                 <div class="_box-header flex">
                     <p>Access Granted</p>
                 </div>
@@ -32,6 +24,14 @@
                             <a class="text-underline text-alert" @click.prevent="check">Go to Login Page</a>
                         </router-link>
                     </div>
+                </div>
+            </article>
+
+            <article class="_box flex-block mb-1">
+                <div class="_box-header flex">
+                    <p class="p-1 fontSize-1h w-75">
+                        You are here because you have been forced to do it or you want to change your credentials...
+                    </p>
                 </div>
             </article>
 
