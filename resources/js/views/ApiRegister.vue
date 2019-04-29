@@ -28,9 +28,18 @@
             </article>
 
             <article class="_box flex-block mb-1">
-                <div class="_box-header flex">
-                    <p class="p-1 fontSize-1h w-75">
-                        You are here because you have been forced to do it or you want to change your credentials...
+                <div class="_box-header flex-block p-1">
+                    <p class="pt-1 fontSize-1h text-underline text-center">
+                        Register Page
+                    </p>
+                    <p class="pt-1 fontSize-1h">
+                        You are here because:
+                    </p>
+                    <p class="pt-1 fontSize-1h">
+                        A: You have been forced to do it.
+                    </p>
+                    <p class="pb-1 fontSize-1h">
+                        B: You want to change your credentials to super unpredictable...
                     </p>
                 </div>
             </article>
