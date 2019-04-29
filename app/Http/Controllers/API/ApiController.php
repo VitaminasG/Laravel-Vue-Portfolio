@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
 use Hash;
+use Illuminate\Support\Str;
 
 class ApiController extends Controller
 {
@@ -59,8 +60,15 @@ class ApiController extends Controller
         }
 
         if($user->type === $admin->isAdmin()){
+
+            $token = Str::random(80);
+            $user->api_token = hash('sha256', $token);
+
+            $user->save();
+
             return response()->json([
-                'message' => $user,
+                'name' => $user->name,
+                'token' => $token,
                 'status' => 200
             ], 200);
         } else {

@@ -29,7 +29,7 @@
                     {{ message }}
                     <div class="__link">
                         <router-link to="/login">
-                            <a class="text-underline text-alert">Go to Login Page</a>
+                            <a class="text-underline text-alert" @click.prevent="check">Go to Login Page</a>
                         </router-link>
                     </div>
                 </div>
@@ -75,6 +75,7 @@
 <script>
 
     import axios from 'axios';
+    import auth from './../auth';
 
     export default {
         name: "register",
@@ -104,14 +105,13 @@
                             this.error = false;
                             this.success = true;
                             this.message = success.data.message;
-                            this.$router.push('/login');
+                            auth.verify();
                         }
                     })
                     .catch(({response})=>{
                         this.success = false;
                         this.error = true;
                         this.message = response.data.message;
-                        console.log(response.data.message);
                     })
             },
         }

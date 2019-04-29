@@ -52,8 +52,20 @@ class Auth {
                 }
 
                 this.verified = response.data.check;
-                this.setLoc('verified', response.data.check);
+                this.setLoc('verified', this.verified);
         });
+    };
+
+    login(token, user) {
+
+
+        this.setLoc('token', token);
+
+        this.setLoc('user', user);
+
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+
+        this.confirmed = true;
     };
 
     setLoc(name, i) {
@@ -99,14 +111,6 @@ class Auth {
         return this.confirmed
 
     };
-
-    // login(token, user) {
-    //
-    //     window.localStorage.setItem('token', token);
-    //     window.localStorage.setItem('user', JSON.stringify(user));
-    //
-    //     axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-    // };
 
 }
 

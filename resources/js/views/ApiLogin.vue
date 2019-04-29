@@ -2,28 +2,28 @@
 
     <div id="_login" class="flex-center">
 
-        <div id="_panel" class="flex-block h-50">
+        <div id="_panel" class="flex-block h-50 w-25">
 
             <article v-if="error" class="_box-error flex-block">
-                <div class="_box-header flex">
+                <div class="_box-header flex fontSize-1h">
                     <p>Access Denied</p>
                 </div>
-                <div class="_box-body text-center">
+                <div class="_box-body text-center fontSize-1h">
                     {{ message }}
                 </div>
             </article>
 
             <div class="field">
                 <label>Email</label>
-                <div class="">
-                    <input class="_input" type="email" name="email" v-model="email">
+                <div class="w-100">
+                    <input class="_input w-100" type="email" name="email" v-model="email">
                 </div>
             </div>
 
             <div class="field">
                 <label>Password</label>
-                <div class="">
-                    <input class="_input" type="password" name="password" v-model="password">
+                <div class="w-100">
+                    <input class="_input w-100" type="password" name="password" v-model="password">
                 </div>
             </div>
 
@@ -39,6 +39,7 @@
 <script>
 
     import axios from 'axios';
+    import auth from './../auth';
 
     export default {
         name: "login",
@@ -61,8 +62,8 @@
                     .then(({data})=>{
                         this.error = false;
                         this.message = '';
-                        // auth.login(data.token, data.user);
-                        // this.$router.push('/Dashboard');
+                        auth.login(data.token, data.name);
+                        this.$router.push('/Dashboard');
                     })
                     .catch(({response})=>{
                         this.error = true;
