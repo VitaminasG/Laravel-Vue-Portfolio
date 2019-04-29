@@ -7,7 +7,6 @@ yarn-debug.log*
 yarn-error.log*
 
 public/hot
-public/chunks
 storage/*.key
 .env.*.php
 .env.php

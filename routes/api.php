@@ -5,6 +5,8 @@ Route::get('/register', 'API\ApiController@register');
 
 /*
  * TODO : For Production set throttle on ':10,1' - 10 request per 1 min.
+ *
+ * TODO: For Production remove PhpStorm FileIgnore for public/js/app.js & public/chunks
  */
 
 Route::post('/register', 'API\ApiController@register')->middleware('throttle');

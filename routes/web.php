@@ -1,7 +1,7 @@
 <?php
 
 /*
- * TODO : Make Login with Api-token
+ * TODO: For Production remove PhpStorm FileIgnore for public/js/app.js & public/chunks
  */
 
 
