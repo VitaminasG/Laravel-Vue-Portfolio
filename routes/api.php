@@ -14,6 +14,6 @@ Route::post('/login', 'API\ApiController@login')->middleware('throttle');
 
 Route::middleware('auth:api')->group(function(){
 
-     //
+    // Route::get('/dashboard', 'API\ApiController@update');
 
 });

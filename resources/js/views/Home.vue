@@ -2,9 +2,10 @@
 
     <div class="container is-fluid" v-cloak>
 
+        <!--TODO: create link component-->
         <div class="__link">
             <router-link to="/login">
-                <a class=""><img src="../../assets/dashboard.svg"></a>
+                <img src="../../assets/dashboard.svg">
             </router-link>
         </div>
 

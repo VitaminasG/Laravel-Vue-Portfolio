@@ -2,6 +2,12 @@
 
     <div id="_login" class="flex-center">
 
+        <div class="__link">
+            <router-link to="/">
+                <img src="../../assets/exit.svg">
+            </router-link>
+        </div>
+
         <div id="_panel" class="flex-block h-50 w-25">
 
             <article v-if="error" class="_box-error flex-block mb-1">
@@ -16,7 +22,7 @@
             <article class="_box flex-block mb-1">
                 <div class="_box-header flex">
                     <p class="p-1 fontSize-1h w-75 text-center text-underline">
-                        SignIn Page
+                        SignIn
                     </p>
                 </div>
             </article>
@@ -88,6 +94,18 @@
 
     #_login{
         min-height: 100vh;
+    }
+
+    .__link{
+        position: absolute;
+        top: 2rem;
+        right: 2rem;
+    }
+
+    .__link a:hover {
+
+        filter: drop-shadow(0px 0px 2px rgba(151, 197, 29, 0.31)) invert(10%);
+
     }
 
     ._box{

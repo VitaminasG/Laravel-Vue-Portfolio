@@ -15,13 +15,21 @@
 
             <article v-if="success" class="_box-success flex-block mb-1">
                 <div class="_box-header flex">
-                    <p>Access Granted</p>
+                    <p>Credentials was changed successfully!</p>
                 </div>
                 <div class="_box-body text-center flex-block">
                     {{ message }}
                     <div class="__link">
-                        <router-link to="/login">
-                            <a class="text-underline text-alert" @click.prevent="check">Go to Login Page</a>
+                        <router-link to="/Login">
+                            <div class="text-underline text-alert">
+                                Go to Login Page
+                            </div>
+                        </router-link>
+                        <p>OR</p>
+                        <router-link to="/">
+                            <div class="text-underline text-alert">
+                                Back to Home Page
+                            </div>
                         </router-link>
                     </div>
                 </div>
@@ -83,9 +91,6 @@
 
 <script>
 
-    import axios from 'axios';
-    import auth from './../auth';
-
     export default {
         name: "register",
         data(){
@@ -99,6 +104,14 @@
                 success: false,
             }
         },
+
+        mounted(){
+            if(auth.verified){
+                console.log('Push to Login!');
+                this.$router.push('/Login');
+            }
+        },
+
         methods:{
             register(){
                 let data = {
@@ -115,6 +128,7 @@
                             this.success = true;
                             this.message = success.data.message;
                             auth.verify();
+                            this.$router.push('/login');
                         }
                     })
                     .catch(({response})=>{

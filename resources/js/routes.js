@@ -1,5 +1,4 @@
 import VueRouter from 'vue-router';
-import auth from './auth';
 
 function loadView(view) {
     return () => import('./views/'+ view);
@@ -19,7 +18,21 @@ let router = new VueRouter({
         {
             path: '/',
             name: 'Home',
-            component: loadView('Home')
+            component: loadView('Home'),
+            beforeEnter: (to, from, next) => {
+                if(!auth.verified){
+                    console.log('Fresh Login!');
+                    next({
+                        path: '/Register',
+                        redirect: to.fullPath,
+                    })
+                } else {
+                    console.log('Good, go ahead!');
+                    next();
+                }
+
+                next();
+            }
         },
 
         {
@@ -53,16 +66,18 @@ let router = new VueRouter({
 
 router.beforeEach((to, from, next) =>{
     if(to.matched.some(record => record.meta.freshLogin)){
-        if(!auth.verify()){
+        auth.verify();
+        if(!auth.verified){
             next({
                 path: '/Register',
-                query: { redirect: to.fullPath },
-            });
-
-            return;
+                redirect: to.fullPath,
+            })
+        } else {
+            next();
         }
+    } else {
+        next();
     }
-    next();
 });
 
 router.beforeEach((to, from, next) =>{
@@ -70,13 +85,14 @@ router.beforeEach((to, from, next) =>{
        if(!auth.confirm()){
            next({
                path: '/Login',
-               redirect: to.fullPath
-           });
-
-           return;
+               query: { redirect: to.fullPath }
+           })
+       } else {
+           next();
        }
+   } else {
+       next();
    }
-    next();
 });
 
 export default router;
