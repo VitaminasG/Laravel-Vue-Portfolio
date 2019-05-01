@@ -53,7 +53,7 @@
 <script>
 
     import axios from 'axios';
-    import auth from './../auth';
+    import auth from '../helpers/police';
 
     export default {
         name: "login",

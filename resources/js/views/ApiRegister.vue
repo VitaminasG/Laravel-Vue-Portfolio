@@ -105,15 +105,9 @@
             }
         },
 
-        mounted(){
-            if(auth.verified){
-                console.log('Push to Login!');
-                this.$router.push('/Login');
-            }
-        },
-
         methods:{
             register(){
+
                 let data = {
                     oldEmail: this.oldEmail,
                     oldPassword: this.oldPassword,
@@ -121,14 +115,15 @@
                     password: this.password
                 };
 
-                axios.post('/api/register', data)
+                window.axios.post('/api/register', data)
                     .then(success => {
                         if(success.data.status === 201){
                             this.error = false;
                             this.success = true;
                             this.message = success.data.message;
+                            // not Tested!
                             auth.verify();
-                            this.$router.push('/login');
+                            this.$router.push('/Login');
                         }
                     })
                     .catch(({response})=>{

@@ -1,5 +1,6 @@
 require('./bootstrap');
 
+import vueStore from './store/vueStore';
 import router from './routes';
 import { TimelineMax} from "gsap/TweenMax";
 
@@ -7,7 +8,16 @@ new Vue({
 
     el: '#app',
 
+    vueStore : vueStore,
     router : router,
+
+    // computed:{
+    //
+    //   apiList(){
+    //       return this.vueStore.state.getList();
+    //   }
+    //
+    // },
 
     mounted(){
 

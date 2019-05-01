@@ -1,8 +1,11 @@
 import VueRouter from 'vue-router';
+import vueStore from './store/vueStore'
 
 function loadView(view) {
-    return () => import('./views/'+ view);
+    return () => import('./views/' + view);
 }
+
+const boxingDay = vueStore;
 
 let router = new VueRouter({
 
@@ -19,20 +22,14 @@ let router = new VueRouter({
             path: '/',
             name: 'Home',
             component: loadView('Home'),
-            beforeEnter: (to, from, next) => {
-                if(!auth.verified){
-                    console.log('Fresh Login!');
-                    next({
-                        path: '/Register',
-                        redirect: to.fullPath,
-                    })
-                } else {
-                    console.log('Good, go ahead!');
-                    next();
-                }
+            meta: { freshLogin: true },
+        },
 
-                next();
-            }
+        {
+            path:'/Login',
+            name: 'apiLogin',
+            component: loadView('ApiLogin'),
+            meta: { freshLogin: true }
         },
 
         {
@@ -48,13 +45,6 @@ let router = new VueRouter({
         },
 
         {
-            path:'/Login',
-            name: 'apiLogin',
-            component: loadView('ApiLogin'),
-            meta: { freshLogin: true }
-        },
-
-        {
             path: '/Dashboard',
             name: 'Dashboard',
             component: loadView('Dashboard'),
@@ -65,12 +55,16 @@ let router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) =>{
+
     if(to.matched.some(record => record.meta.freshLogin)){
-        auth.verify();
-        if(!auth.verified){
+
+        let verify = false;
+
+        if(verify !== true){
+
             next({
                 path: '/Register',
-                redirect: to.fullPath,
+                query: { redirect: to.fullPath }
             })
         } else {
             next();
@@ -78,21 +72,22 @@ router.beforeEach((to, from, next) =>{
     } else {
         next();
     }
-});
 
-router.beforeEach((to, from, next) =>{
-   if(to.matched.some(record => record.meta.requiresAuth)){
-       if(!auth.confirm()){
-           next({
-               path: '/Login',
-               query: { redirect: to.fullPath }
-           })
-       } else {
-           next();
-       }
-   } else {
-       next();
-   }
+    if(to.matched.some(record => record.meta.requiresAuth)){
+
+        let confirm = false;
+
+        if(confirm){
+            next({
+                path: '/Login',
+                query: { redirect: to.fullPath }
+            })
+        } else {
+            next();
+        }
+    } else {
+        next();
+    }
 });
 
 export default router;
