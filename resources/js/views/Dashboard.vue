@@ -5,8 +5,8 @@
 
         <!-- Login Links -->
         <div class="flex py-1 px-1">
-            <p>Hello, user name</p>
-            <router-link to="/logout">Logout</router-link>
+            <p>Hello, {{ username }}</p>
+            <a href="/" @click.prevent="logout">Logout</a>
         </div>
 
         <h2 class="text-center">Dashboard</h2>
@@ -49,11 +49,20 @@
 
 <script>
 
+    import store from './../store/vueStore';
+
     export default {
         name: "Dashboard",
         data(){
             return{
-
+                username: store.getters.user,
+                token: store.getters.token,
+            }
+        },
+        methods:{
+            logout(){
+                store.dispatch('logout');
+                this.$router.push('/');
             }
         }
     }

@@ -11,14 +11,6 @@ new Vue({
     vueStore : vueStore,
     router : router,
 
-    // computed:{
-    //
-    //   apiList(){
-    //       return this.vueStore.state.getList();
-    //   }
-    //
-    // },
-
     mounted(){
 
         let tl = new TimelineMax({

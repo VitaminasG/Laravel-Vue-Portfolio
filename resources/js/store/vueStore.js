@@ -9,8 +9,8 @@ window.depot = _store;
 window.sorter = _sorter;
 
 // Debug mode
-window.depot.debug = true;
-window.sorter.debug = true;
+window.depot.debug = false;
+window.sorter.debug = false;
 
 Vue.use(Vuex);
 
@@ -24,6 +24,7 @@ export default new Vuex.Store({
         },
         session:{
             verified:'',
+            confirmed:'',
             token:'',
             user:'',
         },
@@ -36,6 +37,7 @@ export default new Vuex.Store({
         list: state => state.api.list,
         target: state => state.api.target,
         verified: state => state.session.verified,
+        confirmed: state => state.session.confirmed,
         token: state => state.session.token,
         user: state => state.session.user,
     },
@@ -44,11 +46,25 @@ export default new Vuex.Store({
         setTarget(state, target){
             state.api.target = target;
         },
+        setStatus(state, status){
+            state.status = status;
+        },
         setVerified(state){
             state.session.verified = depot.getLoc('verified');
         },
-        setStatus(state, status){
-            state.status = status;
+        setStorage(state){
+            state.session.confirmed = depot.getLoc('confirmed');
+            state.session.token = depot.getLoc('token');
+            state.session.user = depot.getLoc('user');
+        },
+        setConfirmed(state){
+            state.session.confirmed = depot.getLoc('confirmed');
+        },
+        setToken(state){
+          state.session.token = depot.getLoc('token');
+        },
+        setUser(state){
+            state.session.user = depot.getLoc('user');
         },
 
     },
@@ -60,9 +76,11 @@ export default new Vuex.Store({
             commit('setTarget', newList[route])
         },
 
-        freshA({commit}, url){
+        checkStorage({commit}){
+          commit('setStorage');
+        },
 
-            depot.clearStore();
+        freshA({commit}, url){
 
             return new Promise((resolve, reject) =>{
                 axios.get(url)
@@ -82,6 +100,42 @@ export default new Vuex.Store({
               commit('setVerified');
           })
         },
+
+        loginA({commit}, { user, token }){
+
+            depot.setLoc('user', user);
+            depot.setLoc('token', token);
+
+            // check if token locStore was set correctly
+            if(!depot.getLoc('token')){
+
+                console.log('Token not found!');
+                depot.setLoc('confirmed', false);
+
+            } else {
+
+                depot.setLoc('confirmed', true);
+
+                axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+            }
+        },
+
+        loginB({ dispatch, commit }, { user, token }){
+            return dispatch('loginA', {user:user, token:token} ).then(() => {
+                commit('setStorage');
+            })
+        },
+
+        logout({commit}){
+
+            return new Promise((resolve) => {
+                depot.clearStore();
+                delete axios.defaults.headers.common['Authorization'];
+                resolve()
+            }).then(() => {
+                commit('setStorage');
+            })
+        }
     }
 
 });

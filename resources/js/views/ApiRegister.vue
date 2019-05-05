@@ -35,7 +35,7 @@
                 </div>
             </article>
 
-            <article class="_box flex-block mb-1">
+            <article v-if="!success" class="_box flex-block mb-1">
                 <div class="_box-header flex-block p-1">
                     <p class="pt-1 fontSize-1h text-underline text-center">
                         Register Page
@@ -91,6 +91,8 @@
 
 <script>
 
+    import axios from 'axios';
+
     export default {
         name: "register",
         data(){
@@ -115,22 +117,25 @@
                     password: this.password
                 };
 
-                window.axios.post('/api/register', data)
+                axios.post('/api/register', data)
                     .then(success => {
                         if(success.data.status === 201){
                             this.error = false;
                             this.success = true;
                             this.message = success.data.message;
-                            // not Tested!
-                            auth.verify();
-                            this.$router.push('/Login');
                         }
                     })
                     .catch(({response})=>{
                         this.success = false;
                         this.error = true;
                         this.message = response.data.message;
-                    })
+                    });
+
+                // Clear input after submit
+                this.oldEmail = '';
+                this.oldPassword = '';
+                this.email = '';
+                this.password = '';
             },
         }
     }

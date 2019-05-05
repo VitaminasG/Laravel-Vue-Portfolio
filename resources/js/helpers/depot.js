@@ -47,7 +47,10 @@ class depot {
 
         if(!this.store.getItem(name)){
 
-            console.log('Storage with name: ' + name + ' is empty! Was set to null.');
+            if(this._debug) {
+                console.log('Storage with name: ' + name + ' is empty! Was set to null.');
+            }
+
             this.store.setItem(name, null);
 
             return JSON.parse(this.store.getItem(name));

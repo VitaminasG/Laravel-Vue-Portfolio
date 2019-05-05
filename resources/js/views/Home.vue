@@ -4,7 +4,7 @@
 
         <!--TODO: create link component-->
         <div class="__link">
-            <router-link to="/login">
+            <router-link to="/dashboard">
                 <img src="../../assets/dashboard.svg">
             </router-link>
         </div>

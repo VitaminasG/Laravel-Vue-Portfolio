@@ -53,7 +53,7 @@
 <script>
 
     import axios from 'axios';
-    import auth from '../helpers/operator';
+    import store from './../store/vueStore';
 
     export default {
         name: "login",
@@ -65,24 +65,34 @@
                 message:'',
             }
         },
+        mounted(){
+
+            //Checking if already logged-in
+          store.dispatch('checkStorage').then(() => {
+              if(store.getters.confirmed){
+                  this.$router.push('/Dashboard');
+              }
+          })
+        },
         methods:{
             login(){
+
                 let data = {
                     email: this.email,
                     password: this.password
                 };
 
                 axios.post('/api/login', data)
-                    .then(({data})=>{
+                    .then( response => {
                         this.error = false;
                         this.message = '';
-                        auth.login(data.token, data.name);
+                        store.dispatch('loginB', {user:response.data.name, token: response.data.token} );
                         this.$router.push('/Dashboard');
                     })
-                    .catch(({response})=>{
+                    .catch( ({ response }) => {
+                        console.log(response);
                         this.error = true;
                         this.message = response.data.message;
-                        console.log(response.data.message);
                     })
             },
         }

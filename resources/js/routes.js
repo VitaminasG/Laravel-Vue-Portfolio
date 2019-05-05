@@ -28,7 +28,7 @@ let router = new VueRouter({
             path:'/Login',
             name: 'apiLogin',
             component: loadView('ApiLogin'),
-            meta: { freshLogin: true }
+            meta: { freshLogin: true },
         },
 
         {
@@ -62,7 +62,7 @@ router.beforeEach((to, from, next) =>{
             method: 'get',
             route: 'verify'}).then(() => {
 
-            store.dispatch('freshB', store.getters.target).then(()=>{
+            store.dispatch('freshB', store.getters.target).then(()=> {
 
                 if(!store.getters.verified){
 
@@ -83,16 +83,18 @@ router.beforeEach((to, from, next) =>{
 
     if(to.matched.some(record => record.meta.requiresAuth)){
 
-        let confirm = false;
+        store.dispatch('checkStorage').then(() => {
 
-        if(confirm){
-            next({
-                path: '/Login',
-                redirect: to.fullPath
-            })
-        } else {
-            next();
-        }
+            if(!store.getters.confirmed){
+                next({
+                    path: '/Login',
+                    redirect: to.fullPath
+                });
+            } else {
+                next();
+            }
+        });
+
     } else {
         next();
     }

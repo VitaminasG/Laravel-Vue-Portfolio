@@ -43829,13 +43829,6 @@ new Vue({
   el: '#app',
   vueStore: _store_vueStore__WEBPACK_IMPORTED_MODULE_0__["default"],
   router: _routes__WEBPACK_IMPORTED_MODULE_1__["default"],
-  // computed:{
-  //
-  //   apiList(){
-  //       return this.vueStore.state.getList();
-  //   }
-  //
-  // },
   mounted: function mounted() {
     var tl = new gsap_TweenMax__WEBPACK_IMPORTED_MODULE_2__["TimelineMax"]({
       repeat: -1,
@@ -43964,7 +43957,10 @@ function () {
      */
     value: function getLoc(name) {
       if (!this.store.getItem(name)) {
-        console.log('Storage with name: ' + name + ' is empty! Was set to null.');
+        if (this._debug) {
+          console.log('Storage with name: ' + name + ' is empty! Was set to null.');
+        }
+
         this.store.setItem(name, null);
         return JSON.parse(this.store.getItem(name));
       } else {
@@ -44196,16 +44192,16 @@ router.beforeEach(function (to, from, next) {
   if (to.matched.some(function (record) {
     return record.meta.requiresAuth;
   })) {
-    var confirm = false;
-
-    if (confirm) {
-      next({
-        path: '/Login',
-        redirect: to.fullPath
-      });
-    } else {
-      next();
-    }
+    _store_vueStore__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('checkStorage').then(function () {
+      if (!_store_vueStore__WEBPACK_IMPORTED_MODULE_1__["default"].getters.confirmed) {
+        next({
+          path: '/Login',
+          redirect: to.fullPath
+        });
+      } else {
+        next();
+      }
+    });
   } else {
     next();
   }
@@ -44239,8 +44235,8 @@ __webpack_require__.r(__webpack_exports__);
 window.depot = _helpers_depot__WEBPACK_IMPORTED_MODULE_3__["default"];
 window.sorter = _helpers_sorter__WEBPACK_IMPORTED_MODULE_4__["default"]; // Debug mode
 
-window.depot.debug = true;
-window.sorter.debug = true;
+window.depot.debug = false;
+window.sorter.debug = false;
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
@@ -44251,6 +44247,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     },
     session: {
       verified: '',
+      confirmed: '',
       token: '',
       user: ''
     },
@@ -44267,6 +44264,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     verified: function verified(state) {
       return state.session.verified;
     },
+    confirmed: function confirmed(state) {
+      return state.session.confirmed;
+    },
     token: function token(state) {
       return state.session.token;
     },
@@ -44278,11 +44278,25 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     setTarget: function setTarget(state, target) {
       state.api.target = target;
     },
+    setStatus: function setStatus(state, status) {
+      state.status = status;
+    },
     setVerified: function setVerified(state) {
       state.session.verified = depot.getLoc('verified');
     },
-    setStatus: function setStatus(state, status) {
-      state.status = status;
+    setStorage: function setStorage(state) {
+      state.session.confirmed = depot.getLoc('confirmed');
+      state.session.token = depot.getLoc('token');
+      state.session.user = depot.getLoc('user');
+    },
+    setConfirmed: function setConfirmed(state) {
+      state.session.confirmed = depot.getLoc('confirmed');
+    },
+    setToken: function setToken(state) {
+      state.session.token = depot.getLoc('token');
+    },
+    setUser: function setUser(state) {
+      state.session.user = depot.getLoc('user');
     }
   },
   actions: {
@@ -44294,9 +44308,12 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
       var newList = list[method];
       commit('setTarget', newList[route]);
     },
-    freshA: function freshA(_ref3, url) {
+    checkStorage: function checkStorage(_ref3) {
       var commit = _ref3.commit;
-      depot.clearStore();
+      commit('setStorage');
+    },
+    freshA: function freshA(_ref4, url) {
+      var commit = _ref4.commit;
       return new Promise(function (resolve, reject) {
         axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(url).then(function (success) {
           depot.setLoc('verified', success.data.check);
@@ -44307,11 +44324,48 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
         });
       });
     },
-    freshB: function freshB(_ref4, url) {
-      var dispatch = _ref4.dispatch,
-          commit = _ref4.commit;
+    freshB: function freshB(_ref5, url) {
+      var dispatch = _ref5.dispatch,
+          commit = _ref5.commit;
       return dispatch('freshA', url).then(function () {
         commit('setVerified');
+      });
+    },
+    loginA: function loginA(_ref6, _ref7) {
+      var commit = _ref6.commit;
+      var user = _ref7.user,
+          token = _ref7.token;
+      depot.setLoc('user', user);
+      depot.setLoc('token', token); // check if token locStore was set correctly
+
+      if (!depot.getLoc('token')) {
+        console.log('Token not found!');
+        depot.setLoc('confirmed', false);
+      } else {
+        depot.setLoc('confirmed', true);
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+      }
+    },
+    loginB: function loginB(_ref8, _ref9) {
+      var dispatch = _ref8.dispatch,
+          commit = _ref8.commit;
+      var user = _ref9.user,
+          token = _ref9.token;
+      return dispatch('loginA', {
+        user: user,
+        token: token
+      }).then(function () {
+        commit('setStorage');
+      });
+    },
+    logout: function logout(_ref10) {
+      var commit = _ref10.commit;
+      return new Promise(function (resolve) {
+        depot.clearStore();
+        delete axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common['Authorization'];
+        resolve();
+      }).then(function () {
+        commit('setStorage');
       });
     }
   }
