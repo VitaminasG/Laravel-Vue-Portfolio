@@ -1,7 +1,10 @@
-class operator {
+class Operator {
 
+    // Getters & Setters
+
+    // DEBUG mode.
     /**
-     * Get and Set _debug
+     * Get and Set debug mode.
      *
      * @returns {boolean}
      */
@@ -13,65 +16,72 @@ class operator {
         this._debug = value;
     }
 
-    constructor(){
+    // Constructor
+    constructor() {
+
+        // Debug mode.
         this._debug = false;
-        this.store = localStorage;
+
+        // Default settings.
+        this.token = null;
+        this.user = null;
     }
 
     /**
-     * Set - single item to local storage.
-     * @param {string} name - custom name as key.
-     * @param {...object} i - custom object value cast with json.stringify.
-     */
-    setLoc(name, i) {
-
-        this.store.setItem(name, JSON.stringify(i));
-
-        if(this._debug){
-            console.log('SetLoc with name: ' + name + 'and value: ' + i);
-        }
-
-    };
-
-    /**
-     * Get - single item from local storage.
-     * @param {string} name - custom name as key.
+     * Store back-end admin token and name.
+     * @param token
+     * @param user
      *
-     * @return {values} - return with json.parse.
+     * @return {boolean}
      */
-    getLoc(name) {
+    login(token, user) {
 
-        if(!this.store.getItem(name)){
+        depot.setLoc('token', token);
+        depot.setLoc('user', user);
 
-            console.log('Storage with name: ' + name + ' is empty! Was set to null.');
-            this.store.setItem(name, null);
+        // check if token locStore was set correctly
+        if(!depot.getLoc('token')){
 
-            return JSON.parse(this.store.getItem(name));
+            console.log('Token not found!');
+            return this.confirmed ;
 
         } else {
 
-            if(this._debug){
-                console.log('getLoc with name: ' + name + ' , value: '
-                    + JSON.parse(this.store.getItem(name)))
-            }
+            this.token = depot.getLoc('token');
+            this.user = depot.getLoc('user');
+            this.confirmed = true;
 
-            return JSON.parse(this.store.getItem(name))
         }
+
+        window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+
+        return this.confirmed ;
     };
 
     /**
-     * Clear - local storage.
+     * Logout for dashboard.
+     * Still in progress...
      *
-     * @return {void}
+     * @return {boolean} - Set to True to trigger something...
      */
-    clearStore(){
+    logout(){
 
-        if(this._debug){
-            console.log('Storage was Cleared!')
-        }
-        this.store.clear();
+        depot.clearStore();
+
+        return true;
+
     }
+
+    /**
+     * Check if token exist;
+     *
+     * @return {values}
+     */
+    confirm() {
+
+        return depot.getLoc('token');
+    };
 
 }
 
-export default new operator();
+export default new Operator();

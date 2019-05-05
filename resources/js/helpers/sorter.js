@@ -27,58 +27,16 @@ class Serve {
      */
     get apiList() {
 
-        if(!this._apiList) {
-            return this._apiList;
-        }
-
-        return this.getList();
+        return this._apiList;
     }
 
-    /**
-     * Set - new API list.
-     * @param value.
-     */
-    set apiList(value) {
-
-        this.setList(value);
-    }
-
-    // CONSTRUCTOR
+    // Constructor
 
     constructor(){
 
         // Default settings.
         this._debug = false;
         this._apiList = this.list();
-    }
-
-    /**
-     * Get URL list for Back-end Routes.
-     *
-     * @return {object}.
-     * @
-     */
-    getList(){
-
-        console.log('SomeOne lost a List! Please, barista.serve.list() !!!');
-
-        // Get a new default list.
-
-        return Object.entries(this.list());
-
-    }
-
-    /**
-     * Set a new API list.
-     * @param {object} newList.
-     */
-    setList(newList){
-
-        if(this._debug) {
-            console.log('Set a new API list...');
-        }
-
-        this.apiList = newList;
     }
 
     /**
@@ -112,12 +70,12 @@ class Serve {
         // API list
         apiL = {
             get: {
-                verify: {link: apiP + 'verify', method: 'get'},
-                register: {link: apiP + 'register', method: 'get'},
+                verify: apiP + 'verify',
+                register: apiP + 'register',
             },
             post: {
-                register: {link: apiP + 'register', method: 'post'},
-                verify: {link: apiP + 'login', method: 'post'},
+                register: apiP + 'register',
+                verify: apiP + 'login',
             },
         };
 

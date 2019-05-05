@@ -25,11 +25,11 @@ class ApiController extends Controller
         if(!$admin->verified){
             return response()->json([
                 'check' => false,
-            ], 307);
+            ]);
         } else {
             return response()->json([
                 'check' => true,
-            ], 200);
+            ]);
         }
     }
 

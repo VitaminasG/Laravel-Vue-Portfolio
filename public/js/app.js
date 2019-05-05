@@ -43894,10 +43894,115 @@ window.gsap = gsap__WEBPACK_IMPORTED_MODULE_3__["default"];
 
 /***/ }),
 
-/***/ "./resources/js/helpers/barista.js":
-/*!*****************************************!*\
-  !*** ./resources/js/helpers/barista.js ***!
-  \*****************************************/
+/***/ "./resources/js/helpers/depot.js":
+/*!***************************************!*\
+  !*** ./resources/js/helpers/depot.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var depot =
+/*#__PURE__*/
+function () {
+  _createClass(depot, [{
+    key: "debug",
+    // Getters & Setters
+    // DEBUG mode.
+
+    /**
+     * Get and Set _debug
+     *
+     * @returns {boolean}
+     */
+    get: function get() {
+      return this._debug;
+    },
+    set: function set(value) {
+      this._debug = value;
+    } // Constructor
+
+  }]);
+
+  function depot() {
+    _classCallCheck(this, depot);
+
+    this._debug = false;
+    this.store = localStorage;
+  }
+  /**
+   * Set - single item to local storage.
+   * @param {string} name - custom name as key.
+   * @param {...object} i - custom object value cast with json.stringify.
+   */
+
+
+  _createClass(depot, [{
+    key: "setLoc",
+    value: function setLoc(name, i) {
+      this.store.setItem(name, JSON.stringify(i));
+
+      if (this._debug) {
+        console.log('SetLoc with name: ' + name + ' and value: ' + i);
+      }
+    }
+  }, {
+    key: "getLoc",
+
+    /**
+     * Get - single item from local storage.
+     * @param {string} name - custom name as key.
+     *
+     * @return {values} - return with json.parse.
+     */
+    value: function getLoc(name) {
+      if (!this.store.getItem(name)) {
+        console.log('Storage with name: ' + name + ' is empty! Was set to null.');
+        this.store.setItem(name, null);
+        return JSON.parse(this.store.getItem(name));
+      } else {
+        if (this._debug) {
+          console.log('getLoc with name: ' + name + ' , value: ' + JSON.parse(this.store.getItem(name)));
+        }
+
+        return JSON.parse(this.store.getItem(name));
+      }
+    }
+  }, {
+    key: "clearStore",
+
+    /**
+     * Clear - local storage.
+     *
+     * @return {void}
+     */
+    value: function clearStore() {
+      if (this._debug) {
+        console.log('Storage was Cleared!');
+      }
+
+      this.store.clear();
+    }
+  }]);
+
+  return depot;
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (new depot());
+
+/***/ }),
+
+/***/ "./resources/js/helpers/sorter.js":
+/*!****************************************!*\
+  !*** ./resources/js/helpers/sorter.js ***!
+  \****************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -43942,20 +44047,8 @@ function () {
   }, {
     key: "apiList",
     get: function get() {
-      if (!this._apiList) {
-        return this._apiList;
-      }
-
-      return this.getList();
-    }
-    /**
-     * Set - new API list.
-     * @param value.
-     */
-    ,
-    set: function set(value) {
-      this.setList(value);
-    } // CONSTRUCTOR
+      return this._apiList;
+    } // Constructor
 
   }]);
 
@@ -43967,43 +44060,15 @@ function () {
     this._apiList = this.list();
   }
   /**
-   * Get URL list for Back-end Routes.
+   * Sorted list by method.
+   * @param {object} list.
+   * @param {string} method.
    *
-   * @return {object}.
-   * @
+   * @return {object}
    */
 
 
   _createClass(Serve, [{
-    key: "getList",
-    value: function getList() {
-      console.log('SomeOne lost a List! Please, barista.serve.list() !!!'); // Get a new default list.
-
-      return Object.entries(this.list());
-    }
-    /**
-     * Set a new API list.
-     * @param {object} newList.
-     */
-
-  }, {
-    key: "setList",
-    value: function setList(newList) {
-      if (this._debug) {
-        console.log('Set a new API list...');
-      }
-
-      this.apiList = newList;
-    }
-    /**
-     * Sorted list by method.
-     * @param {object} list.
-     * @param {string} method.
-     *
-     * @return {object}
-     */
-
-  }, {
     key: "sortedBy",
     value: function sortedBy(list, method) {
       if (this._debug) {
@@ -44027,24 +44092,12 @@ function () {
 
       apiL = {
         get: {
-          verify: {
-            link: apiP + 'verify',
-            method: 'get'
-          },
-          register: {
-            link: apiP + 'register',
-            method: 'get'
-          }
+          verify: apiP + 'verify',
+          register: apiP + 'register'
         },
         post: {
-          register: {
-            link: apiP + 'register',
-            method: 'post'
-          },
-          verify: {
-            link: apiP + 'login',
-            method: 'post'
-          }
+          register: apiP + 'register',
+          verify: apiP + 'login'
         }
       };
       return apiL;
@@ -44055,211 +44108,6 @@ function () {
 }();
 
 /* harmony default export */ __webpack_exports__["default"] = (new Serve());
-
-/***/ }),
-
-/***/ "./resources/js/helpers/operator.js":
-/*!******************************************!*\
-  !*** ./resources/js/helpers/operator.js ***!
-  \******************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var operator =
-/*#__PURE__*/
-function () {
-  _createClass(operator, [{
-    key: "debug",
-
-    /**
-     * Get and Set _debug
-     *
-     * @returns {boolean}
-     */
-    get: function get() {
-      return this._debug;
-    },
-    set: function set(value) {
-      this._debug = value;
-    }
-  }]);
-
-  function operator() {
-    _classCallCheck(this, operator);
-
-    this._debug = false;
-    this.store = localStorage;
-  }
-  /**
-   * Set - single item to local storage.
-   * @param {string} name - custom name as key.
-   * @param {...object} i - custom object value cast with json.stringify.
-   */
-
-
-  _createClass(operator, [{
-    key: "setLoc",
-    value: function setLoc(name, i) {
-      this.store.setItem(name, JSON.stringify(i));
-
-      if (this._debug) {
-        console.log('SetLoc with name: ' + name + 'and value: ' + i);
-      }
-    }
-  }, {
-    key: "getLoc",
-
-    /**
-     * Get - single item from local storage.
-     * @param {string} name - custom name as key.
-     *
-     * @return {values} - return with json.parse.
-     */
-    value: function getLoc(name) {
-      if (!this.store.getItem(name)) {
-        console.log('Storage with name: ' + name + ' is empty! Was set to null.');
-        this.store.setItem(name, null);
-        return JSON.parse(this.store.getItem(name));
-      } else {
-        if (this._debug) {
-          console.log('getLoc with name: ' + name + ' , value: ' + JSON.parse(this.store.getItem(name)));
-        }
-
-        return JSON.parse(this.store.getItem(name));
-      }
-    }
-  }, {
-    key: "clearStore",
-
-    /**
-     * Clear - local storage.
-     *
-     * @return {void}
-     */
-    value: function clearStore() {
-      if (this._debug) {
-        console.log('Storage was Cleared!');
-      }
-
-      this.store.clear();
-    }
-  }]);
-
-  return operator;
-}();
-
-/* harmony default export */ __webpack_exports__["default"] = (new operator());
-
-/***/ }),
-
-/***/ "./resources/js/helpers/police.js":
-/*!****************************************!*\
-  !*** ./resources/js/helpers/police.js ***!
-  \****************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var Police =
-/*#__PURE__*/
-function () {
-  _createClass(Police, [{
-    key: "debug",
-
-    /**
-     * Get and Set debug mode.
-     *
-     * @returns {boolean}
-     */
-    get: function get() {
-      return this._debug;
-    },
-    set: function set(value) {
-      this._debug = value;
-    }
-  }]);
-
-  function Police() {
-    _classCallCheck(this, Police);
-
-    // Debug mode.
-    this._debug = false; // Default settings.
-
-    this.token = null;
-    this.user = null;
-  }
-  /**
-   * Store back-end admin token and name.
-   * @param token
-   * @param user
-   *
-   * @return {boolean}
-   */
-
-
-  _createClass(Police, [{
-    key: "login",
-    value: function login(token, user) {
-      window.StorageOperator.setLoc('token', token);
-      window.StorageOperator.setLoc('user', user); // check if token locStore was set correctly
-
-      if (!window.StorageOperator.getLoc('token')) {
-        console.log('Token not found!');
-        return this.confirmed;
-      } else {
-        this.token = window.StorageOperator.getLoc('token');
-        this.user = window.StorageOperator.getLoc('user');
-        this.confirmed = true;
-      }
-
-      window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-      return this.confirmed;
-    }
-  }, {
-    key: "logout",
-
-    /**
-     * Logout for dashboard.
-     * Still in progress...
-     *
-     * @return {boolean} - Set to True to trigger something...
-     */
-    value: function logout() {
-      window.StorageOperator.clearStore();
-      return true;
-    }
-    /**
-     * Check if token exist;
-     *
-     * @return {values}
-     */
-
-  }, {
-    key: "confirm",
-    value: function confirm() {
-      return window.StorageOperator.getLoc('token');
-    }
-  }]);
-
-  return Police;
-}();
-
-/* harmony default export */ __webpack_exports__["default"] = (new Police());
 
 /***/ }),
 
@@ -44283,7 +44131,6 @@ function loadView(view) {
   };
 }
 
-var boxingDay = _store_vueStore__WEBPACK_IMPORTED_MODULE_1__["default"];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   mode: 'history',
   routes: [{
@@ -44325,18 +44172,23 @@ router.beforeEach(function (to, from, next) {
   if (to.matched.some(function (record) {
     return record.meta.freshLogin;
   })) {
-    var verify = false;
-
-    if (verify !== true) {
-      next({
-        path: '/Register',
-        query: {
-          redirect: to.fullPath
+    _store_vueStore__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('setTarget', {
+      list: _store_vueStore__WEBPACK_IMPORTED_MODULE_1__["default"].getters.list,
+      method: 'get',
+      route: 'verify'
+    }).then(function () {
+      _store_vueStore__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('freshB', _store_vueStore__WEBPACK_IMPORTED_MODULE_1__["default"].getters.target).then(function () {
+        if (!_store_vueStore__WEBPACK_IMPORTED_MODULE_1__["default"].getters.verified) {
+          next({
+            path: '/Register',
+            redirect: to.fullPath
+          });
+          return;
+        } else {
+          next();
         }
       });
-    } else {
-      next();
-    }
+    });
   } else {
     next();
   }
@@ -44349,9 +44201,7 @@ router.beforeEach(function (to, from, next) {
     if (confirm) {
       next({
         path: '/Login',
-        query: {
-          redirect: to.fullPath
-        }
+        redirect: to.fullPath
       });
     } else {
       next();
@@ -44378,71 +44228,94 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _helpers_police__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./../helpers/police */ "./resources/js/helpers/police.js");
-/* harmony import */ var _helpers_operator__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./../helpers/operator */ "./resources/js/helpers/operator.js");
-/* harmony import */ var _helpers_barista__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./../helpers/barista */ "./resources/js/helpers/barista.js");
-
+/* harmony import */ var _helpers_depot__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../helpers/depot */ "./resources/js/helpers/depot.js");
+/* harmony import */ var _helpers_sorter__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../helpers/sorter */ "./resources/js/helpers/sorter.js");
 
 
 
 
  // Set custom Js-helpers to Global
 
-window.Police = _helpers_police__WEBPACK_IMPORTED_MODULE_3__["default"];
-window.StorageOperator = _helpers_operator__WEBPACK_IMPORTED_MODULE_4__["default"];
-window.Barista = _helpers_barista__WEBPACK_IMPORTED_MODULE_5__["default"];
+window.depot = _helpers_depot__WEBPACK_IMPORTED_MODULE_3__["default"];
+window.sorter = _helpers_sorter__WEBPACK_IMPORTED_MODULE_4__["default"]; // Debug mode
+
+window.depot.debug = true;
+window.sorter.debug = true;
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
-var vueStore = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
+/* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
     debug: true,
-    helper: {
-      barista: Barista,
-      operator: StorageOperator,
-      police: Police
+    api: {
+      list: sorter.apiList,
+      target: []
     },
-    verified: [],
+    session: {
+      verified: '',
+      token: '',
+      user: ''
+    },
     status: [],
-    api: [],
-    link: []
+    data: []
+  },
+  getters: {
+    list: function list(state) {
+      return state.api.list;
+    },
+    target: function target(state) {
+      return state.api.target;
+    },
+    verified: function verified(state) {
+      return state.session.verified;
+    },
+    token: function token(state) {
+      return state.session.token;
+    },
+    user: function user(state) {
+      return state.session.user;
+    }
   },
   mutations: {
-    getlink: function getlink(state, link) {
-      state.link = link;
+    setTarget: function setTarget(state, target) {
+      state.api.target = target;
     },
-    getApi: function getApi(state, api) {
-      state.api = api;
+    setVerified: function setVerified(state) {
+      state.session.verified = depot.getLoc('verified');
     },
-    getVerify: function getVerify(state, verified) {
-      state.verified = verified;
-    },
-    getStatus: function getStatus(state, status) {
+    setStatus: function setStatus(state, status) {
       state.status = status;
     }
   },
   actions: {
-    getVerify: function getVerify(_ref) {
+    setTarget: function setTarget(_ref, _ref2) {
       var commit = _ref.commit;
-      return axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(this.state.link).then(function (success) {
-        return commit('getVerify', success.data.check);
-      })["catch"](function (response) {
-        return commit('getStatus', response.statusText);
+      var list = _ref2.list,
+          method = _ref2.method,
+          route = _ref2.route;
+      var newList = list[method];
+      commit('setTarget', newList[route]);
+    },
+    freshA: function freshA(_ref3, url) {
+      var commit = _ref3.commit;
+      depot.clearStore();
+      return new Promise(function (resolve, reject) {
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(url).then(function (success) {
+          depot.setLoc('verified', success.data.check);
+          resolve(success.data.check);
+        })["catch"](function (error) {
+          console.log(error);
+          reject(error);
+        });
       });
     },
-    getApi: function getApi(_ref2) {
-      var commit = _ref2.commit;
-
-      if (!this.helper.barista) {
-        commit('getApi', this.helper.barista.apiList());
-      }
-    },
-    getLink: function getLink(_ref3) {
-      var commit = _ref3.commit;
-      var url = this.state.api['get'].verify.link;
-      commit('getLink', url);
+    freshB: function freshB(_ref4, url) {
+      var dispatch = _ref4.dispatch,
+          commit = _ref4.commit;
+      return dispatch('freshA', url).then(function () {
+        commit('setVerified');
+      });
     }
   }
-});
-/* harmony default export */ __webpack_exports__["default"] = (vueStore);
+}));
 
 /***/ }),
 

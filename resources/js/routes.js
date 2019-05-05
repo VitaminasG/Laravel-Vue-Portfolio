@@ -1,11 +1,10 @@
 import VueRouter from 'vue-router';
-import vueStore from './store/vueStore'
+import store from './store/vueStore';
 
 function loadView(view) {
+
     return () => import('./views/' + view);
 }
-
-const boxingDay = vueStore;
 
 let router = new VueRouter({
 
@@ -58,17 +57,26 @@ router.beforeEach((to, from, next) =>{
 
     if(to.matched.some(record => record.meta.freshLogin)){
 
-        let verify = false;
+        store.dispatch('setTarget', {
+            list: store.getters.list,
+            method: 'get',
+            route: 'verify'}).then(() => {
 
-        if(verify !== true){
+            store.dispatch('freshB', store.getters.target).then(()=>{
 
-            next({
-                path: '/Register',
-                query: { redirect: to.fullPath }
-            })
-        } else {
-            next();
-        }
+                if(!store.getters.verified){
+
+                    next({
+                        path: '/Register',
+                        redirect: to.fullPath
+                    });
+
+                    return;
+                } else {
+                    next();
+                }
+            });
+        });
     } else {
         next();
     }
@@ -80,7 +88,7 @@ router.beforeEach((to, from, next) =>{
         if(confirm){
             next({
                 path: '/Login',
-                query: { redirect: to.fullPath }
+                redirect: to.fullPath
             })
         } else {
             next();
