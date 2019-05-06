@@ -40,6 +40,7 @@ export default new Vuex.Store({
         confirmed: state => state.session.confirmed,
         token: state => state.session.token,
         user: state => state.session.user,
+        data: state => state.data,
     },
 
     mutations: {
@@ -57,15 +58,9 @@ export default new Vuex.Store({
             state.session.token = depot.getLoc('token');
             state.session.user = depot.getLoc('user');
         },
-        setConfirmed(state){
-            state.session.confirmed = depot.getLoc('confirmed');
-        },
-        setToken(state){
-          state.session.token = depot.getLoc('token');
-        },
-        setUser(state){
-            state.session.user = depot.getLoc('user');
-        },
+        setData(state, data){
+            state.data = data;
+        }
 
     },
 
@@ -116,7 +111,7 @@ export default new Vuex.Store({
 
                 depot.setLoc('confirmed', true);
 
-                axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+                window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
             }
         },
 
@@ -126,11 +121,30 @@ export default new Vuex.Store({
             })
         },
 
+        stats({ dispatch, commit, getters}, url){
+            dispatch('checkStorage').then(()=>{
+
+                window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + getters.token;
+
+                return new Promise((resolve, reject) => {
+                    axios.get(url).then( success => {
+                        commit('setData', success.data.data);
+                        resolve();
+                    })
+                        .catch( error => {
+                            console.log(error);
+                            reject(error);
+                        })
+                })
+            });
+
+        },
+
         logout({commit}){
 
             return new Promise((resolve) => {
                 depot.clearStore();
-                delete axios.defaults.headers.common['Authorization'];
+                delete window.axios.defaults.headers.common['Authorization'];
                 resolve()
             }).then(() => {
                 commit('setStorage');

@@ -72,6 +72,7 @@ class Serve {
             get: {
                 verify: apiP + 'verify',
                 register: apiP + 'register',
+                stats: apiP + 'stats',
             },
             post: {
                 register: apiP + 'register',
