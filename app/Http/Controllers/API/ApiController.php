@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Stats;
+use App\Http\Resources\Stats as StatResource;
 use Hash;
 use Illuminate\Support\Str;
 
@@ -14,7 +16,6 @@ class ApiController extends Controller
     /**
      * Check Fresh Login
      *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function verify()
     {
@@ -36,7 +37,6 @@ class ApiController extends Controller
     /**
      * Login the Admin.
      *
-     * @return \Illuminate\Http\Response
      */
     public function login()
     {
@@ -62,7 +62,7 @@ class ApiController extends Controller
         if($user->type === $admin->isAdmin()){
 
             $token = Str::random(80);
-            $user->api_token = hash('sha256', $token);
+            $user->api_token = $token;
 
             $user->save();
 
@@ -119,6 +119,34 @@ class ApiController extends Controller
             'message' => 'The credentials was changed!',
             'status' => 201,
         ], 201);
+    }
+
+
+    /**
+     * Get Statistic for Dashboard
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function stats()
+    {
+        $user = new User();
+
+        $data = StatResource::collection(Stats::latest()->take(5)->get());
+
+        if(auth('api')->user()->type === $user->isAdmin()){
+
+            return response()->json([
+                'data' => $data,
+            ], 200);
+
+        } else {
+
+            return response()->json([
+                'message' => 'You are not Admin!',
+            ], 200);
+        }
+
+
     }
 
     /**

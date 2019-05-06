@@ -7,6 +7,7 @@ use App\Mail\ContactMe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Jenssegers\Agent\Agent;
+use App\Stats;
 
 class IndexController extends Controller
 {
@@ -18,13 +19,18 @@ class IndexController extends Controller
     public function index()
 
 	{
+	    $stats = new Stats();
+        $agent = new Agent();
 
-		$agent = new Agent();
+        $stats->ip = request()->ip();
+        $stats->agent = request()->header('User-Agent');
+        $stats->date = $stats->getDate();
+
+        $stats->save();
 
 		if( $agent->isDesktop() ){
 
 			return view( 'layouts.master' );
-
 		}
 
 		if ( $agent->isMobile() ) {
@@ -36,7 +42,6 @@ class IndexController extends Controller
 			} else {
 
 				return view( 'layouts.mobile' );
-
 			}
 
 		}
@@ -44,7 +49,6 @@ class IndexController extends Controller
 		if ( $agent->isRobot() ) {
 
 			return view( 'layouts.server' );
-
 		}
 
 	}

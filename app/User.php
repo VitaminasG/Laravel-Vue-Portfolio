@@ -30,7 +30,6 @@ class User extends Authenticatable
 
     protected $roles = [
         'su' => 'admin',
-        'author' => 'author'
     ];
 
     public function returnRole($type)
