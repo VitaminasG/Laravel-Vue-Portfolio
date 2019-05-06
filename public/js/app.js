@@ -44089,7 +44089,8 @@ function () {
       apiL = {
         get: {
           verify: apiP + 'verify',
-          register: apiP + 'register'
+          register: apiP + 'register',
+          stats: apiP + 'stats'
         },
         post: {
           register: apiP + 'register',
@@ -44272,6 +44273,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     },
     user: function user(state) {
       return state.session.user;
+    },
+    data: function data(state) {
+      return state.data;
     }
   },
   mutations: {
@@ -44289,14 +44293,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
       state.session.token = depot.getLoc('token');
       state.session.user = depot.getLoc('user');
     },
-    setConfirmed: function setConfirmed(state) {
-      state.session.confirmed = depot.getLoc('confirmed');
-    },
-    setToken: function setToken(state) {
-      state.session.token = depot.getLoc('token');
-    },
-    setUser: function setUser(state) {
-      state.session.user = depot.getLoc('user');
+    setData: function setData(state, data) {
+      state.data = data;
     }
   },
   actions: {
@@ -44343,7 +44341,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
         depot.setLoc('confirmed', false);
       } else {
         depot.setLoc('confirmed', true);
-        axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+        window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
       }
     },
     loginB: function loginB(_ref8, _ref9) {
@@ -44358,11 +44356,28 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
         commit('setStorage');
       });
     },
-    logout: function logout(_ref10) {
-      var commit = _ref10.commit;
+    stats: function stats(_ref10, url) {
+      var dispatch = _ref10.dispatch,
+          commit = _ref10.commit,
+          getters = _ref10.getters;
+      dispatch('checkStorage').then(function () {
+        window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + getters.token;
+        return new Promise(function (resolve, reject) {
+          axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(url).then(function (success) {
+            commit('setData', success.data.data);
+            resolve();
+          })["catch"](function (error) {
+            console.log(error);
+            reject(error);
+          });
+        });
+      });
+    },
+    logout: function logout(_ref11) {
+      var commit = _ref11.commit;
       return new Promise(function (resolve) {
         depot.clearStore();
-        delete axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common['Authorization'];
+        delete window.axios.defaults.headers.common['Authorization'];
         resolve();
       }).then(function () {
         commit('setStorage');
