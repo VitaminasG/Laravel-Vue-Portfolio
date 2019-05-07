@@ -11,14 +11,29 @@
 
             <div class="_card-content flex-block h-100">
 
-                    <div v-for="stat in stats">
-
-                        <div class="flex text-underline">
-                            <p>IP: {{ stat.ip }}</p>
-                            <p>Agent: {{ stat.agent }}</p>
-                            <p>Date: {{ stat.date }}</p>
-                        </div>
-                    </div>
+                <table class="table w-100">
+                    <thead>
+                    <tr>
+                        <th>IP</th>
+                        <th>Agent</th>
+                        <th>Date</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th>IP</th>
+                        <th>Agent</th>
+                        <th>Date</th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    <tr v-for="stat in stats">
+                        <td>{{ stat.ip }}</td>
+                        <td>{{ stat.agent }}</td>
+                        <td>{{ stat.date }}</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -58,5 +73,21 @@
         border: 2px dashed #86c60b;
         color: #86c60b;
         text-shadow: 0 0 5px rgba(134, 198, 11, 0.6);
+    }
+    .table {
+        background-color: transparent;
+        color: inherit;
+    }
+
+    .table td, .table th{
+        border: none;
+    }
+
+    .table thead td, .table thead th{
+        color: #d4e62a;
+    }
+
+    .table tfoot td, .table tfoot th{
+        color: #d4e62a;
     }
 </style>

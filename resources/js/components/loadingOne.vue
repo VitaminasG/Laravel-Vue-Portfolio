@@ -67,7 +67,9 @@
 <script>
 
     import { materials } from '../textMaterial';
-    import { TweenMax, TimelineMax } from "gsap/all";
+    import { TweenMax, TimelineMax, TextPlugin } from "gsap/all";
+
+    const plugins = [TextPlugin];
 
     export default {
 
@@ -78,14 +80,11 @@
             return {
 
                 debug: false,
-
                 i: {
                     t1: 't1', t2: 't2', t3: 't3', t4: 't4'
                 },
-
                 n: 0,
                 subStep: 1
-
             }
 
         },
@@ -93,15 +92,11 @@
         computed: {
 
             ChangedN(){
-
                 return this.n.toFixed(0);
-
             },
 
             scrambText(){
-
                 return materials.ScramObj('Two', 'third', 'text1');
-
             }
 
         },
@@ -111,13 +106,9 @@
             subStep(){
 
                 if(this.subStep === 7){
-
                     this.$emit('firstDone', true);
-
                 }
-
             }
-
         },
 
         methods: {
@@ -125,7 +116,6 @@
             imHereTop(){
 
                 TweenMax.fromTo('.tbar', 1.5, {opacity: 0}, {opacity: 1, delay: 1}, 1 )
-
             },
 
             imHereMid(el, done){
@@ -146,21 +136,18 @@
             beforeTyping(el, done){
 
                 TweenMax.set(el, {autoAlpha: 0, onComplete: done});
-
             },
 
             typing(key, el, done){
 
                 let letter = this.scrambText.text1[key];
-
                 let tl2 = new TimelineMax({
                     onComplete: done
                 });
 
                 tl2.staggerTo('.scramb', 0.2, {autoAlpha: 1, delay: 3}, 0.1)
                     .staggerTo('.scramb', 0.2, {autoAlpha: 0}, '+=0.2')
-                    .to('.letter-'+key, 0.5, {autoAlpha: 1, text: letter}, '+=0.1');
-
+                    .to('.letter-' + key, 0.5, {text: letter, autoAlpha: 1}, '+=0.1');
             },
 
             doneTyping:
@@ -173,13 +160,9 @@
                 this.subStep++;
 
                 if(this.debug){
-
                     console.log('Now we in Sub Step: ' + this.subStep);
-
                 }
-
             }
-
         }
     }
 </script>

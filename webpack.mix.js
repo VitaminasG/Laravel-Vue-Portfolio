@@ -1,12 +1,5 @@
 const mix = require('laravel-mix');
 
-mix.webpackConfig({
-    output: {
-        chunkFilename: 'chunks/[name].js',
-        publicPath: '/',
-    },
-});
-
 mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/mobile.js', 'public/js/mobile')
     .sass('resources/sass/app.scss', 'public/css')

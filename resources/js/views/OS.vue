@@ -7,7 +7,6 @@
             <div v-if="!gui" class="flex-loading">
 
                 <loading-one v-if="osStep === 1" @firstDone="waitingFirst($event)"></loading-one>
-
                 <loading-two v-if="osStep === 2" @secondDone="waitingSecond($event)"></loading-two>
 
             </div>
@@ -52,11 +51,8 @@
 
                     this.display = false;
                     this.gui = true;
-
                 }
-
             }
-
         },
 
         methods: {
@@ -64,9 +60,7 @@
             waitingFirst(event){
 
                 if(event){
-
                     this.osStep++;
-
                 }
 
             },
@@ -74,13 +68,9 @@
             waitingSecond(event){
 
                 if(event){
-
                     this.osStep++;
-
                 }
-
             }
-
         }
     }
 </script>

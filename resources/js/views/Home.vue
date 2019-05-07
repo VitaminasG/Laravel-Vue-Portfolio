@@ -20,13 +20,9 @@
                             <div>
 
                                 <div v-if="countStep >= 0 " v-for="(symbol, index) in newFirstTl.text1" class="inline">
-
-                                        <transition-group appear @before-appear="beforeAppear" @appear="typing" @after-appear="doneTyping">
-
-                                            <span :key="symbol" :data-index="index">{{ symbol }}</span>
-
-                                        </transition-group>
-
+                                    <transition-group appear @before-appear="beforeAppear" @appear="typing" @after-appear="doneTyping">
+                                        <span :key="symbol" :data-index="index">{{ symbol }}</span>
+                                    </transition-group>
                                 </div>
 
                             </div>
@@ -34,13 +30,9 @@
                             <div>
 
                                 <div v-if="countStep > 1" v-for="(symbol, index) in newFirstTl.text2" class="inline">
-
                                     <transition-group appear @before-appear="beforeAppear" @appear="typing" @after-appear="doneTyping">
-
                                         <span :key="symbol" :data-index="index">{{ symbol }}</span>
-
                                     </transition-group>
-
                                 </div>
 
                             </div>
@@ -48,13 +40,9 @@
                             <div>
 
                                 <div v-if="countStep > 2" v-for="(symbol, index) in newFirstTl.text3" class="inline">
-
                                     <transition-group appear @before-appear="beforeAppear" @appear="typing" @after-appear="doneTyping">
-
                                         <span :key="symbol" :data-index="index">{{ symbol }}</span>
-
                                     </transition-group>
-
                                 </div>
 
                             </div>
@@ -62,13 +50,9 @@
                             <div>
 
                                 <div v-if="countStep > 3" v-for="(symbol, index) in newFirstTl.text4" class="inline">
-
                                     <transition-group appear @before-appear="beforeAppear" @appear="typing" @after-appear="doneTyping">
-
                                         <span :key="symbol" :data-index="index">{{ symbol }}</span>
-
                                     </transition-group>
-
                                 </div>
 
                             </div>
@@ -82,13 +66,9 @@
                             <transition appear @appear="transition('msg')" :css="false">
 
                                 <div ref="msg" class="flex-block">
-
                                     <div class="msg columns">
-
                                         <div class="column is-one-third avatar flex-center">
-
                                             <img src="../../assets/avatar.gif" alt="Avatar">
-
                                         </div>
 
                                         <div class="column flex-block">
@@ -127,14 +107,12 @@
                                             *** Author will be very grateful if you will spread only positive energy and
                                             not in any situation bad about anything associated with this website.
                                         </p>
-
                                         <p>
                                             Terms & Conditions based on free man speech - <span class="text-alert">Martin Luther King, Jr</span>.
                                             You on the mountaintop!
                                         </p>
 
                                     </div>
-
                                 </div>
 
                             </transition>
@@ -149,13 +127,9 @@
                             <div class="my-1">
 
                                 <div v-if="step >= 3" v-for="(relax, index) in newSecondTl.text1" class="inline">
-
                                     <transition-group appear @before-appear="beforeAppear" @appear="typing" @after-appear="doneTyping">
-
                                         <span :key="relax" :data-index="index">{{ relax }}</span>
-
                                     </transition-group>
-
                                 </div>
 
                             </div>
@@ -163,15 +137,10 @@
                             <div v-if="step === 4">
 
                                 <transition appear @appear="transition('next')" :css="false">
-
                                     <div ref="next">
-
                                         <label>Press "Enter" to proceed </label>
-
                                         <input v-focus type="text" name="enter" @keyup.enter="loginPage">
-
                                     </div>
-
                                 </transition>
 
                             </div>
@@ -318,23 +287,18 @@
                     case 5:
 
                         this.step++;
-
                         setTimeout( to.delayAfter, 2000 );
-
                         break;
 
                     case 7:
 
                         setTimeout( to.delayAfter, 1000 );
-
                         break;
 
                     default:
 
                         if(this.debug) {
-
                             console.log('What to do now? We have Step: ' + this.countStep);
-
                         }
                 }
 

@@ -3,7 +3,7 @@ import store from './store/vueStore';
 
 function loadView(view) {
 
-    return () => import('./views/' + view);
+    return () => import('./views/' + view + '.vue');
 }
 
 let router = new VueRouter({

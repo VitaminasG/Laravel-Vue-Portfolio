@@ -10,14 +10,14 @@
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
     "devDependencies": {
-        "@babel/plugin-syntax-dynamic-import": "^7.2.0",
         "axios": "^0.18",
+        "babel-plugin-dynamic-import-node": "^2.2.0",
         "cross-env": "^5.1",
         "gsap": "^2.0.2",
         "laravel-mix": "^4.0.14",
         "lodash": "^4.17.11",
         "resolve-url-loader": "^2.3.1",
-        "sass": "^1.19.0",
+        "sass": "^1.20.1",
         "sass-loader": "^7.1.0",
         "vue": "^2.6.3",
         "vue-template-compiler": "^2.6.3"
