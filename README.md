@@ -21,10 +21,29 @@ gediminaspalsys.uk, is allowed to keep for yourself and in some cases must be us
 accessed web environments if it will help to save a humanity. Also, the author has rights
 to keep all website assets and written materials as his own property.
 
+## Update - Dashboard
+
+Integrated a new feature to Log-in as Admin and get Web Statistics from Database. If user accessed
+ Web Site on fresh migration, then will be asked to register and confirm new login credentials.
+ 
+ Web and API routes:
+ ```
+ +--------+----------+--------------+------+-------------------------------------------------+--------------+
+ |        | POST     | ContactMe    |      | App\Http\Controllers\IndexController@store      | web          |
+ |        | POST     | api/login    |      | App\Http\Controllers\API\ApiController@login    | api,throttle |
+ |        | GET|HEAD | api/register |      | App\Http\Controllers\API\ApiController@register | api          |
+ |        | POST     | api/register |      | App\Http\Controllers\API\ApiController@register | api,throttle |
+ |        | GET|HEAD | api/stats    |      | App\Http\Controllers\API\ApiController@stats    | api,auth:api |
+ |        | GET|HEAD | api/verify   |      | App\Http\Controllers\API\ApiController@verify   | api          |
+ |        | GET|HEAD | {Vue?}       |      | App\Http\Controllers\IndexController@index      | web          |
+ +--------+----------+--------------+------+-------------------------------------------------+--------------+
+```
+
 ## Official link to Page site
 
 - Link to route: '/' [https://gediminaspalsys.uk/](https://gediminaspalsys.uk/).
 - Link to route: '/OS' [https://gediminaspalsys.uk/OS](https://gediminaspalsys.uk/OS).
+- Link to route: '/Dashboard' [https://gediminaspalsys.uk/Dashboard](https://gediminaspalsys.uk/Dashboard).
 
 *If you using a mobile device, then you will be redirected to mobile site with modified content. 
 All that content redirection made by using **jenseegers/agent** - follow the link to read more -> [jenssegers/agent](https://github.com/jenssegers/agent).*
@@ -34,11 +53,15 @@ All that content redirection made by using **jenseegers/agent** - follow the lin
 ```
 git clone https://github.com/VitaminasG/Laravel-Vue-Portfolio.git
 ```
-
 ```
 cd Laravel-Vue-Portfolio
 ```
-
+```
+composer update
+```
+```
+npm install
+```
 *Edit, move and delete to your need's*
 
 ## Personal Statment
