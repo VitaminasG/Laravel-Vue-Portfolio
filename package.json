@@ -15,7 +15,7 @@
         "cross-env": "^5.1",
         "gsap": "^2.0.2",
         "laravel-mix": "^4.0.14",
-        "lodash": "^4.17.11",
+        "lodash": "^4.17.13",
         "resolve-url-loader": "^2.3.1",
         "sass": "^1.20.1",
         "sass-loader": "^7.1.0",
