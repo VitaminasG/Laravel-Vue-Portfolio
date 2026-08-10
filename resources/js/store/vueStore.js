@@ -142,11 +142,22 @@ export default new Vuex.Store({
 
         logout({commit, getters}){
 
-            // Clear the local session even if the request fails, so the user is
-            // never stuck in a half-logged-in state.
-            return axios.post(getters.list.post.logout)
-                .catch(() => {})
+            // Send the token explicitly instead of relying on
+            // window.axios.defaults.headers.common['Authorization'], which is
+            // only ever set as a side effect of loginA/stats and is never
+            // rehydrated from localStorage on page load. Without this, a
+            // logout fired before that default exists went out unauthenticated,
+            // failed silently, and left the server-side token valid while the
+            // UI reported a successful logout.
+            return axios.post(getters.list.post.logout, {}, {
+                headers: { Authorization: 'Bearer ' + getters.token }
+            })
+                .catch(error => {
+                    console.error('Logout request to the server failed; the API token may still be valid server-side.', error);
+                })
                 .then(() => {
+                    // Clear the local session even if the request failed, so the
+                    // user is never stuck in a half-logged-in state.
                     depot.clearStore();
                     delete window.axios.defaults.headers.common['Authorization'];
                     commit('setStorage');
