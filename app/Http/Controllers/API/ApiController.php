@@ -19,19 +19,13 @@ class ApiController extends Controller
      */
     public function verify()
     {
-        $user= new User();
+        $user = new User();
 
         $admin = User::where('type', $user->isAdmin())->first();
 
-        if(!$admin->verified){
-            return response()->json([
-                'check' => false,
-            ]);
-        } else {
-            return response()->json([
-                'check' => true,
-            ]);
-        }
+        return response()->json([
+            'check' => (bool) optional($admin)->verified,
+        ]);
     }
 
     /**

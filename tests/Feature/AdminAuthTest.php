@@ -31,6 +31,15 @@ class AdminAuthTest extends TestCase
             ->assertExactJson(['check' => true]);
     }
 
+    public function test_verify_returns_false_when_no_admin_row_exists()
+    {
+        User::query()->delete();
+
+        $this->getJson('/api/verify')
+            ->assertStatus(200)
+            ->assertExactJson(['check' => false]);
+    }
+
     public function test_login_fails_with_an_unknown_email()
     {
         $this->postJson('/api/login', ['email' => 'nobody@example.com', 'password' => 'x'])
