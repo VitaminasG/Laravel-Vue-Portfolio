@@ -26,3 +26,6 @@ storage/*.key
 /.phpstorm.meta.php
 .idea/
 .temp/
+
+# Playwright MCP session artifacts
+.playwright-mcp/
