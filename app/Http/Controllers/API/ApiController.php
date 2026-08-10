@@ -125,22 +125,16 @@ class ApiController extends Controller
     {
         $user = new User();
 
-        $data = StatResource::collection(Stats::latest()->take(5)->get());
-
-        if(auth('api')->user()->type === $user->isAdmin()){
-
-            return response()->json([
-                'data' => $data,
-            ], 200);
-
-        } else {
+        if (auth('api')->user()->type !== $user->isAdmin()) {
 
             return response()->json([
                 'message' => 'You are not Admin!',
-            ], 200);
+            ], 403);
         }
 
-
+        return response()->json([
+            'data' => StatResource::collection(Stats::latest()->take(5)->get()),
+        ], 200);
     }
 
     /**

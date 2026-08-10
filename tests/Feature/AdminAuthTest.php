@@ -142,6 +142,20 @@ class AdminAuthTest extends TestCase
             ->assertJsonStructure(['data']);
     }
 
+    public function test_stats_returns_403_for_an_authenticated_non_admin()
+    {
+        $visitor = User::create([
+            'name' => 'visitor',
+            'email' => 'visitor@example.com',
+            'password' => Hash::make('password123'),
+            'type' => User::default(),
+            'api_token' => \Illuminate\Support\Str::random(80),
+        ]);
+
+        $this->getJson('/api/stats', ['Authorization' => 'Bearer ' . $visitor->api_token])
+            ->assertStatus(403);
+    }
+
     public function test_a_password_with_html_characters_survives_register_and_login()
     {
         $password = 'p<a>&"\'ssw0rd';
