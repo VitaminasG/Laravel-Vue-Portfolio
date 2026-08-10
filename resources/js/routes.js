@@ -55,31 +55,44 @@ let router = new VueRouter({
 
 router.beforeEach(async (to, from, next) => {
 
-    if (to.matched.some(record => record.meta.freshLogin)) {
+    try {
 
-        await store.dispatch('setTarget', {
-            list: store.getters.list,
-            method: 'get',
-            route: 'verify'
-        });
+        if (to.matched.some(record => record.meta.freshLogin)) {
 
-        await store.dispatch('freshB', store.getters.target);
+            await store.dispatch('setTarget', {
+                list: store.getters.list,
+                method: 'get',
+                route: 'verify'
+            });
 
-        if (!store.getters.verified) {
-            return next({ path: '/Register' });
+            await store.dispatch('freshB', store.getters.target);
+
+            if (!store.getters.verified) {
+                return next({ path: '/Register' });
+            }
         }
-    }
 
-    if (to.matched.some(record => record.meta.requiresAuth)) {
+        if (to.matched.some(record => record.meta.requiresAuth)) {
 
-        await store.dispatch('checkStorage');
+            await store.dispatch('checkStorage');
 
-        if (!store.getters.confirmed) {
-            return next({ path: '/Login' });
+            if (!store.getters.confirmed) {
+                return next({ path: '/Login' });
+            }
         }
-    }
 
-    next();
+        next();
+
+    } catch (error) {
+
+        // Fail open: this guard is a UX affordance, not the security boundary
+        // (the server's auth:api middleware is). On first load there is no
+        // previous route to fall back to, so next(false) would strand the
+        // user on a blank screen. Log the failure and let navigation through
+        // instead of hanging forever on a rejected dispatch.
+        console.error('Router guard: failed to resolve auth state, allowing navigation through', error);
+        next();
+    }
 });
 
 export default router;
