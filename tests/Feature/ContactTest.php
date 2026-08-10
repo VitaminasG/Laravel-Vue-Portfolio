@@ -69,5 +69,6 @@ class ContactTest extends TestCase
             ->assertStatus(422);
 
         Mail::assertNothingSent();
+        $this->assertSame(0, \DB::table('indices')->count());
     }
 }
