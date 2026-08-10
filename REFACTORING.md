@@ -74,13 +74,13 @@ the correction is marked.
 
 ## Phase 4 — Frontend simplification
 
-- [ ] `resources/js/components/testing.vue` — delete (dead code, never imported).
-- [ ] Remove leftover `console.log` calls (31 across `.vue`/`.js`).
-- [ ] `helpers/sorter.js:78` — rename the misleading `post.verify` key (→ `login`);
+- [x] `resources/js/components/testing.vue` — delete (dead code, never imported).
+- [x] Remove leftover `console.log` calls (31 across `.vue`/`.js`).
+- [x] `helpers/sorter.js:78` — rename the misleading `post.verify` key (→ `login`);
       simplify the `apiList` / `setTarget` / `target` indirection for a few endpoints.
-- [ ] Extract the duplicated dashed-box SCSS (statistics, ApiLogin, ApiRegister,
+- [x] Extract the duplicated dashed-box SCSS (statistics, ApiLogin, ApiRegister,
       textEditor) into shared classes.
-- [ ] `views/Dashboard.vue:18-22,36` — remove the always-rendered "Access Denied"
+- [x] `views/Dashboard.vue:18-22,36` — remove the always-rendered "Access Denied"
       leftover; make `username` reactive (computed instead of `data`).
 
 ### Carried over from the phases 1-3 pass
@@ -91,31 +91,31 @@ they are not rediscovered from scratch.
 
 Cleanups worth folding into whichever Phase 4 item touches the same file:
 
-- [ ] `resources/js/helpers/sorter.js` — `get.register` still maps to
+- [x] `resources/js/helpers/sorter.js` — `get.register` still maps to
       `/api/register`, which returns 405 since the GET route was dropped. Dead
       entry; remove it alongside the `post.verify` rename above.
-- [ ] `tests/Feature/AdminAuthTest.php` — unused `use Illuminate\Support\Facades\Cache;`
+- [x] `tests/Feature/AdminAuthTest.php` — unused `use Illuminate\Support\Facades\Cache;`
       import (the class uses `$this->artisan('cache:clear')` instead).
-- [ ] No trailing newline at EOF in `AdminAuthTest.php`, `ContactTest.php`,
+- [x] No trailing newline at EOF in `AdminAuthTest.php`, `ContactTest.php`,
       `VisitTest.php`, `routes.js`, `vueStore.js`, `sorter.js`. House-wide; fix
       in one sweep or not at all.
-- [ ] `ApiController.php` — two conditional styles now coexist: `if (! $user) {`
+- [x] `ApiController.php` — two conditional styles now coexist: `if (! $user) {`
       in the refactored code against `if($user->isAdmin()){` in the older code.
       A formatting pass would settle it.
-- [ ] `app/Http/Controllers/Auth/RegisterController.php` — stock `make:auth`
+- [x] `app/Http/Controllers/Auth/RegisterController.php` — stock `make:auth`
       scaffolding, unreachable from any route. Delete rather than maintain.
 
 Test coverage gaps for code this refactor changed:
 
-- [ ] `ApiController::login()` — the non-admin rejection branch has no
+- [x] `ApiController::login()` — the non-admin rejection branch has no
       end-to-end test, and its comparison changed when `isAdmin()` became a
       boolean.
-- [ ] `POST /api/logout` without a token (expected 401) is untested.
-- [ ] `throttle:10,1` is tested on `/api/login` but not on `/api/register`.
+- [x] `POST /api/logout` without a token (expected 401) is untested.
+- [x] `throttle:10,1` is tested on `/api/login` but not on `/api/register`.
 - [ ] The throttle-before-`auth:api` ordering on the guarded group was verified
       by reading `SortedMiddleware`, not by an executable test — driving
       `/api/stats` past 60 anonymous requests would prove it, at real cost.
-- [ ] `ContactMe`'s Blade view is never rendered by a test, so a variable-name
+- [x] `ContactMe`'s Blade view is never rendered by a test, so a variable-name
       typo there would go unnoticed. The four payload keys were checked by hand
       and match.
 
