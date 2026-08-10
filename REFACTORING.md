@@ -100,6 +100,32 @@ the correction is marked.
 - `login.vue` hardcoded `visitor`/`visiting` is an intentional retro-OS easter egg
   (documented in `Home.vue:176`) — left as-is.
 
+## Found during the final whole-branch review (fixed, not planned)
+
+A review of the completed branch surfaced four issues that none of the per-task
+reviews could see, because each of them only looked at one task's diff. All four
+were fixed before merge.
+
+- **Rate limiting was keyed per IP, not per route.** Laravel 5.7 builds the
+  limiter key from `sha1($route->getDomain().'|'.$request->ip())`, so every
+  unauthenticated API route shared one counter. Since the router guard calls
+  `GET /api/verify` on each visit to `/` or `/Login`, ten page loads a minute
+  exhausted the 10/min budget on `POST /api/login` and locked users out with a
+  429. Fixed with `App\Http\Middleware\ThrottlePerRoute`, which folds the route
+  into the key; every route in `routes/api.php` now uses the `throttle.route`
+  alias.
+- **`/api/stats` and `/api/logout` were effectively unthrottled.** Their group
+  declared `auth:api` before the throttle, so anonymous requests were rejected
+  by the guard before the limiter ever ran. The throttle now comes first.
+- **A credential change did not revoke the existing API token.** `register()`
+  updated the password but left `users.api_token` intact, so an admin changing
+  their password after a suspected leak stayed compromised.
+- **Logout could fail silently.** The client posted without an explicit
+  `Authorization` header, relying on an axios default that is never rehydrated
+  from localStorage on page load; a logout fired before that default existed
+  went out unauthenticated, was swallowed by an empty `catch`, and left the
+  server-side token valid while the UI reported success.
+
 ## Verification
 
 After each phase: run the test suite and load the app at
