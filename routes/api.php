@@ -10,4 +10,7 @@ Route::get('/register', 'API\ApiController@register');
 Route::post('/register', 'API\ApiController@register')->middleware('throttle');
 Route::post('/login', 'API\ApiController@login')->middleware('throttle');
 
-Route::middleware('auth:api')->get('/stats','API\ApiController@stats');
+Route::middleware('auth:api')->group(function () {
+    Route::get('/stats', 'API\ApiController@stats');
+    Route::post('/logout', 'API\ApiController@logout');
+});

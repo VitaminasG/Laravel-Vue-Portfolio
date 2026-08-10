@@ -144,6 +144,31 @@ class ApiController extends Controller
     }
 
     /**
+     * Invalidate the current API token.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function logout()
+    {
+        $user = auth('api')->user();
+
+        $user->api_token = null;
+        $user->save();
+
+        // Drop the cached auth manager so no already-authenticated guard
+        // instance can outlive this request. The token guard resolves and
+        // caches its user once per process; without this, a long-lived
+        // process (or, as here, several requests sharing one application
+        // instance in a test) would keep treating the old token as valid
+        // even though it was just cleared from storage.
+        app()->forgetInstance('auth');
+
+        return response()->json([
+            'message' => 'Logged out.',
+        ], 200);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

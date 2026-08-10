@@ -156,4 +156,21 @@ class AdminAuthTest extends TestCase
     {
         $this->get('/api/stats')->assertStatus(401);
     }
+
+    public function test_logout_clears_the_token_and_invalidates_it()
+    {
+        $token = $this->postJson('/api/login', [
+            'email' => 'admin@example.com',
+            'password' => '12345678',
+        ])->json('token');
+
+        $this->postJson('/api/logout', [], ['Authorization' => 'Bearer ' . $token])
+            ->assertStatus(200)
+            ->assertJson(['message' => 'Logged out.']);
+
+        $this->assertNull(User::where('email', 'admin@example.com')->first()->api_token);
+
+        $this->getJson('/api/stats', ['Authorization' => 'Bearer ' . $token])
+            ->assertStatus(401);
+    }
 }

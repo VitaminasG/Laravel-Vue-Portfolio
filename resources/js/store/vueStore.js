@@ -140,15 +140,17 @@ export default new Vuex.Store({
 
         },
 
-        logout({commit}){
+        logout({commit, getters}){
 
-            return new Promise((resolve) => {
-                depot.clearStore();
-                delete window.axios.defaults.headers.common['Authorization'];
-                resolve()
-            }).then(() => {
-                commit('setStorage');
-            })
+            // Clear the local session even if the request fails, so the user is
+            // never stuck in a half-logged-in state.
+            return axios.post(getters.list.post.logout)
+                .catch(() => {})
+                .then(() => {
+                    depot.clearStore();
+                    delete window.axios.defaults.headers.common['Authorization'];
+                    commit('setStorage');
+                });
         }
     }
 

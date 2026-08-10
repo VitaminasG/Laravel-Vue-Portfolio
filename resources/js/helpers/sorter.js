@@ -77,6 +77,7 @@ class Serve {
             post: {
                 register: apiP + 'register',
                 verify: apiP + 'login',
+                logout: apiP + 'logout',
             },
         };
 
