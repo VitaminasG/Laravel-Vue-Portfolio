@@ -53,51 +53,33 @@ let router = new VueRouter({
 
 });
 
-router.beforeEach((to, from, next) =>{
+router.beforeEach(async (to, from, next) => {
 
-    if(to.matched.some(record => record.meta.freshLogin)){
+    if (to.matched.some(record => record.meta.freshLogin)) {
 
-        store.dispatch('setTarget', {
+        await store.dispatch('setTarget', {
             list: store.getters.list,
             method: 'get',
-            route: 'verify'}).then(() => {
-
-            store.dispatch('freshB', store.getters.target).then(()=> {
-
-                if(!store.getters.verified){
-
-                    next({
-                        path: '/Register',
-                        redirect: to.fullPath
-                    });
-
-                    return;
-                } else {
-                    next();
-                }
-            });
-        });
-    } else {
-        next();
-    }
-
-    if(to.matched.some(record => record.meta.requiresAuth)){
-
-        store.dispatch('checkStorage').then(() => {
-
-            if(!store.getters.confirmed){
-                next({
-                    path: '/Login',
-                    redirect: to.fullPath
-                });
-            } else {
-                next();
-            }
+            route: 'verify'
         });
 
-    } else {
-        next();
+        await store.dispatch('freshB', store.getters.target);
+
+        if (!store.getters.verified) {
+            return next({ path: '/Register' });
+        }
     }
+
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+
+        await store.dispatch('checkStorage');
+
+        if (!store.getters.confirmed) {
+            return next({ path: '/Login' });
+        }
+    }
+
+    next();
 });
 
 export default router;

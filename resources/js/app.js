@@ -8,7 +8,7 @@ new Vue({
 
     el: '#app',
 
-    vueStore : vueStore,
+    store : vueStore,
     router : router,
 
     mounted(){
