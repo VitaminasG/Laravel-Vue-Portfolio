@@ -49,4 +49,25 @@ class ContactTest extends TestCase
                 && $mail->payload['agent'] === 'TestAgent/1.0';
         });
     }
+
+    public function test_a_submission_is_stored_and_answered_with_json()
+    {
+        Mail::fake();
+
+        $this->postJson('/ContactMe', $this->payload(), ['User-Agent' => 'TestAgent/1.0'])
+            ->assertStatus(200)
+            ->assertExactJson(['message' => 'Message sent.']);
+
+        $this->assertSame(1, \DB::table('indices')->count());
+    }
+
+    public function test_a_submission_without_a_message_is_rejected()
+    {
+        Mail::fake();
+
+        $this->postJson('/ContactMe', ['name' => 'Tester', 'from' => 'tester@example.com'])
+            ->assertStatus(422);
+
+        Mail::assertNothingSent();
+    }
 }

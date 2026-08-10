@@ -63,7 +63,7 @@ class IndexController extends Controller
 
     public function store(Request $request){
 
-		$this->validate(request(), [
+		$this->validate($request, [
 
 			'name' => 'required',
 
@@ -73,14 +73,14 @@ class IndexController extends Controller
 
 			]);
 
-		$request->agent = $request->header('User-Agent');
+		$agent = $request->header('User-Agent');
 
 		$data = new Index;
 
 		$data->name = $request->name;
 		$data->from = $request->from;
 		$data->message = $request->message;
-		$data->agent = $request->agent;
+		$data->agent = $agent;
 
 		$data->save();
 
@@ -88,9 +88,12 @@ class IndexController extends Controller
 			'name' => $request->name,
 			'from' => $request->from,
 			'body' => $request->message,
-			'agent' => $request->header('User-Agent'),
+			'agent' => $agent,
 		]));
 
+		return response()->json([
+			'message' => 'Message sent.',
+		], 200);
 	}
 
 
