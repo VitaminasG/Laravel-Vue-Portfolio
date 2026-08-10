@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\User;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 /**
@@ -14,6 +15,12 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class AdminAuthTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->artisan('cache:clear');
+    }
 
     public function test_verify_returns_false_for_an_unverified_admin()
     {
@@ -178,5 +185,25 @@ class AdminAuthTest extends TestCase
 
         $this->getJson('/api/stats', ['Authorization' => 'Bearer ' . $token])
             ->assertStatus(401);
+    }
+
+    public function test_register_is_not_reachable_over_get()
+    {
+        $this->getJson('/api/register')->assertStatus(405);
+    }
+
+    public function test_login_is_throttled_after_ten_attempts()
+    {
+        for ($i = 0; $i < 10; $i++) {
+            $this->postJson('/api/login', [
+                'email' => 'admin@example.com',
+                'password' => 'wrong',
+            ])->assertStatus(401);
+        }
+
+        $this->postJson('/api/login', [
+            'email' => 'admin@example.com',
+            'password' => 'wrong',
+        ])->assertStatus(429);
     }
 }

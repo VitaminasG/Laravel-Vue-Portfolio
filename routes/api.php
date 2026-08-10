@@ -1,14 +1,9 @@
 <?php
 
 Route::get('/verify', 'API\ApiController@verify');
-Route::get('/register', 'API\ApiController@register');
 
-/*
- * TODO : For Production set throttle on ':10,1' - 10 request per 1 min.
- */
-
-Route::post('/register', 'API\ApiController@register')->middleware('throttle');
-Route::post('/login', 'API\ApiController@login')->middleware('throttle');
+Route::post('/register', 'API\ApiController@register')->middleware('throttle:10,1');
+Route::post('/login', 'API\ApiController@login')->middleware('throttle:10,1');
 
 Route::middleware('auth:api')->group(function () {
     Route::get('/stats', 'API\ApiController@stats');
