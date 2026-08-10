@@ -84,7 +84,7 @@ class IndexController extends Controller
 
 		$data->save();
 
-		Mail::to("vitaminas.g@gmail.com")->send(new ContactMe($request));
+		Mail::to(config('contact.recipient'))->send(new ContactMe($request));
 
 	}
 
