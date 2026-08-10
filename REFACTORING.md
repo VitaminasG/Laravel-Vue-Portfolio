@@ -112,9 +112,11 @@ Test coverage gaps for code this refactor changed:
       boolean.
 - [x] `POST /api/logout` without a token (expected 401) is untested.
 - [x] `throttle:10,1` is tested on `/api/login` but not on `/api/register`.
-- [ ] The throttle-before-`auth:api` ordering on the guarded group was verified
-      by reading `SortedMiddleware`, not by an executable test — driving
-      `/api/stats` past 60 anonymous requests would prove it, at real cost.
+- [x] The throttle-before-`auth:api` ordering on the guarded group is now
+      covered by a test. Writing it found that the ordering did not actually
+      hold: $middlewarePriority outranks the order declared in routes/api.php,
+      and Laravel was hoisting Authenticate above the throttle. Fixed in
+      app/Http/Kernel.php.
 - [x] `ContactMe`'s Blade view is never rendered by a test, so a variable-name
       typo there would go unnoticed. The four payload keys were checked by hand
       and match.

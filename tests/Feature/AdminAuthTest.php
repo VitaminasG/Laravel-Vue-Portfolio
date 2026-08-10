@@ -251,6 +251,24 @@ class AdminAuthTest extends TestCase
         ])->assertStatus(401);
     }
 
+    public function test_anonymous_traffic_to_a_guarded_route_is_throttled_not_just_rejected()
+    {
+        // The guarded group declares the throttle before auth:api on purpose.
+        // Middleware runs in declared order, so an anonymous request is counted
+        // by the rate limiter first and only then rejected by the guard. With
+        // the order reversed, auth:api answers 401 before the limiter ever sees
+        // the request, and /api/stats and /api/logout can be hammered forever
+        // at no cost — each rejection still costs a users-table lookup.
+        //
+        // The limit is 60/min, so the first 60 are refused for lack of a token
+        // and the 61st is refused for exceeding the budget.
+        for ($i = 0; $i < 60; $i++) {
+            $this->getJson('/api/stats')->assertStatus(401);
+        }
+
+        $this->getJson('/api/stats')->assertStatus(429);
+    }
+
     public function test_is_admin_returns_a_real_boolean()
     {
         $admin = User::where('email', 'admin@example.com')->first();

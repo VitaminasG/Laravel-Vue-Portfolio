@@ -72,6 +72,15 @@ class Kernel extends HttpKernel
     protected $middlewarePriority = [
         \Illuminate\Session\Middleware\StartSession::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+        // Throttling is listed ahead of Authenticate so anonymous traffic to a
+        // guarded route is counted before it is rejected. Declaring the order
+        // in routes/api.php is not enough: this list outranks it, and with
+        // SubstituteBindings (from the `api` group) also present, Laravel was
+        // hoisting Authenticate above both — leaving /api/stats and
+        // /api/logout free to be hammered, each rejection still costing a
+        // users-table lookup.
+        \App\Http\Middleware\ThrottlePerRoute::class,
+        \Illuminate\Routing\Middleware\ThrottleRequests::class,
         \App\Http\Middleware\Authenticate::class,
         \Illuminate\Session\Middleware\AuthenticateSession::class,
         \Illuminate\Routing\Middleware\SubstituteBindings::class,
