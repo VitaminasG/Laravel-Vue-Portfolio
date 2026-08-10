@@ -221,6 +221,21 @@ class AdminAuthTest extends TestCase
         ])->assertStatus(429);
     }
 
+    public function test_verify_traffic_does_not_consume_the_login_throttle_budget()
+    {
+        // /api/verify allows 60 requests/min; /api/login allows 10. Before the
+        // per-route throttle fix, both shared one IP-keyed counter, so this
+        // burst of verify calls alone was enough to exhaust login's budget.
+        for ($i = 0; $i < 10; $i++) {
+            $this->getJson('/api/verify')->assertStatus(200);
+        }
+
+        $this->postJson('/api/login', [
+            'email' => 'admin@example.com',
+            'password' => 'wrong',
+        ])->assertStatus(401);
+    }
+
     public function test_is_admin_returns_a_real_boolean()
     {
         $admin = User::where('email', 'admin@example.com')->first();
