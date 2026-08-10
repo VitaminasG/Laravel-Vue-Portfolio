@@ -151,4 +151,9 @@ class AdminAuthTest extends TestCase
             'password' => $password,
         ])->assertStatus(200);
     }
+
+    public function test_unauthenticated_request_returns_401_without_a_json_accept_header()
+    {
+        $this->get('/api/stats')->assertStatus(401);
+    }
 }
