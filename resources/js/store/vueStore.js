@@ -8,16 +8,11 @@ import _sorter from "../helpers/sorter";
 window.depot = _store;
 window.sorter = _sorter;
 
-// Debug mode
-window.depot.debug = false;
-window.sorter.debug = false;
-
 Vue.use(Vuex);
 
 export default new Vuex.Store({
 
   state: {
-    debug: true,
     api: {
       list: sorter.apiList,
       target:[],
@@ -84,7 +79,7 @@ export default new Vuex.Store({
             resolve(success.data.check);
           })
           .catch(error => {
-            console.log(error);
+            console.error('Failed to check whether the admin has been verified.', error);
             reject(error);
           })
       })
@@ -104,7 +99,7 @@ export default new Vuex.Store({
       // check if token locStore was set correctly
       if(!depot.getLoc('token')){
 
-        console.log('Token not found!');
+        console.error('Login succeeded but the token could not be stored; the session will not persist.');
         depot.setLoc('confirmed', false);
 
       } else {
@@ -132,7 +127,7 @@ export default new Vuex.Store({
             resolve();
           })
             .catch( error => {
-              console.log(error);
+              console.error('Failed to load dashboard stats.', error);
               reject(error);
             })
         })

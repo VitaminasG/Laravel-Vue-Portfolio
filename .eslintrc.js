@@ -52,9 +52,10 @@ module.exports = {
         'vue/html-indent': ['error', 2],
         'vue/script-indent': ['error', 2, { baseIndent: 1 }],
 
-        // Leftover debug statements are tracked as a Phase 4 cleanup item;
-        // warn rather than error so linting stays green until they are gone.
-        'no-console': 'warn',
+        // Debug logging is gone; what remains are genuine failure reports that
+        // belong in the console, so error and warn stay allowed while a stray
+        // console.log gets flagged.
+        'no-console': ['warn', { allow: ['error', 'warn'] }],
 
         // This is a retro-OS portfolio, not a component library: single-word
         // component names like Home and OS are intentional.

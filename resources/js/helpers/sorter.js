@@ -1,66 +1,35 @@
 class Serve {
 
-  // Getters & Setters
-
-  // DEBUG mode.
   /**
-     * Get - debug mode.
-     * @returns {boolean}
-     */
-  get debug() {
-    return this._debug;
-  }
-
-  /**
-     * Set - debug mode.
-     * @param {boolean} value.
-     */
-  set debug(value) {
-    this._debug = value;
-  }
-
-  // API list.
-  /**
-     * Get - API list.
-     *
-     * @returns {array}
-     */
+   * Get - API list.
+   *
+   * @returns {array}
+   */
   get apiList() {
-
     return this._apiList;
   }
 
-  // Constructor
-
-  constructor(){
-
-    // Default settings.
-    this._debug = false;
+  constructor() {
     this._apiList = this.list();
   }
 
   /**
-     * Sorted list by method.
-     * @param {object} list.
-     * @param {string} method.
-     *
-     * @return {object}
-     */
-  sortedBy(list, method){
-
-    if(this._debug) {
-      console.log('Api list by method: '+ method);
-    }
-
+   * Sorted list by method.
+   * @param {object} list.
+   * @param {string} method.
+   *
+   * @return {object}
+   */
+  sortedBy(list, method) {
     return Object.entries(list[method]);
   }
 
   /**
-     * A default - API list.
-     *
-     * @return {object}
-     */
-  list(){
+   * A default - API list.
+   *
+   * @return {object}
+   */
+  list() {
 
     let apiP, apiL;
 

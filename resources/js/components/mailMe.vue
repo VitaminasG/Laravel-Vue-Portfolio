@@ -122,8 +122,6 @@
 
       return {
 
-        debug: false,
-
         isActive : '',
         success: false,
         message: '',
@@ -165,15 +163,7 @@
 
         this.clear();
 
-        if(this.debug){
-          console.log('Clearing Field and Error Obj!');
-        }
-
         axios.post('/ContactMe', this.fields).then(response => {
-
-          if(this.debug){
-            console.log('Sending Data: ', this.fields);
-          }
 
           this.fields = {};
 
@@ -187,13 +177,9 @@
 
             this.errors = error.response.data.errors;
 
-            if(this.debug){
-              console.log('cached some errors : ', this.errors);
-            }
-
           } else if (error.request ){
 
-            console.log(error.request);
+            console.error('The contact form request never reached the server.', error.request);
 
           }
         });

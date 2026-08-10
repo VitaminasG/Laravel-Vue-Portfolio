@@ -270,8 +270,6 @@
     data(){
       return{
         loading: null,
-        debug: false,
-
         // Animation Steps
         step: 1,
         countStep : 0,
@@ -319,9 +317,6 @@
 
         default:
 
-          if(this.debug) {
-            console.log('What to do now? We have Step: ' + this.countStep);
-          }
         }
 
       }
@@ -348,22 +343,10 @@
 
       beforeAppear(el) {
 
-        if(this.debug){
-
-          console.log('Before Enter');
-
-        }
-
         el.style.opacity = 0;
       },
 
       typing(el, done){
-
-        if(this.debug) {
-
-          console.log('Enter');
-
-        }
 
         let delay = el.dataset.index * 75;
 
@@ -378,19 +361,7 @@
 
         _.throttle(function(){
 
-          if(this.debug) {
-
-            console.log('adding time again from Throttle');
-
-          }
-
           this.countStep += 1;
-
-          if(this.debug) {
-
-            console.log('Now is step after Throttle: ' + this.countStep);
-
-          }
 
         },3500),
 
@@ -432,12 +403,6 @@
       },
 
       delayAfter(){
-
-        if(this.debug){
-
-          console.log('Here I am after TimeOut');
-
-        }
 
         this.step++;
 

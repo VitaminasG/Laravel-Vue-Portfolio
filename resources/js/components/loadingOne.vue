@@ -79,7 +79,6 @@
 
       return {
 
-        debug: false,
         i: {
           t1: 't1', t2: 't2', t3: 't3', t4: 't4'
         },
@@ -159,9 +158,6 @@
 
         this.subStep++;
 
-        if(this.debug){
-          console.log('Now we in Sub Step: ' + this.subStep);
-        }
       }
     }
   }

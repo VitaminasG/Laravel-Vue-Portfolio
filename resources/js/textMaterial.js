@@ -1,7 +1,5 @@
 export const materials = {
 
-  debug: false,
-
   store: {
 
     result: {},
@@ -29,28 +27,15 @@ export const materials = {
 
   create(name){
 
-    if(this.debug){
-      console.log('Object Created: ' + name);
-    }
-
     this.store.result[name] = {};
 
   },
 
   strSplit(text, key, name){
 
-    if(this.debug){
-      console.log('Splitting :' + key);
-    }
-
     this.store.result[name][key] = [];
 
     Object.assign(this.store.result[name][key], text.split(''));
-
-    if(this.debug){
-      console.log('Splited and Displaying :' + ' Object->' + name + ', With Key : ' + key );
-      console.log(this.store.result[name][key]);
-    }
 
   },
 

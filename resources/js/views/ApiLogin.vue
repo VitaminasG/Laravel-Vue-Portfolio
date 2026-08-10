@@ -90,7 +90,6 @@
             this.$router.push('/Dashboard');
           })
           .catch( ({ response }) => {
-            console.log(response);
             this.error = true;
             this.message = response.data.message;
           })

@@ -127,8 +127,6 @@
     data(){
       return {
 
-        debug: false,
-
         clock: '',
         date: '',
 
@@ -257,11 +255,6 @@
 
         this.modalType = 'text';
 
-        if (this.debug){
-          console.log('Pointing to: ', target);
-          console.log('Modal Type: ', this.modalType);
-        }
-
         // Clear and Add State of Modal
 
         store.clearState();
@@ -278,10 +271,6 @@
       toggleMail(event){
 
         this.modalType = 'mail';
-
-        if (this.debug){
-          console.log('Modal Type: ', this.modalType);
-        }
 
         // Clear and Add State of Modal
 
