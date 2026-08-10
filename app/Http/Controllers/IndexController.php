@@ -51,6 +51,8 @@ class IndexController extends Controller
 			return view( 'layouts.server' );
 		}
 
+		// No detector matched — fall back to the full desktop experience.
+		return view( 'layouts.master' );
 	}
 
 

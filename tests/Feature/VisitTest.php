@@ -61,4 +61,11 @@ class VisitTest extends TestCase
 
         $this->assertSame(1, \DB::table('stats')->count());
     }
+
+    public function test_an_empty_user_agent_still_receives_a_layout()
+    {
+        $this->visit('')
+            ->assertStatus(200)
+            ->assertSee('/js/app.js', false);
+    }
 }
