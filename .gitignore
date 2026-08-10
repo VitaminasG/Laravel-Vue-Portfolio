@@ -1,3 +1,7 @@
+#CLAUDE
+CLAUDE.md
+.claude
+
 vendor/
 node_modules/
 logs
@@ -12,8 +16,13 @@ storage/*.key
 .env.php
 .env
 
+# Local SSL certificates (mkcert) — personal, not versioned
+.docker/certs/*
+!.docker/certs/.gitkeep
+
 #Personal Ignores
 
 /_ide_helper.php
 /.phpstorm.meta.php
 .idea/
+.temp/

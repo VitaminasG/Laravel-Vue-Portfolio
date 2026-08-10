@@ -1,0 +1,13 @@
+x-networks: &networks
+  networks:
+    portfolio:
+
+services:
+  # Expose the MariaDB port to the host locally (e.g. to connect with a DB client)
+  mariadb:
+    ports:
+      - "3309:3306"
+  # webpack-dev-server (npm run hot), if ever needed
+  node:
+    ports:
+      - "8091:8080"

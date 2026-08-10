@@ -1,0 +1,76 @@
+x-log-min: &log-min
+  logging:
+    options:
+      max-size: '10M'
+      max-file: '3'
+
+x-restart: &restart
+  restart: unless-stopped
+
+x-networks: &networks
+  networks:
+    portfolio:
+
+services:
+  nginx:
+    container_name: ${DOCKER_CONTAINER_PREFIX}-nginx
+    build:
+      context: './.docker/nginx'
+      dockerfile: 'Dockerfile'
+      args:
+        - SSL_CERT
+        - SSL_KEY
+    ports:
+      - '${HTTP_PORT:-80}:80'
+      - '${SSL_PORT:-443}:443'
+    volumes:
+      - ./:/var/www/portfolio
+      - portfolio-sockets:/var/run/sockets
+    networks:
+      portfolio:
+        aliases:
+          - gediminaspalsys.local
+    depends_on:
+      - php
+    <<: [ *log-min, *restart, *networks ]
+
+  php:
+    container_name: ${DOCKER_CONTAINER_PREFIX}-php
+    build: ./.docker/php
+    # Intentionally WITHOUT env_file: Laravel reads the mounted .env directly (vlucas/phpdotenv).
+    # env_file would bake values in at container start and shadow later .env changes
+    # (e.g. after `php artisan key:generate` the container would need a restart).
+    volumes:
+      - ./:/var/www/portfolio
+      - portfolio-sockets:/var/run/sockets
+    depends_on:
+      - mariadb
+    <<: [ *log-min, *restart, *networks ]
+
+  mariadb:
+    container_name: ${DOCKER_CONTAINER_PREFIX}-mariadb
+    build: ./.docker/mariadb
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ./.docker/mariadb/templates/init:/docker-entrypoint-initdb.d
+      - portfolio-mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-toor}
+    <<: [ *log-min, *restart, *networks ]
+
+  node:
+    image: node:12-buster-slim
+    container_name: ${DOCKER_CONTAINER_PREFIX}-node
+    working_dir: /var/www/portfolio
+    tty: true
+    volumes:
+      - ./:/var/www/portfolio
+    <<: [ *log-min, *restart, *networks ]
+
+networks:
+  portfolio:
+    driver: bridge
+
+volumes:
+  portfolio-sockets:
+  portfolio-mysql:

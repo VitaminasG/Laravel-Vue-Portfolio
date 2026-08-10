@@ -1,0 +1,3 @@
+[mysqld]
+default-time-zone = "Europe/Vilnius"
+sql_mode = "NO_ENGINE_SUBSTITUTION"

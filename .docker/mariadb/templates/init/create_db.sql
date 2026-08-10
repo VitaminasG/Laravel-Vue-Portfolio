@@ -1,0 +1,3 @@
+CREATE DATABASE IF NOT EXISTS `portfolio`;
+
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%';
