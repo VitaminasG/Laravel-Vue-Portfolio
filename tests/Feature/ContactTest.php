@@ -34,4 +34,19 @@ class ContactTest extends TestCase
             return $mail->hasTo('configured@example.com');
         });
     }
+
+    public function test_the_mailable_carries_a_plain_payload()
+    {
+        Mail::fake();
+
+        $this->post('/ContactMe', $this->payload(), ['User-Agent' => 'TestAgent/1.0'])
+            ->assertSuccessful();
+
+        Mail::assertSent(ContactMe::class, function ($mail) {
+            return $mail->payload['name'] === 'Tester'
+                && $mail->payload['from'] === 'tester@example.com'
+                && $mail->payload['body'] === 'Hello there'
+                && $mail->payload['agent'] === 'TestAgent/1.0';
+        });
+    }
 }

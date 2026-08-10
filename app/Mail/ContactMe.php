@@ -5,25 +5,25 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Http\Request;
 
 class ContactMe extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $request;
+    /**
+     * @var array
+     */
+    public $payload;
 
     /**
-     * Create a message instance
+     * Create a message instance.
      *
+     * @param  array  $payload  keys: name, from, body, agent
      * @return void
      */
-    public function __construct(Request $request)
+    public function __construct(array $payload)
     {
-
-    	$this->request = $request;
-
+        $this->payload = $payload;
     }
 
     /**
@@ -32,15 +32,7 @@ class ContactMe extends Mailable
      * @return $this
      */
     public function build()
-
     {
-
-        return $this->view('emails.contactMe')
-	        ->with([
-	        	'name' => $this->request->name,
-	        	'from' => $this->request->from,
-	        	'body' => $this->request->message,
-		        'agent' => $this->request->agent
-	        ]);
+        return $this->view('emails.contactMe')->with($this->payload);
     }
 }

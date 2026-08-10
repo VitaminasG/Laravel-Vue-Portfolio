@@ -84,7 +84,12 @@ class IndexController extends Controller
 
 		$data->save();
 
-		Mail::to(config('contact.recipient'))->send(new ContactMe($request));
+		Mail::to(config('contact.recipient'))->send(new ContactMe([
+			'name' => $request->name,
+			'from' => $request->from,
+			'body' => $request->message,
+			'agent' => $request->header('User-Agent'),
+		]));
 
 	}
 
