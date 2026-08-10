@@ -18,59 +18,59 @@ the correction is marked.
 
 ## Phase 1 — Correctness bugs
 
-- [ ] `resources/js/routes.js:56-101` — `beforeEach` calls `next()` twice (two
+- [x] `resources/js/routes.js:56-101` — `beforeEach` calls `next()` twice (two
       independent if/else blocks, plus sync/async race on `freshLogin` routes).
       Rewrite as a single guard with correct async flow.
       *Corrected: redirects do work in practice (`/Dashboard` lands on `/Login`),
       so this is a race and a fragility, not an open auth hole.*
-- [ ] `app/Http/Controllers/API/ApiController.php:20-35` — `verify()` crashes (500)
+- [x] `app/Http/Controllers/API/ApiController.php:20-35` — `verify()` crashes (500)
       when no admin row exists (`$admin->verified` on null). Guard for null.
-- [ ] `resources/js/app.js:11` — `vueStore: vueStore` should be `store: vueStore`
+- [x] `resources/js/app.js:11` — `vueStore: vueStore` should be `store: vueStore`
       so Vuex is wired to `$store`.
       *Corrected: harmless today — no component uses `this.$store`; all four
       consumers import `store` directly. A misleading line, not a defect.*
-- [ ] `ApiController.php:113` — drop `htmlentities()` around the password before
+- [x] `ApiController.php:113` — drop `htmlentities()` around the password before
       `Hash::make()` (it mangles passwords containing `<>&"'`).
       *Note: this is a fix, not a regression — `login()` already checks the raw
       password, so such a password cannot work today.*
-- [ ] `app/Http/Controllers/IndexController.php:19-54` — `index()` returns nothing
+- [x] `app/Http/Controllers/IndexController.php:19-54` — `index()` returns nothing
       for unmatched agents; add a desktop default. Robots keep being recorded.
       *Corrected: theoretical. `isDesktop()` is `!isMobile() && !isTablet() &&
       !isRobot()`, so a branch always matches — verified against tablets, smart
       TVs, consoles, curl, wget and an empty User-Agent. Default added as a
       safety net only.*
-- [ ] `app/Exceptions/Handler.php` — an unauthenticated API request returns 500,
+- [x] `app/Exceptions/Handler.php` — an unauthenticated API request returns 500,
       not 401: the handler redirects to a `login` route that does not exist.
       Masked in practice because axios sends `Accept: application/json`.
 
 ## Phase 2 — Security
 
-- [ ] `IndexController.php:85` — hardcoded recipient `vitaminas.g@gmail.com` →
+- [x] `IndexController.php:85` — hardcoded recipient `vitaminas.g@gmail.com` →
       move to `config`/`.env` (`CONTACT_RECIPIENT`), keeping the current address
       as the fallback.
-- [ ] `vueStore.js` logout + `ApiController` — server keeps the `api_token` valid
+- [x] `vueStore.js` logout + `ApiController` — server keeps the `api_token` valid
       forever; logout only clears localStorage. Add `POST /api/logout` behind
       `auth:api` that clears `users.api_token`.
-- [ ] `routes/api.php:10-11` — set explicit `throttle:10,1` and drop `GET /register`.
+- [x] `routes/api.php:10-11` — set explicit `throttle:10,1` and drop `GET /register`.
       *Corrected: `GET /verify` is used by `sorter.js` and must stay. `GET /register`
       is worse than "pointless" — a GET request invokes the credential change.*
-- [ ] `ApiController::stats()` — returns 200 with an error message for a non-admin;
+- [x] `ApiController::stats()` — returns 200 with an error message for a non-admin;
       should be 403.
 
 ## Phase 3 — Backend simplification
 
-- [ ] `app/User.php:31-69` — `isAdmin()` returns a string (misleading); `admin()` /
+- [x] `app/User.php:31-69` — `isAdmin()` returns a string (misleading); `admin()` /
       `default()` duplicate the `$roles` map. Consolidate role logic (bool `isAdmin()`
       + clear role constants).
       *Safe: `'su'` appears only inside `User.php`, and the database contains only
       `type='admin'`.*
-- [ ] `ApiController.php` — extract the repeated "find user + check password" block;
+- [x] `ApiController.php` — extract the repeated "find user + check password" block;
       remove the empty resource stubs `store/show/update/destroy` (158-195).
-- [ ] `app/Mail/ContactMe.php` — stop passing the whole `Request`; pass a plain
+- [x] `app/Mail/ContactMe.php` — stop passing the whole `Request`; pass a plain
       payload (name/from/message/agent) so the mailable is queue-safe.
-- [ ] `IndexController.php:74` — read the User-Agent header directly instead of
+- [x] `IndexController.php:74` — read the User-Agent header directly instead of
       assigning the dynamic `$request->agent` property.
-- [ ] `IndexController@store` — returns no response at all (empty 200); return JSON.
+- [x] `IndexController@store` — returns no response at all (empty 200); return JSON.
 
 ## Phase 4 — Frontend simplification
 
