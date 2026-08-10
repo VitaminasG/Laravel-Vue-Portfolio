@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('type')->default(User::default());
+            $table->string('type')->default(User::ROLE_DEFAULT);
             $table->boolean('verified')->default(0);
             $table->string('password');
             $table->rememberToken();
@@ -28,7 +28,7 @@ class CreateUsersTable extends Migration
         User::create([
             'name' => 'admin',
             'email' => 'admin@example.com',
-            'type' => User::admin(),
+            'type' => User::ROLE_ADMIN,
             'password' => Hash::make('12345678')
         ]);
     }

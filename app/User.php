@@ -28,43 +28,16 @@ class User extends Authenticatable
         'password', 'api_token', 'remember_token', 'id',
     ];
 
-    protected $roles = [
-        'su' => 'admin',
-    ];
-
-    public function returnRole($type)
-    {
-        return $this->roles[$type];
-    }
+    const ROLE_ADMIN = 'admin';
+    const ROLE_DEFAULT = 'user';
 
     /**
-     * Check if User Type is Admin
+     * Check if the user has the admin role.
      *
      * @return boolean
      */
     public function isAdmin()
     {
-        return $this->returnRole('su');
-    }
-
-    /**
-     * Return Admin Type
-     *
-     * @return string
-     */
-    public static function admin()
-    {
-
-        return $admin = 'admin';
-    }
-
-    /**
-     * Return Default Type
-     *
-     * @return string
-     */
-    public static function default()
-    {
-        return $default = 'user';
+        return $this->type === self::ROLE_ADMIN;
     }
 }

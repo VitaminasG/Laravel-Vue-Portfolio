@@ -19,9 +19,7 @@ class ApiController extends Controller
      */
     public function verify()
     {
-        $user = new User();
-
-        $admin = User::where('type', $user->isAdmin())->first();
+        $admin = User::where('type', User::ROLE_ADMIN)->first();
 
         return response()->json([
             'check' => (bool) optional($admin)->verified,
@@ -34,8 +32,6 @@ class ApiController extends Controller
      */
     public function login()
     {
-
-        $admin = new User();
 
         $user = User::where('email', request('email'))->first();
 
@@ -53,7 +49,7 @@ class ApiController extends Controller
             ], 401);
         }
 
-        if($user->type === $admin->isAdmin()){
+        if($user->isAdmin()){
 
             $token = Str::random(80);
             $user->api_token = $token;
@@ -123,9 +119,7 @@ class ApiController extends Controller
      */
     public function stats()
     {
-        $user = new User();
-
-        if (auth('api')->user()->type !== $user->isAdmin()) {
+        if (! auth('api')->user()->isAdmin()) {
 
             return response()->json([
                 'message' => 'You are not Admin!',

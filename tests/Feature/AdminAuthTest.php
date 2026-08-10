@@ -148,7 +148,7 @@ class AdminAuthTest extends TestCase
             'name' => 'visitor',
             'email' => 'visitor@example.com',
             'password' => Hash::make('password123'),
-            'type' => User::default(),
+            'type' => User::ROLE_DEFAULT,
             'api_token' => \Illuminate\Support\Str::random(80),
         ]);
 
@@ -219,5 +219,16 @@ class AdminAuthTest extends TestCase
             'email' => 'admin@example.com',
             'password' => 'wrong',
         ])->assertStatus(429);
+    }
+
+    public function test_is_admin_returns_a_real_boolean()
+    {
+        $admin = User::where('email', 'admin@example.com')->first();
+
+        $this->assertTrue($admin->isAdmin());
+
+        $visitor = new User(['type' => User::ROLE_DEFAULT]);
+
+        $this->assertFalse($visitor->isAdmin());
     }
 }
