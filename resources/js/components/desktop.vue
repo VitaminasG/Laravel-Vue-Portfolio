@@ -311,13 +311,19 @@
 <style scoped>
 
     .desktop {
-        background-image: url('../../assets/wallpaper.jpg');
+        background-image: url('../../assets/wallpaper.png');
         background-size: cover;
         background-repeat: no-repeat;
         display: flex;
         flex-direction: column;
         min-height: 100vh;
-        text-shadow: 0 0 5px rgba(230, 230, 230, 0.31);
+        /*
+            A dark shadow, not a light one: the wallpaper runs from bright sky
+            at the top to dark grass at the bottom, and the near-white icon
+            labels would otherwise disappear against the clouds. This is what
+            the desktop it borrows from did for the same reason.
+        */
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.75);
     }
 
     .d-content {
