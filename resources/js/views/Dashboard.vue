@@ -1,52 +1,52 @@
 <template>
-    <div>
+  <div>
 
     <div id="_dash">
 
-        <!-- Login Links -->
-        <div class="flex py-1 px-1">
-            <p>Hello, {{ username }}</p>
-            <a href="/" @click.prevent="logout">Logout</a>
-        </div>
+      <!-- Login Links -->
+      <div class="flex py-1 px-1">
+        <p>Hello, {{ username }}</p>
+        <a href="/" @click.prevent="logout">Logout</a>
+      </div>
 
-        <h2 class="text-center">Dashboard</h2>
-        <div class="flex-block flex-center h-100">
-            <stats></stats>
-        </div>
+      <h2 class="text-center">Dashboard</h2>
+      <div class="flex-block flex-center h-100">
+        <stats />
+      </div>
     </div>
 
-        <article class="_box flex-block">
-            <div class="_box-header flex">
-                <p>Access Denied</p>
-            </div>
-        </article>
+    <article class="_box flex-block">
+      <div class="_box-header flex">
+        <p>Access Denied</p>
+      </div>
+    </article>
 
-    </div>
+  </div>
 </template>
 
 <script>
 
-    import store from './../store/vueStore';
-    const stats = () => import('../components/statistics');
+  import store from './../store/vueStore';
+  const stats = () => import('../components/statistics');
 
-    export default {
-        name: "Dashboard",
-        data(){
-            return{
-                username: store.getters.user,
-                token: store.getters.token,
-            }
-        },
-        components:{
-          stats,
-        },
-        methods:{
-            logout(){
-                store.dispatch('logout');
-                this.$router.push('/');
-            }
-        }
+  export default {
+    name: "Dashboard",
+    components:{
+      stats,
+    },
+    data(){
+      return{
+        username: store.getters.user,
+        token: store.getters.token,
+      }
+    },
+    methods:{
+      logout(){
+        store.dispatch('logout');
+        this.$router.push('/');
+      }
     }
+  }
 </script>
 
 <style scoped>

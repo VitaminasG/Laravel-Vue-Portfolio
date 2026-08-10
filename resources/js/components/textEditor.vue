@@ -1,41 +1,39 @@
 <template>
 
-    <!-- Text Editor 1 -->
-    <div class="my-1 w-50 h-50">
+  <!-- Text Editor 1 -->
+  <div class="my-1 w-50 h-50">
 
-        <div class="_card h-100">
+    <div class="_card h-100">
 
-            <header class="_card-header">
-                <p class="_card-header-title">First Text</p>
-            </header>
+      <header class="_card-header">
+        <p class="_card-header-title">First Text</p>
+      </header>
 
-            <div class="_card-content">
-                <div class="content">
-                            <textarea class="_card-textarea" placeholder="e.g. Hello world" rows="10">
-
-                            </textarea>
-                </div>
-            </div>
-
-            <footer class="_card-footer flex-center">
-                <button class="_card-button">Save</button>
-            </footer>
-
+      <div class="_card-content">
+        <div class="content">
+          <textarea class="_card-textarea" placeholder="e.g. Hello world" rows="10" />
         </div>
+      </div>
+
+      <footer class="_card-footer flex-center">
+        <button class="_card-button">Save</button>
+      </footer>
 
     </div>
+
+  </div>
 
 </template>
 
 <script>
-    export default {
-        name: "textEditor",
-        data(){
-            return{
-                data:[],
-            }
-        },
-    }
+  export default {
+    name: "TextEditor",
+    data(){
+      return{
+        data:[],
+      }
+    },
+  }
 </script>
 
 <style scoped>

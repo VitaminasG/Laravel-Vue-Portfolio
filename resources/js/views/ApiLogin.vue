@@ -1,102 +1,102 @@
 <template>
 
-    <div id="_login" class="flex-center">
+  <div id="_login" class="flex-center">
 
-        <div class="__link">
-            <router-link to="/">
-                <img src="../../assets/exit.svg">
-            </router-link>
-        </div>
-
-        <div id="_panel" class="flex-block h-50 w-25">
-
-            <article v-if="error" class="_box-error flex-block mb-1">
-                <div class="_box-header flex fontSize-1h">
-                    <p>Access Denied</p>
-                </div>
-                <div class="_box-body text-center fontSize-1h">
-                    {{ message }}
-                </div>
-            </article>
-
-            <article class="_box flex-block mb-1">
-                <div class="_box-header flex">
-                    <p class="p-1 fontSize-1h w-75 text-center text-underline">
-                        SignIn
-                    </p>
-                </div>
-            </article>
-
-            <div class="field">
-                <label>Email</label>
-                <div class="w-100">
-                    <input class="_input w-100" type="email" name="email" v-model="email">
-                </div>
-            </div>
-
-            <div class="field">
-                <label>Password</label>
-                <div class="w-100">
-                    <input class="_input w-100" type="password" name="password" v-model="password">
-                </div>
-            </div>
-
-            <div class="flex-center">
-                <button class="_box-button" @click.prevent="login">Login</button>
-            </div>
-        </div>
-
+    <div class="__link">
+      <router-link to="/">
+        <img src="../../assets/exit.svg">
+      </router-link>
     </div>
+
+    <div id="_panel" class="flex-block h-50 w-25">
+
+      <article v-if="error" class="_box-error flex-block mb-1">
+        <div class="_box-header flex fontSize-1h">
+          <p>Access Denied</p>
+        </div>
+        <div class="_box-body text-center fontSize-1h">
+          {{ message }}
+        </div>
+      </article>
+
+      <article class="_box flex-block mb-1">
+        <div class="_box-header flex">
+          <p class="p-1 fontSize-1h w-75 text-center text-underline">
+            SignIn
+          </p>
+        </div>
+      </article>
+
+      <div class="field">
+        <label>Email</label>
+        <div class="w-100">
+          <input v-model="email" class="_input w-100" type="email" name="email">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Password</label>
+        <div class="w-100">
+          <input v-model="password" class="_input w-100" type="password" name="password">
+        </div>
+      </div>
+
+      <div class="flex-center">
+        <button class="_box-button" @click.prevent="login">Login</button>
+      </div>
+    </div>
+
+  </div>
 
 </template>
 
 <script>
 
-    import axios from 'axios';
-    import store from './../store/vueStore';
+  import axios from 'axios';
+  import store from './../store/vueStore';
 
-    export default {
-        name: "login",
-        data(){
-            return {
-                email:'',
-                password:'',
-                error: false,
-                message:'',
-            }
-        },
-        mounted(){
+  export default {
+    name: "Login",
+    data(){
+      return {
+        email:'',
+        password:'',
+        error: false,
+        message:'',
+      }
+    },
+    mounted(){
 
-            //Checking if already logged-in
-          store.dispatch('checkStorage').then(() => {
-              if(store.getters.confirmed){
-                  this.$router.push('/Dashboard');
-              }
-          })
-        },
-        methods:{
-            login(){
-
-                let data = {
-                    email: this.email,
-                    password: this.password
-                };
-
-                axios.post('/api/login', data)
-                    .then( response => {
-                        this.error = false;
-                        this.message = '';
-                        store.dispatch('loginB', {user:response.data.name, token: response.data.token} );
-                        this.$router.push('/Dashboard');
-                    })
-                    .catch( ({ response }) => {
-                        console.log(response);
-                        this.error = true;
-                        this.message = response.data.message;
-                    })
-            },
+      //Checking if already logged-in
+      store.dispatch('checkStorage').then(() => {
+        if(store.getters.confirmed){
+          this.$router.push('/Dashboard');
         }
+      })
+    },
+    methods:{
+      login(){
+
+        let data = {
+          email: this.email,
+          password: this.password
+        };
+
+        axios.post('/api/login', data)
+          .then( response => {
+            this.error = false;
+            this.message = '';
+            store.dispatch('loginB', {user:response.data.name, token: response.data.token} );
+            this.$router.push('/Dashboard');
+          })
+          .catch( ({ response }) => {
+            console.log(response);
+            this.error = true;
+            this.message = response.data.message;
+          })
+      },
     }
+  }
 
 </script>
 

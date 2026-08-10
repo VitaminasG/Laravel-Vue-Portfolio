@@ -1,228 +1,226 @@
 <template>
 
-    <div class="">
+  <div class="">
 
-        <div class="modal" v-bind:class="{ 'is-active' : this.isActive}">
+    <div class="modal" :class="{ 'is-active' : isActive}">
 
-            <div class="modal-background"></div>
+      <div class="modal-background" />
 
-            <div class="modal-card w-50">
+      <div class="modal-card w-50">
 
-                <header class="modal-card-head">
+        <header class="modal-card-head">
 
-                    <p class="modal-card-title">
+          <p class="modal-card-title">
 
-                        <slot name="header"></slot>
+            <slot name="header" />
 
-                    </p>
+          </p>
 
-                    <button @click="closeMod" class="delete" ></button>
+          <button class="delete" @click="closeMod" />
 
-                </header>
+        </header>
 
-                <section class="modal-card-body">
+        <section class="modal-card-body">
 
-                <!-- Form Field -->
+          <!-- Form Field -->
 
-                    <form @submit.prevent="submit">
+          <form @submit.prevent="submit">
 
-                        <div class="field">
+            <div class="field">
 
-                            <label class="label">Your Name: </label>
+              <label class="label">Your Name: </label>
 
-                            <div class="control">
+              <div class="control">
 
-                                <input class="input" type="text" name="name" v-model="fields.name" placeholder="e.g Alex Smith">
+                <input v-model="fields.name" class="input" type="text" name="name" placeholder="e.g Alex Smith">
 
-                                <div class="error pt-1">
+                <div class="error pt-1">
 
-                                    <p class="text-alert" v-if="errors && errors.name">
-                                        Please fill your name
-                                    </p>
+                  <p v-if="errors && errors.name" class="text-alert">
+                    Please fill your name
+                  </p>
 
-                                </div>
+                </div>
 
-                            </div>
-
-                        </div>
-
-                        <div class="field">
-
-                            <label class="label">Your Email Address: </label>
-
-                            <div class="control">
-
-                                <input class="input" type="email"  name="from" v-model="fields.from" placeholder="e.g. alexsmith@gmail.com">
-
-                                <div class="error pt-1">
-
-                                    <p class="text-alert" v-if="errors && errors.from">
-                                        Please fill your email address
-                                    </p>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        <div class="field">
-
-                            <textarea class="textarea" name="message" v-model="fields.message" placeholder="Please type your message here..." rows="5">
-
-                            </textarea>
-
-                            <div class="control error pt-1">
-
-                                <p class="text-alert" v-if="errors && errors.message">
-                                   Please add message
-                                </p>
-
-                            </div>
-
-                        </div>
-
-                        <div class="field">
-
-                            <div class="control py-1">
-
-                                <button class="submit px-1">Submit</button>
-
-                            </div>
-
-                        </div>
-
-                    </form>
-
-                </section>
+              </div>
 
             </div>
 
-        </div>
+            <div class="field">
 
-        <div class="feedback text-center" v-show="success">
+              <label class="label">Your Email Address: </label>
 
-            <p>Your message received. I will contact you shortly.</p>
+              <div class="control">
 
-        </div>
+                <input v-model="fields.from" class="input" type="email" name="from" placeholder="e.g. alexsmith@gmail.com">
+
+                <div class="error pt-1">
+
+                  <p v-if="errors && errors.from" class="text-alert">
+                    Please fill your email address
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="field">
+
+              <textarea v-model="fields.message" class="textarea" name="message" placeholder="Please type your message here..." rows="5" />
+
+              <div class="control error pt-1">
+
+                <p v-if="errors && errors.message" class="text-alert">
+                  Please add message
+                </p>
+
+              </div>
+
+            </div>
+
+            <div class="field">
+
+              <div class="control py-1">
+
+                <button class="submit px-1">Submit</button>
+
+              </div>
+
+            </div>
+
+          </form>
+
+        </section>
+
+      </div>
 
     </div>
+
+    <div v-show="success" class="feedback text-center">
+
+      <p>Your message received. I will contact you shortly.</p>
+
+    </div>
+
+  </div>
 
 </template>
 
 <script>
 
-    import { store } from "../state-man";
+  import { store } from "../state-man";
 
-    import { TimelineMax } from "gsap/all";
+  import { TimelineMax } from "gsap/all";
 
-    export default {
+  export default {
 
-        name: "mailMe",
+    name: "MailMe",
 
-        data(){
+    data(){
 
-            return {
+      return {
 
-                debug: false,
+        debug: false,
 
-                isActive : '',
-                success: false,
-                message: '',
+        isActive : '',
+        success: false,
+        message: '',
 
 
-                fields: {},
-                errors: {}
+        fields: {},
+        errors: {}
 
-            }
-        },
+      }
+    },
 
-        watch: {
+    watch: {
 
-            isActive(){
+      isActive(){
 
-                return store.dispatchState();
+        return store.dispatchState();
 
-            }
+      }
 
-        },
+    },
 
-        created(){
+    created(){
 
-            this.isActive = store.dispatchState();
+      this.isActive = store.dispatchState();
 
-        },
+    },
 
-        methods: {
+    methods: {
 
-            closeMod(){
+      closeMod(){
 
-                store.clearState();
-                store.changeState(false);
-                this.isActive = store.dispatchState();
+        store.clearState();
+        store.changeState(false);
+        this.isActive = store.dispatchState();
 
-            },
+      },
 
-            submit() {
+      submit() {
 
-                    this.clear();
+        this.clear();
 
-                    if(this.debug){
-                        console.log('Clearing Field and Error Obj!');
-                    }
-
-                    axios.post('/ContactMe', this.fields).then(response => {
-
-                            if(this.debug){
-                                console.log('Sending Data: ', this.fields);
-                            }
-
-                            this.fields = {};
-
-                            if(response.status === 200 ){
-
-                                this.feedback();
-
-                            }}).catch(error => {
-
-                                if( error.response ){
-
-                                    this.errors = error.response.data.errors;
-
-                                    if(this.debug){
-                                        console.log('cached some errors : ', this.errors);
-                                    }
-
-                                } else if (error.request ){
-
-                                    console.log(error.request);
-
-                                }
-                            });
-
-            },
-
-            clear(){
-
-                this.errors = {};
-
-            },
-
-            // animation
-
-            feedback(){
-
-                this.success = true;
-
-                let tl = new TimelineMax;
-
-                tl.fromTo(".feedback", 1,{y: 60, opacity: 0 }, {y: 0, opacity: 1})
-                    .to(".feedback", 1, {opacity: 0}, "+=3")
-
-            }
-
+        if(this.debug){
+          console.log('Clearing Field and Error Obj!');
         }
+
+        axios.post('/ContactMe', this.fields).then(response => {
+
+          if(this.debug){
+            console.log('Sending Data: ', this.fields);
+          }
+
+          this.fields = {};
+
+          if(response.status === 200 ){
+
+            this.feedback();
+
+          }}).catch(error => {
+
+          if( error.response ){
+
+            this.errors = error.response.data.errors;
+
+            if(this.debug){
+              console.log('cached some errors : ', this.errors);
+            }
+
+          } else if (error.request ){
+
+            console.log(error.request);
+
+          }
+        });
+
+      },
+
+      clear(){
+
+        this.errors = {};
+
+      },
+
+      // animation
+
+      feedback(){
+
+        this.success = true;
+
+        let tl = new TimelineMax;
+
+        tl.fromTo(".feedback", 1,{y: 60, opacity: 0 }, {y: 0, opacity: 1})
+          .to(".feedback", 1, {opacity: 0}, "+=3")
+
+      }
+
     }
+  }
 </script>
 
 <style scoped>

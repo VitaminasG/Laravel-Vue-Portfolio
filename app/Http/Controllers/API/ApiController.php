@@ -11,7 +11,6 @@ use Illuminate\Support\Str;
 
 class ApiController extends Controller
 {
-
     /**
      * Check Fresh Login
      *
@@ -65,8 +64,7 @@ class ApiController extends Controller
             return $error;
         }
 
-        if($user->isAdmin()){
-
+        if ($user->isAdmin()) {
             $token = Str::random(80);
             $user->api_token = $token;
 
@@ -83,7 +81,6 @@ class ApiController extends Controller
                'status' => 401
             ], 401);
         }
-
     }
 
 
@@ -126,7 +123,6 @@ class ApiController extends Controller
     public function stats()
     {
         if (! auth('api')->user()->isAdmin()) {
-
             return response()->json([
                 'message' => 'You are not Admin!',
             ], 403);
@@ -153,5 +149,4 @@ class ApiController extends Controller
             'message' => 'Logged out.',
         ], 200);
     }
-
 }

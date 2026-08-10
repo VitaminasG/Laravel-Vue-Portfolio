@@ -1,88 +1,88 @@
 class Serve {
 
-    // Getters & Setters
+  // Getters & Setters
 
-    // DEBUG mode.
-    /**
+  // DEBUG mode.
+  /**
      * Get - debug mode.
      * @returns {boolean}
      */
-    get debug() {
-        return this._debug;
-    }
+  get debug() {
+    return this._debug;
+  }
 
-    /**
+  /**
      * Set - debug mode.
      * @param {boolean} value.
      */
-    set debug(value) {
-        this._debug = value;
-    }
+  set debug(value) {
+    this._debug = value;
+  }
 
-    // API list.
-    /**
+  // API list.
+  /**
      * Get - API list.
      *
      * @returns {array}
      */
-    get apiList() {
+  get apiList() {
 
-        return this._apiList;
-    }
+    return this._apiList;
+  }
 
-    // Constructor
+  // Constructor
 
-    constructor(){
+  constructor(){
 
-        // Default settings.
-        this._debug = false;
-        this._apiList = this.list();
-    }
+    // Default settings.
+    this._debug = false;
+    this._apiList = this.list();
+  }
 
-    /**
+  /**
      * Sorted list by method.
      * @param {object} list.
      * @param {string} method.
      *
      * @return {object}
      */
-    sortedBy(list, method){
+  sortedBy(list, method){
 
-        if(this._debug) {
-            console.log('Api list by method: '+ method);
-        }
-
-        return Object.entries(list[method]);
+    if(this._debug) {
+      console.log('Api list by method: '+ method);
     }
 
-    /**
+    return Object.entries(list[method]);
+  }
+
+  /**
      * A default - API list.
      *
      * @return {object}
      */
-    list(){
+  list(){
 
-        let apiP, apiL;
+    let apiP, apiL;
 
-        // API prefix
-        apiP = '/api/';
+    // API prefix
+    apiP = '/api/';
 
-        // API list
-        apiL = {
-            get: {
-                verify: apiP + 'verify',
-                register: apiP + 'register',
-                stats: apiP + 'stats',
-            },
-            post: {
-                register: apiP + 'register',
-                verify: apiP + 'login',
-                logout: apiP + 'logout',
-            },
-        };
+    // API list
+    apiL = {
+      get: {
+        verify: apiP + 'verify',
+        register: apiP + 'register',
+        stats: apiP + 'stats',
+      },
+      post: {
+        register: apiP + 'register',
+        verify: apiP + 'login',
+        logout: apiP + 'logout',
+      },
+    };
 
-        return apiL;
-    }
+    return apiL;
+  }
 }
 
 export default new Serve();

@@ -31,7 +31,17 @@ module.exports = {
         sorter: 'readonly',
         TweenMax: 'readonly',
         TimelineMax: 'readonly',
+        // GSAP 2 registers its easing objects globally when TweenMax loads.
         Power1: 'readonly',
+        Power2: 'readonly',
+        Power3: 'readonly',
+        Power4: 'readonly',
+        Sine: 'readonly',
+        Back: 'readonly',
+        Elastic: 'readonly',
+        Bounce: 'readonly',
+        Expo: 'readonly',
+        Circ: 'readonly',
     },
 
     rules: {

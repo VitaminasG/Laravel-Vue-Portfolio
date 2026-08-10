@@ -1,70 +1,70 @@
 <template>
 
-    <!-- Web Statistics -->
-    <div class="my-1 w-50 h-50">
+  <!-- Web Statistics -->
+  <div class="my-1 w-50 h-50">
 
-        <div class="_card h-100">
+    <div class="_card h-100">
 
-            <header class="_card-header">
-                <p class="_card-header-title">Web Statistics</p>
-            </header>
+      <header class="_card-header">
+        <p class="_card-header-title">Web Statistics</p>
+      </header>
 
-            <div class="_card-content flex-block h-100">
+      <div class="_card-content flex-block h-100">
 
-                <table class="table w-100">
-                    <thead>
-                    <tr>
-                        <th>IP</th>
-                        <th>Agent</th>
-                        <th>Date</th>
-                    </tr>
-                    </thead>
-                    <tfoot>
-                    <tr>
-                        <th>IP</th>
-                        <th>Agent</th>
-                        <th>Date</th>
-                    </tr>
-                    </tfoot>
-                    <tbody>
-                    <tr v-for="stat in stats">
-                        <td>{{ stat.ip }}</td>
-                        <td>{{ stat.agent }}</td>
-                        <td>{{ stat.date }}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        <table class="table w-100">
+          <thead>
+            <tr>
+              <th>IP</th>
+              <th>Agent</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th>IP</th>
+              <th>Agent</th>
+              <th>Date</th>
+            </tr>
+          </tfoot>
+          <tbody>
+            <tr v-for="stat in stats">
+              <td>{{ stat.ip }}</td>
+              <td>{{ stat.agent }}</td>
+              <td>{{ stat.date }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
+  </div>
     
 </template>
 
 <script>
-    import axios from 'axios';
-    import store from '../store/vueStore';
+  import axios from 'axios';
+  import store from '../store/vueStore';
 
-    export default {
-        name: "statistics",
-        data(){
-            return{
+  export default {
+    name: "Statistics",
+    data(){
+      return{
 
-            }
-        },
-        mounted(){
-            store.dispatch('setTarget', {
-                list: store.getters.list,
-                method: 'get',
-                route: 'stats'}).then(() => {
-                    store.dispatch('stats', store.getters.target);
-            });
-        },
-        computed:{
-            stats: function(){
-                return store.getters.data;
-            }
-        }
+      }
+    },
+    computed:{
+      stats: function(){
+        return store.getters.data;
+      }
+    },
+    mounted(){
+      store.dispatch('setTarget', {
+        list: store.getters.list,
+        method: 'get',
+        route: 'stats'}).then(() => {
+          store.dispatch('stats', store.getters.target);
+        });
     }
+  }
 </script>
 
 <style scoped>

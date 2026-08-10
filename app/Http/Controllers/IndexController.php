@@ -11,15 +11,13 @@ use App\Stats;
 
 class IndexController extends Controller
 {
-
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
 
     public function index()
-
-	{
-	    $stats = new Stats();
+    {
+        $stats = new Stats();
         $agent = new Agent();
 
         $stats->ip = request()->ip();
@@ -28,32 +26,25 @@ class IndexController extends Controller
 
         $stats->save();
 
-		if( $agent->isDesktop() ){
+        if ($agent->isDesktop()) {
+            return view('layouts.master');
+        }
 
-			return view( 'layouts.master' );
-		}
+        if ($agent->isMobile()) {
+            if (request()->path() != '/') {
+                abort(404);
+            } else {
+                return view('layouts.mobile');
+            }
+        }
 
-		if ( $agent->isMobile() ) {
+        if ($agent->isRobot()) {
+            return view('layouts.server');
+        }
 
-			if( request()->path() != '/' ){
-
-				abort(404);
-
-			} else {
-
-				return view( 'layouts.mobile' );
-			}
-
-		}
-
-		if ( $agent->isRobot() ) {
-
-			return view( 'layouts.server' );
-		}
-
-		// No detector matched — fall back to the full desktop experience.
-		return view( 'layouts.master' );
-	}
+        // No detector matched — fall back to the full desktop experience.
+        return view('layouts.master');
+    }
 
 
     /**
@@ -61,40 +52,39 @@ class IndexController extends Controller
      * @throws \Illuminate\Validation\ValidationException
      */
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
 
-		$this->validate($request, [
+        $this->validate($request, [
 
-			'name' => 'required',
+            'name' => 'required',
 
-			'from' => 'required',
+            'from' => 'required',
 
-			'message' => 'required'
+            'message' => 'required'
 
-			]);
+            ]);
 
-		$agent = $request->header('User-Agent');
+        $agent = $request->header('User-Agent');
 
-		$data = new Index;
+        $data = new Index();
 
-		$data->name = $request->name;
-		$data->from = $request->from;
-		$data->message = $request->message;
-		$data->agent = $agent;
+        $data->name = $request->name;
+        $data->from = $request->from;
+        $data->message = $request->message;
+        $data->agent = $agent;
 
-		$data->save();
+        $data->save();
 
-		Mail::to(config('contact.recipient'))->send(new ContactMe([
-			'name' => $request->name,
-			'from' => $request->from,
-			'body' => $request->message,
-			'agent' => $agent,
-		]));
+        Mail::to(config('contact.recipient'))->send(new ContactMe([
+            'name' => $request->name,
+            'from' => $request->from,
+            'body' => $request->message,
+            'agent' => $agent,
+        ]));
 
-		return response()->json([
-			'message' => 'Message sent.',
-		], 200);
-	}
-
-
+        return response()->json([
+            'message' => 'Message sent.',
+        ], 200);
+    }
 }

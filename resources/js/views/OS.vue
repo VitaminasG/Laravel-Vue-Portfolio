@@ -1,78 +1,78 @@
 <template>
 
-    <div>
+  <div>
 
-        <div class="container is-fluid">
+    <div class="container is-fluid">
 
-            <div v-if="!gui" class="flex-loading">
+      <div v-if="!gui" class="flex-loading">
 
-                <loading-one v-if="osStep === 1" @firstDone="waitingFirst($event)"></loading-one>
-                <loading-two v-if="osStep === 2" @secondDone="waitingSecond($event)"></loading-two>
+        <loading-one v-if="osStep === 1" @firstDone="waitingFirst($event)" />
+        <loading-two v-if="osStep === 2" @secondDone="waitingSecond($event)" />
 
-            </div>
-
-        </div>
-
-            <desktop v-if="gui" v-cloak></desktop>
+      </div>
 
     </div>
+
+    <desktop v-if="gui" v-cloak />
+
+  </div>
 
 </template>
 
 <script>
 
-    const loadingOne = () => import('../components/loadingOne');
-    const loadingTwo = () => import('../components/loadingTwo');
-    const desktop = () => import('../components/desktop');
+  const loadingOne = () => import('../components/loadingOne');
+  const loadingTwo = () => import('../components/loadingTwo');
+  const desktop = () => import('../components/desktop');
 
-    export default {
+  export default {
 
-        name: "Home",
+    name: "Home",
 
-        data(){
-            return{
-                gui: false,
-                osStep: 1
-            }
-        },
+    components: {
 
-        components: {
+      loadingOne,
+      loadingTwo,
+      desktop
+    },
 
-            loadingOne,
-            loadingTwo,
-            desktop
-        },
+    data(){
+      return{
+        gui: false,
+        osStep: 1
+      }
+    },
 
-        watch: {
+    watch: {
 
-            osStep(){
+      osStep(){
 
-                if(this.osStep === 3){
+        if(this.osStep === 3){
 
-                    this.display = false;
-                    this.gui = true;
-                }
-            }
-        },
-
-        methods: {
-
-            waitingFirst(event){
-
-                if(event){
-                    this.osStep++;
-                }
-
-            },
-
-            waitingSecond(event){
-
-                if(event){
-                    this.osStep++;
-                }
-            }
+          this.display = false;
+          this.gui = true;
         }
+      }
+    },
+
+    methods: {
+
+      waitingFirst(event){
+
+        if(event){
+          this.osStep++;
+        }
+
+      },
+
+      waitingSecond(event){
+
+        if(event){
+          this.osStep++;
+        }
+      }
     }
+  }
 </script>
 
 <style scoped>

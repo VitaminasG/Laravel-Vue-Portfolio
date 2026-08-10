@@ -1,89 +1,89 @@
 <template>
 
-    <div>
+  <div>
 
-        <div class="modal" v-bind:class="{ 'is-active' : this.isActive}">
+    <div class="modal" :class="{ 'is-active' : isActive}">
 
-            <div class="modal-background"></div>
+      <div class="modal-background" />
 
-                <div class="modal-card">
+      <div class="modal-card">
 
-                    <header class="modal-card-head">
+        <header class="modal-card-head">
 
-                        <p class="modal-card-title">
-                            <slot name="header"></slot> - textPad
-                        </p>
+          <p class="modal-card-title">
+            <slot name="header" /> - textPad
+          </p>
 
-                        <button @click="closeMod" class="delete" ></button>
+          <button class="delete" @click="closeMod" />
 
-                    </header>
+        </header>
 
-                    <section class="modal-card-body">
+        <section class="modal-card-body">
 
-                        <slot class="py-1" name="content"></slot>
+          <slot class="py-1" name="content" />
 
-                    </section>
+        </section>
 
-                    <footer class="modal-card-foot">
+        <footer class="modal-card-foot">
 
-                        <slot name="footer"></slot>
+          <slot name="footer" />
 
-                    </footer>
+        </footer>
 
-                </div>
-
-        </div>
+      </div>
 
     </div>
+
+  </div>
 
 </template>
 
 <script>
 
-    import { store } from "../state-man";
+  import { store } from "../state-man";
 
-    export default {
+  export default {
 
-        name: "textFile",
+    name: "TextFile",
 
-        data(){
+    data(){
 
-            return {
+      return {
 
-                isActive : ''
+        isActive : ''
 
-            }
-        },
+      }
+    },
 
-        watch: {
+    watch: {
 
-            isActive: function(){
+      isActive: function(){
 
-                return store.dispatchState();
+        return store.dispatchState();
 
-            }
+      }
 
-        },
+    },
 
-        created(){
+    created(){
 
-            this.isActive = store.dispatchState();
+      this.isActive = store.dispatchState();
 
-        },
+    },
 
-        methods: {
+    methods: {
 
-            closeMod(){
+      closeMod(){
 
-                store.clearState();
-                store.changeState(false);
-                this.isActive = store.dispatchState();
+        store.clearState();
+        store.changeState(false);
+        this.isActive = store.dispatchState();
 
-            }
-
-        }
+      }
 
     }
+
+  }
 </script>
 
 <style scoped>

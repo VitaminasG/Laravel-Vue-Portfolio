@@ -35,7 +35,7 @@ class ThrottlePerRoute extends ThrottleRequests
 
         if ($route = $request->route()) {
             return sha1(
-                $route->getDomain().'|'.($route->getName() ?: $request->path()).'|'.$request->ip()
+                $route->getDomain() . '|' . ($route->getName() ?: $request->path()) . '|' . $request->ip()
             );
         }
 

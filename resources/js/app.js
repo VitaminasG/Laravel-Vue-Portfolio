@@ -6,21 +6,21 @@ import { TimelineMax} from "gsap/TweenMax";
 
 new Vue({
 
-    el: '#app',
+  el: '#app',
 
-    store : vueStore,
-    router : router,
+  store : vueStore,
+  router : router,
 
-    mounted(){
+  mounted(){
 
-        let tl = new TimelineMax({
-            repeat: -1,
-            delay: 1
-        });
+    let tl = new TimelineMax({
+      repeat: -1,
+      delay: 1
+    });
 
-        tl.to("#boxLine", 3, {top:"50%", opacity: 0.1, ease: Power1.easeIn})
-            .to("#boxLine", 3, {top:"100%", opacity: 0, ease: Power1.easeOut})
+    tl.to("#boxLine", 3, {top:"50%", opacity: 0.1, ease: Power1.easeIn})
+      .to("#boxLine", 3, {top:"100%", opacity: 0, ease: Power1.easeOut})
 
-    }
+  }
 
 });

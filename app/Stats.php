@@ -10,7 +10,8 @@ class Stats extends Model
     protected $fillable = ['ip', 'agent', 'date'];
 
 
-    public function getDate(){
+    public function getDate()
+    {
 
         $dt = Carbon::now();
 
