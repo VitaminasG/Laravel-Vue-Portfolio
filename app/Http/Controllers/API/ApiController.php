@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Stats;
@@ -27,26 +26,43 @@ class ApiController extends Controller
     }
 
     /**
+     * Resolve a user from request credentials.
+     *
+     * @param  string  $emailKey
+     * @param  string  $passwordKey
+     * @return array  [User|null, JsonResponse|null]
+     */
+    private function findUser($emailKey, $passwordKey)
+    {
+        $user = User::where('email', request($emailKey))->first();
+
+        if (! $user) {
+            return [null, response()->json([
+                'message' => 'Wrong email address!',
+                'status' => 401,
+            ], 401)];
+        }
+
+        if (! Hash::check(request($passwordKey), $user->password)) {
+            return [null, response()->json([
+                'message' => 'Wrong password!',
+                'status' => 401,
+            ], 401)];
+        }
+
+        return [$user, null];
+    }
+
+    /**
      * Login the Admin.
      *
      */
     public function login()
     {
+        list($user, $error) = $this->findUser('email', 'password');
 
-        $user = User::where('email', request('email'))->first();
-
-        if(!$user){
-            return response()->json([
-                'message' => 'Wrong email address!',
-                'status' => 401,
-            ], 401);
-        }
-
-        if(!Hash::check(request('password'), $user->password)) {
-            return response()->json([
-                'message' => 'Wrong password!',
-                'status' => 401,
-            ], 401);
+        if ($error) {
+            return $error;
         }
 
         if($user->isAdmin()){
@@ -77,21 +93,10 @@ class ApiController extends Controller
      */
     public function register()
     {
+        list($user, $error) = $this->findUser('oldEmail', 'oldPassword');
 
-        $user = User::where('email', request('oldEmail'))->first();
-
-        if(!$user){
-            return response()->json([
-                'message' => 'Wrong email address!',
-                'status' => 401,
-            ], 401);
-        }
-
-        if(!Hash::check(request('oldPassword'), $user->password)) {
-            return response()->json([
-                'message' => 'Wrong password!',
-                'status' => 401,
-            ], 401);
+        if ($error) {
+            return $error;
         }
 
         $validateData = request()->validate([
@@ -148,48 +153,4 @@ class ApiController extends Controller
         ], 200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }
