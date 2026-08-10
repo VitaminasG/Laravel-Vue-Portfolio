@@ -44,4 +44,32 @@
         <exclude-pattern>*/database/migrations/*</exclude-pattern>
     </rule>
 
+    <!--
+        Migrations and seeders are resolved by file path, not by autoloaded
+        namespace, so Laravel requires them to sit in the global namespace.
+        PSR-12 would have us namespace them and break the framework.
+    -->
+    <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
+        <exclude-pattern>*/database/migrations/*</exclude-pattern>
+        <exclude-pattern>*/database/seeds/*</exclude-pattern>
+    </rule>
+
+    <!--
+        Test methods are named test_what_it_does_when on purpose: PHPUnit reads
+        the method name aloud when a test fails, and a snake_case sentence is
+        far more useful there than testWhatItDoesWhen. This is the prevailing
+        convention in the Laravel ecosystem.
+    -->
+    <rule ref="PSR1.Methods.CamelCapsMethodName.NotCamelCaps">
+        <exclude-pattern>*/tests/*</exclude-pattern>
+    </rule>
+
+    <!--
+        Test fixtures embed real User-Agent strings, which cannot be wrapped
+        without changing what they assert.
+    -->
+    <rule ref="Generic.Files.LineLength.TooLong">
+        <exclude-pattern>*/tests/*</exclude-pattern>
+    </rule>
+
 </ruleset>

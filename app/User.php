@@ -28,8 +28,8 @@ class User extends Authenticatable
         'password', 'api_token', 'remember_token', 'id',
     ];
 
-    const ROLE_ADMIN = 'admin';
-    const ROLE_DEFAULT = 'user';
+    public const ROLE_ADMIN = 'admin';
+    public const ROLE_DEFAULT = 'user';
 
     /**
      * Check if the user has the admin role.
