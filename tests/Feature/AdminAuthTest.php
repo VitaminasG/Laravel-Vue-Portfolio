@@ -4,8 +4,8 @@ namespace Tests\Feature;
 
 use App\User;
 use Tests\TestCase;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 /**
@@ -164,7 +164,7 @@ class AdminAuthTest extends TestCase
             'email' => 'visitor@example.com',
             'password' => Hash::make('password123'),
             'type' => User::ROLE_DEFAULT,
-            'api_token' => \Illuminate\Support\Str::random(80),
+            'api_token' => Str::random(80),
         ]);
 
         $this->getJson('/api/stats', ['Authorization' => 'Bearer ' . $visitor->api_token])
@@ -260,5 +260,49 @@ class AdminAuthTest extends TestCase
         $visitor = new User(['type' => User::ROLE_DEFAULT]);
 
         $this->assertFalse($visitor->isAdmin());
+    }
+
+    public function test_login_refuses_a_non_admin_with_valid_credentials()
+    {
+        User::create([
+            'name' => 'visitor',
+            'email' => 'visitor@example.com',
+            'password' => Hash::make('password123'),
+            'type' => User::ROLE_DEFAULT,
+        ]);
+
+        // The credentials are correct; only the role is wrong, so this proves
+        // the admin check rather than the password check.
+        $this->postJson('/api/login', [
+            'email' => 'visitor@example.com',
+            'password' => 'password123',
+        ])->assertStatus(401)
+          ->assertJson(['message' => 'You are not admin!']);
+
+        $this->assertNull(User::where('email', 'visitor@example.com')->first()->api_token);
+    }
+
+    public function test_logout_requires_authentication()
+    {
+        $this->postJson('/api/logout')->assertStatus(401);
+    }
+
+    public function test_register_is_throttled_after_ten_attempts()
+    {
+        for ($i = 0; $i < 10; $i++) {
+            $this->postJson('/api/register', [
+                'oldEmail' => 'admin@example.com',
+                'oldPassword' => 'wrong',
+                'email' => 'new@example.com',
+                'password' => 'newpassword123',
+            ])->assertStatus(401);
+        }
+
+        $this->postJson('/api/register', [
+            'oldEmail' => 'admin@example.com',
+            'oldPassword' => 'wrong',
+            'email' => 'new@example.com',
+            'password' => 'newpassword123',
+        ])->assertStatus(429);
     }
 }

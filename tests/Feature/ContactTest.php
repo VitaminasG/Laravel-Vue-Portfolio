@@ -82,4 +82,24 @@ class ContactTest extends TestCase
 
         $this->postJson('/ContactMe', $this->payload())->assertStatus(429);
     }
+
+    public function test_the_mail_body_renders_every_field()
+    {
+        // Asserting on the payload alone would not catch a renamed variable in
+        // emails/contactMe.blade.php, which would ship an email with a blank
+        // section and no failure anywhere. Rendering the mailable does.
+        $mailable = new ContactMe([
+            'name' => 'Tester',
+            'from' => 'tester@example.com',
+            'body' => 'Hello there',
+            'agent' => 'TestAgent/1.0',
+        ]);
+
+        $rendered = $mailable->render();
+
+        $this->assertContains('Tester', $rendered);
+        $this->assertContains('tester@example.com', $rendered);
+        $this->assertContains('Hello there', $rendered);
+        $this->assertContains('TestAgent/1.0', $rendered);
+    }
 }
