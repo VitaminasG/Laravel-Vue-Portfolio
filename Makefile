@@ -1,6 +1,7 @@
 .PHONY: help setup generate-certs update-ssl hosts up down restart rebuild logs \
         composer-install key-generate migrate migrate-fresh seed \
-        php-shell node-shell db-shell node-install node-watch node-prod permissions
+        php-shell node-shell db-shell node-install node-watch node-prod permissions \
+        lint lint-fix lint-js lint-js-fix lint-php lint-php-fix lint-install
 
 include .env
 
@@ -34,6 +35,11 @@ help:
 	@echo "  make node-install         npm install"
 	@echo "  make node-watch           npm run watch (recompile on change)"
 	@echo "  make node-prod            npm run prod (production build)"
+	@echo ""
+	@echo "Code style:"
+	@echo "  make lint                 Check JS/Vue (ESLint) and PHP (PSR-12)"
+	@echo "  make lint-fix             Auto-fix what the linters can fix"
+	@echo "  make lint-install         Fetch the PHP_CodeSniffer PHARs (once per clone)"
 	@echo ""
 	@echo "Shells:"
 	@echo "  make php-shell / node-shell / db-shell"
@@ -103,6 +109,34 @@ node-watch:
 
 node-prod:
 	docker exec -i $(DOCKER_CONTAINER_PREFIX)-node npm run prod
+
+# --- Code style ---
+# JS/Vue via ESLint (2-space, Vue style guide); PHP via PHP_CodeSniffer (PSR-12,
+# 4-space). The PHP tools are PHARs under .docker/bin because Packagist dropped
+# Composer 1 support, so `composer require` is no longer an option here.
+lint: lint-js lint-php
+
+lint-fix: lint-js-fix lint-php-fix
+
+lint-js:
+	docker exec -i $(DOCKER_CONTAINER_PREFIX)-node npm run lint
+
+lint-js-fix:
+	docker exec -i $(DOCKER_CONTAINER_PREFIX)-node npm run lint:fix
+
+lint-php:
+	docker exec -i $(DOCKER_CONTAINER_PREFIX)-php php .docker/bin/phpcs.phar
+
+lint-php-fix:
+	docker exec -i $(DOCKER_CONTAINER_PREFIX)-php php .docker/bin/phpcbf.phar
+
+# Fetches the PHP_CodeSniffer PHARs; they are gitignored, so a fresh clone runs
+# this once before `make lint`.
+lint-install:
+	@mkdir -p .docker/bin
+	docker exec -i $(DOCKER_CONTAINER_PREFIX)-php sh -c 'curl -sSL -o .docker/bin/phpcs.phar https://github.com/squizlabs/PHP_CodeSniffer/releases/download/3.7.2/phpcs.phar'
+	docker exec -i $(DOCKER_CONTAINER_PREFIX)-php sh -c 'curl -sSL -o .docker/bin/phpcbf.phar https://github.com/squizlabs/PHP_CodeSniffer/releases/download/3.7.2/phpcbf.phar'
+	@echo "PHP_CodeSniffer 3.7.2 installed into .docker/bin"
 
 # --- Shells ---
 php-shell:

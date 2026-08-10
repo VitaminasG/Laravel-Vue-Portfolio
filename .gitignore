@@ -29,3 +29,6 @@ storage/*.key
 
 # Playwright MCP session artifacts
 .playwright-mcp/
+
+# PHP_CodeSniffer PHARs (fetched via `make lint-install`)
+.docker/bin/
