@@ -76,6 +76,11 @@ class AdminAuthTest extends TestCase
 
     public function test_register_changes_credentials_and_marks_verified()
     {
+        $token = $this->postJson('/api/login', [
+            'email' => 'admin@example.com',
+            'password' => '12345678',
+        ])->json('token');
+
         $this->postJson('/api/register', [
             'oldEmail' => 'admin@example.com',
             'oldPassword' => '12345678',
@@ -88,6 +93,16 @@ class AdminAuthTest extends TestCase
         $this->assertNotNull($admin);
         $this->assertTrue((bool) $admin->verified);
         $this->assertTrue(Hash::check('newpassword123', $admin->password));
+        $this->assertNull($admin->api_token);
+
+        // The test harness shares one application instance across these
+        // chained requests, so the 'api' guard resolved during login is
+        // still cached with the now-stale token attached. Drop it here to
+        // simulate the fresh container a real follow-up request would get.
+        $this->app->forgetInstance('auth');
+
+        $this->getJson('/api/stats', ['Authorization' => 'Bearer ' . $token])
+            ->assertStatus(401);
     }
 
     public function test_register_rejects_wrong_old_credentials()

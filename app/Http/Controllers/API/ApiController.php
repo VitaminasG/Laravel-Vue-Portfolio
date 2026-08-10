@@ -107,6 +107,7 @@ class ApiController extends Controller
         $user->email = $validateData['email'];
         $user->password = Hash::make($validateData['password']);
         $user->verified = true;
+        $user->api_token = null;
 
         $user->save();
 
