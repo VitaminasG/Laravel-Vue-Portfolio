@@ -134,4 +134,21 @@ class AdminAuthTest extends TestCase
             ->assertStatus(200)
             ->assertJsonStructure(['data']);
     }
+
+    public function test_a_password_with_html_characters_survives_register_and_login()
+    {
+        $password = 'p<a>&"\'ssw0rd';
+
+        $this->postJson('/api/register', [
+            'oldEmail' => 'admin@example.com',
+            'oldPassword' => '12345678',
+            'email' => 'new@example.com',
+            'password' => $password,
+        ])->assertStatus(201);
+
+        $this->postJson('/api/login', [
+            'email' => 'new@example.com',
+            'password' => $password,
+        ])->assertStatus(200);
+    }
 }

@@ -104,7 +104,7 @@ class ApiController extends Controller
         ]);
 
         $user->email = $validateData['email'];
-        $user->password = Hash::make(htmlentities($validateData['password']));
+        $user->password = Hash::make($validateData['password']);
         $user->verified = true;
 
         $user->save();
