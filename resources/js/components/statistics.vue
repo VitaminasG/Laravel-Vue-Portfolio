@@ -3,7 +3,7 @@
   <!-- Web Statistics -->
   <div class="my-1 w-50 h-50">
 
-    <div class="_card h-100">
+    <div class="dashed-box h-100">
 
       <header class="_card-header">
         <p class="_card-header-title">Web Statistics</p>
@@ -67,12 +67,6 @@
 </script>
 
 <style scoped>
-    ._card{
-        padding: 0.5rem;
-        border: 2px dashed #86c60b;
-        color: #86c60b;
-        text-shadow: 0 0 5px rgba(134, 198, 11, 0.6);
-    }
     .table {
         background-color: transparent;
         color: inherit;

@@ -16,6 +16,14 @@ $success: #86c148;
 $spanAlert: #e4c921;
 $success: #86c148;
 
+// Dashed-box palette
+// The retro-terminal panels come in three meanings: green for normal content,
+// yellow for a prompt asking for input, red for a failure.
+$box-green: #86c60b;
+$box-yellow: #c6c327;
+$box-yellow-text: #eae728;
+$box-red: #c63a42;
+
 // Fonts
 
 $font-path: '../fonts/';

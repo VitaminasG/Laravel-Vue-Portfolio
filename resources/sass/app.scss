@@ -77,3 +77,52 @@ button, textarea, textarea::placeholder{
   padding-bottom: 1em;
 }
 
+
+// Dashed panels
+//
+// The same "2px dashed border, matching text colour, matching glow" panel was
+// written out five times across ApiLogin, ApiRegister and statistics, each
+// with its own hardcoded hex values. It lives here once now, as a base plus a
+// colour modifier, so a change to the look happens in one place.
+
+@mixin dashed-panel($colour, $width: 2px) {
+  border: $width dashed $colour;
+  color: $colour;
+  text-shadow: 0 0 5px rgba($colour, 0.6);
+}
+
+.dashed-box {
+  padding: 0.5rem;
+
+  @include dashed-panel($box-green);
+
+  // A prompt waiting on the user.
+  &.is-prompt {
+    @include dashed-panel($box-yellow);
+
+    color: $box-yellow-text;
+  }
+
+  // Something went wrong.
+  &.is-error {
+    @include dashed-panel($box-red);
+  }
+}
+
+.dashed-input {
+  border: 2px dashed $box-green;
+}
+
+.dashed-button {
+  padding: 0.2rem;
+  width: 50%;
+  background: none;
+
+  @include dashed-panel($box-green, 1px);
+
+  text-shadow: none;
+
+  &:hover {
+    box-shadow: 0 0 3px rgba($box-green, 0.6);
+  }
+}

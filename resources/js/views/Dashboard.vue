@@ -15,12 +15,6 @@
       </div>
     </div>
 
-    <article class="_box flex-block">
-      <div class="_box-header flex">
-        <p>Access Denied</p>
-      </div>
-    </article>
-
   </div>
 </template>
 
@@ -34,11 +28,13 @@
     components:{
       stats,
     },
-    data(){
-      return{
-        username: store.getters.user,
-        token: store.getters.token,
-      }
+    computed: {
+      // Read through the getter rather than copying it into data(): the name
+      // is written to the store after login, and a data() copy would freeze
+      // whatever the value happened to be when this component was created.
+      username() {
+        return store.getters.user;
+      },
     },
     methods:{
       logout(){
@@ -53,13 +49,6 @@
 
     #_dash{
         height: 100vh;
-    }
-
-    ._box{
-        padding: 0.5rem;
-        border: 2px dashed #c63a42;
-        color: #c63a42;
-        text-shadow: 0 0 5px rgba(198, 58, 66, 0.6);
     }
 
     h2{

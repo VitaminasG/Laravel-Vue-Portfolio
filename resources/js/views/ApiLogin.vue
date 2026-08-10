@@ -10,7 +10,7 @@
 
     <div id="_panel" class="flex-block h-50 w-25">
 
-      <article v-if="error" class="_box-error flex-block mb-1">
+      <article v-if="error" class="dashed-box is-error flex-block mb-1">
         <div class="_box-header flex fontSize-1h">
           <p>Access Denied</p>
         </div>
@@ -19,7 +19,7 @@
         </div>
       </article>
 
-      <article class="_box flex-block mb-1">
+      <article class="dashed-box is-prompt flex-block mb-1">
         <div class="_box-header flex">
           <p class="p-1 fontSize-1h w-75 text-center text-underline">
             SignIn
@@ -30,19 +30,19 @@
       <div class="field">
         <label>Email</label>
         <div class="w-100">
-          <input v-model="email" class="_input w-100" type="email" name="email">
+          <input v-model="email" class="dashed-input w-100" type="email" name="email">
         </div>
       </div>
 
       <div class="field">
         <label>Password</label>
         <div class="w-100">
-          <input v-model="password" class="_input w-100" type="password" name="password">
+          <input v-model="password" class="dashed-input w-100" type="password" name="password">
         </div>
       </div>
 
       <div class="flex-center">
-        <button class="_box-button" @click.prevent="login">Login</button>
+        <button class="dashed-button" @click.prevent="login">Login</button>
       </div>
     </div>
 
@@ -117,34 +117,9 @@
 
     }
 
-    ._box{
-        border: 2px dashed #c6c327;
-        color: #eae728;
-        text-shadow: 0 0 5px rgba(134, 198, 11, 0.60);
-    }
 
-    ._box-error{
-        padding: 0.5rem;
-        border: 2px dashed #c63a42;
-        color: #c63a42;
-        text-shadow: 0 0 5px rgba(198, 58, 66, 0.6);
-    }
 
-    ._input{
-        border: 2px dashed #86c60b;
-    }
 
-    ._box-button {
-        border: 1px dashed #86c60b;
-        padding: 0.2rem;
-        background: none;
-        color: #86c60b;
-        width: 50%;
-    }
 
-    ._box-button:hover {
-        border: 1px dashed #86c60b;
-        box-shadow: 0 0 3px rgba(134, 198, 11, 0.60);
-    }
 
 </style>
