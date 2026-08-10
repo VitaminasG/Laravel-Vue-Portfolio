@@ -170,6 +170,12 @@ class AdminAuthTest extends TestCase
 
         $this->assertNull(User::where('email', 'admin@example.com')->first()->api_token);
 
+        // The test harness shares one application instance across these chained
+        // requests, so the 'api' guard resolved during the logout call is still
+        // cached with the now-stale user attached. Drop it here to simulate the
+        // fresh container a real follow-up request would get.
+        $this->app->forgetInstance('auth');
+
         $this->getJson('/api/stats', ['Authorization' => 'Bearer ' . $token])
             ->assertStatus(401);
     }
