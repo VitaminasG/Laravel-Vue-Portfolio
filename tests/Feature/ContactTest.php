@@ -71,4 +71,15 @@ class ContactTest extends TestCase
         Mail::assertNothingSent();
         $this->assertSame(0, \DB::table('indices')->count());
     }
+
+    public function test_the_sixth_submission_within_a_minute_is_throttled()
+    {
+        Mail::fake();
+
+        for ($i = 0; $i < 5; $i++) {
+            $this->postJson('/ContactMe', $this->payload())->assertStatus(200);
+        }
+
+        $this->postJson('/ContactMe', $this->payload())->assertStatus(429);
+    }
 }
