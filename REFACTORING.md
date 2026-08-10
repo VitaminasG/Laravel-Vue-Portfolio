@@ -83,6 +83,65 @@ the correction is marked.
 - [ ] `views/Dashboard.vue:18-22,36` — remove the always-rendered "Access Denied"
       leftover; make `username` reactive (computed instead of `data`).
 
+### Carried over from the phases 1-3 pass
+
+Minor findings raised during phases 1-3 and triaged as non-blocking by the final
+whole-branch review. None of them affects behaviour today; they are recorded so
+they are not rediscovered from scratch.
+
+Cleanups worth folding into whichever Phase 4 item touches the same file:
+
+- [ ] `resources/js/helpers/sorter.js` — `get.register` still maps to
+      `/api/register`, which returns 405 since the GET route was dropped. Dead
+      entry; remove it alongside the `post.verify` rename above.
+- [ ] `tests/Feature/AdminAuthTest.php` — unused `use Illuminate\Support\Facades\Cache;`
+      import (the class uses `$this->artisan('cache:clear')` instead).
+- [ ] No trailing newline at EOF in `AdminAuthTest.php`, `ContactTest.php`,
+      `VisitTest.php`, `routes.js`, `vueStore.js`, `sorter.js`. House-wide; fix
+      in one sweep or not at all.
+- [ ] `ApiController.php` — two conditional styles now coexist: `if (! $user) {`
+      in the refactored code against `if($user->isAdmin()){` in the older code.
+      A formatting pass would settle it.
+- [ ] `app/Http/Controllers/Auth/RegisterController.php` — stock `make:auth`
+      scaffolding, unreachable from any route. Delete rather than maintain.
+
+Test coverage gaps for code this refactor changed:
+
+- [ ] `ApiController::login()` — the non-admin rejection branch has no
+      end-to-end test, and its comparison changed when `isAdmin()` became a
+      boolean.
+- [ ] `POST /api/logout` without a token (expected 401) is untested.
+- [ ] `throttle:10,1` is tested on `/api/login` but not on `/api/register`.
+- [ ] The throttle-before-`auth:api` ordering on the guarded group was verified
+      by reading `SortedMiddleware`, not by an executable test — driving
+      `/api/stats` past 60 anonymous requests would prove it, at real cost.
+- [ ] `ContactMe`'s Blade view is never rendered by a test, so a variable-name
+      typo there would go unnoticed. The four payload keys were checked by hand
+      and match.
+
+Judgement calls left as they are, with reasons:
+
+- `Handler::unauthenticated()` hardcodes `'Unauthenticated.'` rather than using
+  `$exception->getMessage()` — identical output today.
+- The router guard's redirect `next()` calls sit inside the same `try` as the
+  fail-open `catch`, so a synchronous throw from `next()` itself could
+  double-fire. Not reachable: `next` is a plain callback called with static args.
+- `findUser()` returns a `[User|null, JsonResponse|null]` tuple destructured with
+  `list()`. Unusual for a Laravel controller; an `HttpResponseException` would
+  drop the `if ($error)` boilerplate, but changing it now is churn.
+- `ThrottlePerRoute` folds `$route->getName() ?: $request->path()` into the key,
+  but no route in `routes/api.php` is named, so the `path()` fallback is what
+  actually does the work. Correct either way.
+- `ThrottlePerRoute`'s authenticated branch calls `$request->user()` with the
+  default guard, which is always null on these token-guarded routes — same as
+  the parent class. `/api/stats` and `/api/logout` are therefore keyed by
+  IP+path, not by admin identity.
+- The logout request has no explicit timeout; a hung request delays local
+  session clearing but never blocks it.
+- `verify()` is untested for "an admin row exists but with the wrong type", and
+  `config/contact.php`'s `env()` default branch is untested. Both would test the
+  framework more than the code.
+
 ## Out of scope (separate, risky track)
 
 - Dependency upgrades (axios 0.18, Vue 2 → 3, laravel-mix 4). Not mixed with this
