@@ -80,7 +80,7 @@
 
         <template slot="content">
 
-          <span v-for="text in textFiles[pointing].content" v-show="modalType === 'text'">
+          <span v-for="(text, textKey) in textFiles[pointing].content" v-show="modalType === 'text'" :key="textKey">
 
             <p class="pb-1 text-justify">{{ text }}</p>
 

@@ -27,7 +27,7 @@
             </tr>
           </tfoot>
           <tbody>
-            <tr v-for="stat in stats">
+            <tr v-for="stat in stats" :key="stat.date + stat.ip">
               <td>{{ stat.ip }}</td>
               <td>{{ stat.agent }}</td>
               <td>{{ stat.date }}</td>
@@ -41,7 +41,6 @@
 </template>
 
 <script>
-  import axios from 'axios';
   import store from '../store/vueStore';
 
   export default {

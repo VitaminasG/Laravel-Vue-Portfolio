@@ -45,9 +45,9 @@
         </div>
       </div>
 
-      <div class="column">
+      <div v-if="subStep >= 5" class="column">
 
-        <div v-for="(decod, key) in scrambText.scrambTxt" v-if="subStep >= 5" class="inline">
+        <div v-for="(decod, key) in scrambText.scrambTxt" :key="key" class="inline">
 
           <transition-group appear @before-appear="beforeTyping" @appear="typing(key)" @after-appear="doneTyping">
 
@@ -69,6 +69,10 @@
   import { materials } from '../textMaterial';
   import { TweenMax, TimelineMax, TextPlugin } from "gsap/all";
 
+  // Referencing the plugin keeps the bundler from tree-shaking it away; the
+  // timeline below animates {text: ...}, which only works with TextPlugin
+  // registered.
+  // eslint-disable-next-line no-unused-vars
   const plugins = [TextPlugin];
 
   export default {

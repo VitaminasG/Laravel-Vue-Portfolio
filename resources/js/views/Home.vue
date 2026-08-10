@@ -17,9 +17,9 @@
 
           <div v-if="step > 0" class="pb-2">
 
-            <div>
+            <div v-if="countStep >= 0 ">
 
-              <div v-for="(symbol, index) in newFirstTl.text1" v-if="countStep >= 0 " class="inline">
+              <div v-for="(symbol, index) in newFirstTl.text1" :key="index" class="inline">
                 <transition-group appear @before-appear="beforeAppear" @appear="typing" @after-appear="doneTyping">
                   <span :key="symbol" :data-index="index">{{ symbol }}</span>
                 </transition-group>
@@ -27,9 +27,9 @@
 
             </div>
 
-            <div>
+            <div v-if="countStep > 1">
 
-              <div v-for="(symbol, index) in newFirstTl.text2" v-if="countStep > 1" class="inline">
+              <div v-for="(symbol, index) in newFirstTl.text2" :key="index" class="inline">
                 <transition-group appear @before-appear="beforeAppear" @appear="typing" @after-appear="doneTyping">
                   <span :key="symbol" :data-index="index">{{ symbol }}</span>
                 </transition-group>
@@ -37,9 +37,9 @@
 
             </div>
 
-            <div>
+            <div v-if="countStep > 2">
 
-              <div v-for="(symbol, index) in newFirstTl.text3" v-if="countStep > 2" class="inline">
+              <div v-for="(symbol, index) in newFirstTl.text3" :key="index" class="inline">
                 <transition-group appear @before-appear="beforeAppear" @appear="typing" @after-appear="doneTyping">
                   <span :key="symbol" :data-index="index">{{ symbol }}</span>
                 </transition-group>
@@ -47,9 +47,9 @@
 
             </div>
 
-            <div>
+            <div v-if="countStep > 3">
 
-              <div v-for="(symbol, index) in newFirstTl.text4" v-if="countStep > 3" class="inline">
+              <div v-for="(symbol, index) in newFirstTl.text4" :key="index" class="inline">
                 <transition-group appear @before-appear="beforeAppear" @appear="typing" @after-appear="doneTyping">
                   <span :key="symbol" :data-index="index">{{ symbol }}</span>
                 </transition-group>
@@ -124,9 +124,9 @@
 
           <div class="flex-block">
 
-            <div class="my-1">
+            <div v-if="step >= 3" class="my-1">
 
-              <div v-for="(relax, index) in newSecondTl.text1" v-if="step >= 3" class="inline">
+              <div v-for="(relax, index) in newSecondTl.text1" :key="index" class="inline">
                 <transition-group appear @before-appear="beforeAppear" @appear="typing" @after-appear="doneTyping">
                   <span :key="relax" :data-index="index">{{ relax }}</span>
                 </transition-group>

@@ -70,7 +70,7 @@ export default new Vuex.Store({
       commit('setStorage');
     },
 
-    freshA({commit}, url){
+    freshA(context, url){
 
       return new Promise((resolve, reject) =>{
         axios.get(url)
@@ -91,7 +91,7 @@ export default new Vuex.Store({
       })
     },
 
-    loginA({commit}, { user, token }){
+    loginA(context, { user, token }){
 
       depot.setLoc('user', user);
       depot.setLoc('token', token);
