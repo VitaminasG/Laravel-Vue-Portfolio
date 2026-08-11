@@ -12,6 +12,7 @@
         "lint:fix": "eslint --ext .js,.vue resources/js --fix"
     },
     "devDependencies": {
+        "@playwright/test": "^1.62.1",
         "axios": "^0.18",
         "babel-eslint": "^10.1.0",
         "babel-plugin-dynamic-import-node": "^2.2.0",
