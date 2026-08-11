@@ -77,9 +77,10 @@ All that content redirection made by using **jenseegers/agent** - follow the lin
 ## Re-using Code (a.k.a. Local Resurrection)
 
 So you cloned a relic from the past and now expect it to breathe again? Bold move.
-This thing was forged in the age of Laravel 5.7 and PHP 7.x, so to keep the ancient
-spirits contained we wrap the whole circus in Docker. No, your shiny brand-new system
-PHP and Node will *not* be invited to the party - they would only frighten the locals.
+The backend has since been dragged into the present - Laravel 12 on PHP 8.4 - but
+the frontend is still Vue 2 assembled by Laravel Mix on Node 12, so half this
+circus remains firmly in its own era. Docker keeps both halves contained. No,
+your shiny system PHP and Node will *not* be invited to the party.
 
 You will need **Docker** and **mkcert** (`brew install mkcert nss`). The latter forges
 a locally-trusted SSL certificate, because even nostalgia deserves a green padlock.
@@ -108,7 +109,7 @@ Suspicious of magic and prefer to suffer step by step? The mortal sequence:
 make generate-certs    # forge the locally-trusted certificate
 make update-ssl        # write SSL_CERT / SSL_KEY into .env
 make rebuild           # build & start the containers
-make composer-install  # PHP dependencies (Composer 1.x, because 5.7 is fussy)
+make composer-install  # PHP dependencies
 make key-generate      # APP_KEY, or nothing will decrypt
 make permissions       # let Laravel write to storage/
 make migrate           # run migrations and plant the admin
