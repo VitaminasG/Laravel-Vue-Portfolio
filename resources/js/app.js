@@ -1,4 +1,7 @@
-require('./bootstrap');
+// Imported for its side effects: bootstrap.js registers Vue, axios, lodash and
+// GSAP on window, and wires the CSRF header. It was a CommonJS require() under
+// webpack; Vite produces an ES module, where require() does not exist.
+import './bootstrap';
 
 import vueStore from './store/vueStore';
 import router from './routes';

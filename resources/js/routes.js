@@ -1,9 +1,17 @@
 import VueRouter from 'vue-router';
 import store from './store/vueStore';
 
-function loadView(view) {
+// Each view is still loaded lazily, one chunk per route, exactly as before.
+// The path used to be built at runtime — import('./views/' + view + '.vue') —
+// which webpack resolved by bundling the whole directory as a context module.
+// Rollup cannot analyse a variable path, so it left the string alone and the
+// browser asked the server for a literal .vue file. import.meta.glob is Vite's
+// equivalent: it resolves the pattern at build time and hands back the same
+// lazy import functions.
+const views = import.meta.glob('./views/*.vue');
 
-  return () => import('./views/' + view + '.vue');
+function loadView(view) {
+  return views[`./views/${view}.vue`];
 }
 
 let router = new VueRouter({

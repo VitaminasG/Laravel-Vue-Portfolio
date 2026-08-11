@@ -8,8 +8,7 @@
 
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
-
-        <link rel="stylesheet" href="/css/app.css"/>
+        @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
         <title>{{ config('app.name') }}</title>
 
@@ -24,8 +23,6 @@
             <router-view></router-view>
 
         </div>
-
-    <script src="/js/app.js"></script>
 
     </body>
 

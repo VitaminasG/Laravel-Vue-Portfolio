@@ -3,8 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <link rel="stylesheet" href="/css/mobile/mobileApp.css"/>
+        @vite(['resources/sass/mobileApp.scss', 'resources/js/mobile.js'])
 
         <title>{{ config('app.name') }}</title>
 
@@ -15,8 +14,6 @@
     <div class="a-box a-line" id="boxLine"></div>
 
     <div id="mobApp"></div>
-
-        <script src="/js/mobile/mobile.js"></script>
 
     </body>
 

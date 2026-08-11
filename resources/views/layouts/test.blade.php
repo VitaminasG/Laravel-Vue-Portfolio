@@ -6,8 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <link rel="stylesheet" href="/css/app.css"/>
+        @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
     <title>{{ config('app.name') }}</title>
 
@@ -20,8 +19,6 @@
 <testing-component></testing-component>
 
 </div>
-
-<script src="/js/app.js"></script>
 
 </body>
 

@@ -20,6 +20,16 @@ export default defineConfig({
   ],
 
   resolve: {
+    alias: {
+      // The full build, not the runtime-only one Vue's `module` field points
+      // at. The layouts put <router-view> in the Blade markup rather than in a
+      // render function, so Vue has to compile that template from the DOM at
+      // runtime — which the runtime-only build cannot do. It fails silently:
+      // the bundle loads, bootstrap runs, and #app is simply never populated.
+      // Laravel Mix applied the same alias by default.
+      vue: 'vue/dist/vue.esm.js',
+    },
+
     // The components import each other without an extension — `./views/mHome`
     // rather than `./views/mHome.vue`. Laravel Mix resolved those through
     // webpack's default extension list; Vite has to be told.

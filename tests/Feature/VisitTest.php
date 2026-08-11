@@ -37,7 +37,7 @@ class VisitTest extends TestCase
     {
         $this->visit(self::DESKTOP_UA)
             ->assertStatus(200)
-            ->assertSee('/js/app.js', false);
+            ->assertSee('id="app"', false);
     }
 
     public function test_mobile_visitor_gets_the_mobile_layout()
@@ -66,6 +66,6 @@ class VisitTest extends TestCase
     {
         $this->visit('')
             ->assertStatus(200)
-            ->assertSee('/js/app.js', false);
+            ->assertSee('id="app"', false);
     }
 }

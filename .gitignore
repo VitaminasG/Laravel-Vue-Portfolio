@@ -40,3 +40,6 @@ storage/*.key
 # Playwright
 /test-results/
 /playwright-report/
+
+# Vite build output
+/public/build/
