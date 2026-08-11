@@ -1,5 +1,7 @@
 // Bulma
-@import '~bulma';
+// The tilde prefix was a webpack convention for resolving out of
+// node_modules; Vite resolves bare specifiers there directly.
+@import 'bulma/bulma';
 
 // Variables
 @import 'variables';

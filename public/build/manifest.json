@@ -1,0 +1,95 @@
+{
+  "_TweenMax-C_KkNbTM.js": {
+    "file": "assets/TweenMax-C_KkNbTM.js",
+    "name": "TweenMax"
+  },
+  "resources/assets/Bg_trans.png": {
+    "file": "assets/Bg_trans-sdD8GMjX.png",
+    "src": "resources/assets/Bg_trans.png"
+  },
+  "resources/assets/mFace.gif": {
+    "file": "assets/mFace-Dsl8jKwF.gif",
+    "src": "resources/assets/mFace.gif"
+  },
+  "resources/assets/mobileAssets/CloseIcon.png": {
+    "file": "assets/CloseIcon-DsIPyWXO.png",
+    "src": "resources/assets/mobileAssets/CloseIcon.png"
+  },
+  "resources/assets/mobileAssets/mFb.png": {
+    "file": "assets/mFb-CtjvJfYc.png",
+    "src": "resources/assets/mobileAssets/mFb.png"
+  },
+  "resources/assets/mobileAssets/mGithub.png": {
+    "file": "assets/mGithub-DbElndJw.png",
+    "src": "resources/assets/mobileAssets/mGithub.png"
+  },
+  "resources/assets/mobileAssets/mIn.png": {
+    "file": "assets/mIn-Df28B6k0.png",
+    "src": "resources/assets/mobileAssets/mIn.png"
+  },
+  "resources/assets/mobileAssets/mInsta.png": {
+    "file": "assets/mInsta-dsT1t2b7.png",
+    "src": "resources/assets/mobileAssets/mInsta.png"
+  },
+  "resources/assets/mobileAssets/mMe.jpg": {
+    "file": "assets/mMe-DJ9ICI4i.jpg",
+    "src": "resources/assets/mobileAssets/mMe.jpg"
+  },
+  "resources/assets/mobileAssets/mTweet.png": {
+    "file": "assets/mTweet-DJXCk-bR.png",
+    "src": "resources/assets/mobileAssets/mTweet.png"
+  },
+  "resources/fonts/clacon.ttf": {
+    "file": "assets/clacon-BMzueSwG.ttf",
+    "src": "resources/fonts/clacon.ttf"
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-DXctrdS-.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "imports": [
+      "_TweenMax-C_KkNbTM.js"
+    ]
+  },
+  "resources/js/mobile.js": {
+    "file": "assets/mobile-D3Cu-igJ.js",
+    "name": "mobile",
+    "src": "resources/js/mobile.js",
+    "isEntry": true,
+    "imports": [
+      "_TweenMax-C_KkNbTM.js"
+    ],
+    "css": [
+      "assets/mobile-sljQW014.css"
+    ],
+    "assets": [
+      "assets/CloseIcon-DsIPyWXO.png",
+      "assets/mFace-Dsl8jKwF.gif",
+      "assets/mGithub-DbElndJw.png",
+      "assets/mIn-Df28B6k0.png",
+      "assets/mInsta-dsT1t2b7.png",
+      "assets/mTweet-DJXCk-bR.png",
+      "assets/mFb-CtjvJfYc.png",
+      "assets/mMe-DJ9ICI4i.jpg"
+    ]
+  },
+  "resources/sass/app.scss": {
+    "file": "assets/app-DDtD6B_M.css",
+    "src": "resources/sass/app.scss",
+    "isEntry": true,
+    "name": "app",
+    "names": [
+      "app.css"
+    ]
+  },
+  "resources/sass/mobileApp.scss": {
+    "file": "assets/mobileApp-BUNeZOz8.css",
+    "src": "resources/sass/mobileApp.scss",
+    "isEntry": true,
+    "name": "mobileApp",
+    "names": [
+      "mobileApp.css"
+    ]
+  }
+}

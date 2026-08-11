@@ -1,40 +1,31 @@
 {
     "private": true,
     "scripts": {
-        "dev": "npm run development",
-        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "watch": "npm run development -- --watch",
-        "watch-poll": "npm run watch -- --watch-poll",
-        "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "prod": "npm run production",
-        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "dev": "vite",
+        "build": "vite build",
         "lint": "eslint --ext .js,.vue resources/js",
         "lint:fix": "eslint --ext .js,.vue resources/js --fix",
         "test:e2e": "playwright test"
     },
     "devDependencies": {
         "@playwright/test": "^1.62.1",
-        "axios": "^0.18",
-        "babel-eslint": "^10.1.0",
-        "babel-plugin-dynamic-import-node": "^2.2.0",
-        "cross-env": "^5.1",
+        "@vitejs/plugin-vue2": "^2.3.1",
+        "axios": "^1.7.0",
         "eslint": "^7.32.0",
         "eslint-plugin-vue": "^7.20.0",
-        "gsap": "^2.0.2",
-        "laravel-mix": "^4.0.14",
-        "lodash": "^4.17.13",
-        "resolve-url-loader": "^2.3.1",
-        "sass": "^1.20.1",
-        "sass-loader": "^7.1.0",
-        "vue": "^2.6.3",
-        "vue-eslint-parser": "^7.11.0",
-        "vue-template-compiler": "^2.6.3"
+        "babel-eslint": "^10.1.0",
+        "gsap": "^2.1.2",
+        "laravel-vite-plugin": "^2.1.0",
+        "lodash": "^4.17.21",
+        "sass": "^1.77.0",
+        "vite": "^7.0.0",
+        "vue": "^2.7.16"
     },
     "dependencies": {
-        "bulma": "^0.7.2",
+        "bulma": "^0.7.4",
         "es6-promise": "^4.2.6",
         "mobile-device-detect": "^0.2.3",
-        "vue-router": "^3.0.6",
-        "vuex": "^3.1.0"
+        "vue-router": "^3.6.5",
+        "vuex": "^3.6.2"
     }
 }
