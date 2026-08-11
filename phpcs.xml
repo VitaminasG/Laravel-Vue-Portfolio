@@ -16,6 +16,9 @@
     <exclude-pattern>*/bootstrap/cache/*</exclude-pattern>
     <exclude-pattern>*/public/*</exclude-pattern>
 
+    <!-- PHP_CodeSniffer scans .js and .css by default; this project lints
+         those with ESLint instead. -->
+    <arg name="extensions" value="php"/>
     <arg name="colors"/>
     <arg name="encoding" value="utf-8"/>
     <arg value="p"/>
@@ -66,10 +69,13 @@
 
     <!--
         Test fixtures embed real User-Agent strings, which cannot be wrapped
-        without changing what they assert.
+        without changing what they assert, and the published config files come
+        from the framework skeleton — rewrapping them only makes the next
+        upgrade's diff noisier.
     -->
     <rule ref="Generic.Files.LineLength.TooLong">
         <exclude-pattern>*/tests/*</exclude-pattern>
+        <exclude-pattern>*/config/*</exclude-pattern>
     </rule>
 
 </ruleset>
