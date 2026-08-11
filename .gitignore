@@ -32,3 +32,7 @@ storage/*.key
 
 # PHP_CodeSniffer PHARs (fetched via `make lint-install`)
 .docker/bin/
+
+# PHPUnit run cache
+.phpunit.result.cache
+.phpunit.cache/
