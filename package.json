@@ -9,7 +9,8 @@
         "prod": "npm run production",
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
         "lint": "eslint --ext .js,.vue resources/js",
-        "lint:fix": "eslint --ext .js,.vue resources/js --fix"
+        "lint:fix": "eslint --ext .js,.vue resources/js --fix",
+        "test:e2e": "playwright test"
     },
     "devDependencies": {
         "@playwright/test": "^1.62.1",

@@ -36,3 +36,7 @@ storage/*.key
 # PHPUnit run cache
 .phpunit.result.cache
 .phpunit.cache/
+
+# Playwright
+/test-results/
+/playwright-report/
