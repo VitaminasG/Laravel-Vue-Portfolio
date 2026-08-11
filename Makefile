@@ -1,6 +1,6 @@
 .PHONY: help setup generate-certs update-ssl hosts up down restart rebuild logs \
         composer-install key-generate migrate migrate-fresh seed \
-        php-shell node-shell db-shell node-install node-dev node-build node-e2e permissions \
+        php-shell node-shell db-shell node-install node-dev node-build node-e2e node-clean-hot permissions \
         lint lint-fix lint-js lint-js-fix lint-php lint-php-fix lint-install
 
 include .env
@@ -36,6 +36,7 @@ help:
 	@echo "  make node-dev             Vite dev server with HMR (frontend work)"
 	@echo "  make node-build           Production build into public/build/"
 	@echo "  make node-e2e             Playwright specs against the running site"
+	@echo "  make node-clean-hot       Drop a stale public/hot after an interrupted dev server"
 	@echo ""
 	@echo "Code style:"
 	@echo "  make lint                 Check JS/Vue (ESLint) and PHP (PSR-12)"
@@ -108,11 +109,17 @@ node-install:
 node-dev:
 	docker exec -it $(DOCKER_CONTAINER_PREFIX)-node npm run dev
 
-node-build:
+node-build: node-clean-hot
 	docker exec -i $(DOCKER_CONTAINER_PREFIX)-node npm run build
 
-node-e2e:
+node-e2e: node-clean-hot
 	docker exec -i $(DOCKER_CONTAINER_PREFIX)-node npm run test:e2e
+
+# `npm run dev` writes public/hot, and Laravel serves dev-server URLs while it
+# exists. A graceful shutdown removes it; anything abrupt does not, and the
+# site then points every asset at a server that is no longer listening.
+node-clean-hot:
+	@rm -f public/hot
 
 # --- Code style ---
 # JS/Vue via ESLint (2-space, Vue style guide); PHP via PHP_CodeSniffer (PSR-12,
