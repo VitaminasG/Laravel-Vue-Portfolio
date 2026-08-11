@@ -17,6 +17,14 @@ return Application::configure(basePath: dirname(__DIR__))
             'throttle.route' => \App\Http\Middleware\ThrottlePerRoute::class,
         ]);
 
+        // Laravel's default is `fn () => route('login')`, applied before this
+        // callback runs. This app has no login route — the SPA handles that
+        // client-side — so the default raises "Route [login] not defined"
+        // before the AuthenticationException ever reaches the handler below.
+        // Returning null leaves the exception intact so it can be rendered as
+        // JSON 401.
+        $middleware->redirectGuestsTo(fn () => null);
+
         // Throttling is listed ahead of Authenticate so anonymous traffic to a
         // guarded route is counted before it is rejected. Declaring the order
         // in routes/api.php is not enough: this list outranks it, and without

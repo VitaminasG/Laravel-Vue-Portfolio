@@ -97,9 +97,9 @@ class ContactTest extends TestCase
 
         $rendered = $mailable->render();
 
-        $this->assertContains('Tester', $rendered);
-        $this->assertContains('tester@example.com', $rendered);
-        $this->assertContains('Hello there', $rendered);
-        $this->assertContains('TestAgent/1.0', $rendered);
+        $this->assertStringContainsString('Tester', $rendered);
+        $this->assertStringContainsString('tester@example.com', $rendered);
+        $this->assertStringContainsString('Hello there', $rendered);
+        $this->assertStringContainsString('TestAgent/1.0', $rendered);
     }
 }
