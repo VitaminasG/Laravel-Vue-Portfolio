@@ -78,8 +78,9 @@ All that content redirection made by using **jenseegers/agent** - follow the lin
 
 So you cloned a relic from the past and now expect it to breathe again? Bold move.
 The backend has since been dragged into the present - Laravel 12 on PHP 8.4 - but
-the frontend is still Vue 2 assembled by Laravel Mix on Node 12, so half this
-circus remains firmly in its own era. Docker keeps both halves contained. No,
+the frontend is still Vue 2, now assembled by Vite on Node 22 — modern tooling
+over a framework that has outlived its own support window. Docker keeps the
+whole thing contained. No,
 your shiny system PHP and Node will *not* be invited to the party.
 
 You will need **Docker** and **mkcert** (`brew install mkcert nss`). The latter forges
@@ -127,7 +128,7 @@ Mind the **`:8443`** - the project lives there on purpose. Ports are kept in `.e
 (`HTTP_PORT`, `SSL_PORT`) so this old soul does not start a turf war with your other
 containers squatting on port 443.
 
-Useful spells for the daily grind: `make help`, `make logs`, `make node-watch`
+Useful spells for the daily grind: `make help`, `make logs`, `make node-dev`
 (recompile the Vue/SCSS), `make php-shell`, `make db-shell`.
 
 *Edit, move and delete to your need's*

@@ -1,6 +1,6 @@
 .PHONY: help setup generate-certs update-ssl hosts up down restart rebuild logs \
         composer-install key-generate migrate migrate-fresh seed \
-        php-shell node-shell db-shell node-install node-watch node-prod permissions \
+        php-shell node-shell db-shell node-install node-dev node-build node-e2e permissions \
         lint lint-fix lint-js lint-js-fix lint-php lint-php-fix lint-install
 
 include .env
@@ -33,8 +33,9 @@ help:
 	@echo ""
 	@echo "Node (asset compilation):"
 	@echo "  make node-install         npm install"
-	@echo "  make node-watch           npm run watch (recompile on change)"
-	@echo "  make node-prod            npm run prod (production build)"
+	@echo "  make node-dev             Vite dev server with HMR (frontend work)"
+	@echo "  make node-build           Production build into public/build/"
+	@echo "  make node-e2e             Playwright specs against the running site"
 	@echo ""
 	@echo "Code style:"
 	@echo "  make lint                 Check JS/Vue (ESLint) and PHP (PSR-12)"
@@ -104,11 +105,14 @@ permissions:
 node-install:
 	docker exec -i $(DOCKER_CONTAINER_PREFIX)-node npm install
 
-node-watch:
-	docker exec -it $(DOCKER_CONTAINER_PREFIX)-node npm run watch
+node-dev:
+	docker exec -it $(DOCKER_CONTAINER_PREFIX)-node npm run dev
 
-node-prod:
-	docker exec -i $(DOCKER_CONTAINER_PREFIX)-node npm run prod
+node-build:
+	docker exec -i $(DOCKER_CONTAINER_PREFIX)-node npm run build
+
+node-e2e:
+	docker exec -i $(DOCKER_CONTAINER_PREFIX)-node npm run test:e2e
 
 # --- Code style ---
 # JS/Vue via ESLint (2-space, Vue style guide); PHP via PHP_CodeSniffer (PSR-12,

@@ -37,10 +37,16 @@ export default defineConfig({
   },
 
   server: {
-    // The dev server runs inside the node container, so it has to listen on
-    // all interfaces and advertise a host the browser can actually reach.
+    // The dev server runs inside the node container, which publishes its 8080
+    // to the host as 8091. Everything below exists to reconcile those two
+    // numbers: the server listens on all interfaces inside the container,
+    // while `origin` is what gets written into public/hot and therefore into
+    // the page — so the browser is told the port it can actually reach, not
+    // the one the container sees.
     host: '0.0.0.0',
     port: 8080,
-    hmr: { host: 'localhost', port: 8091 },
+    strictPort: true,
+    origin: 'http://localhost:8091',
+    hmr: { host: 'localhost', clientPort: 8091 },
   },
 });
