@@ -1,0 +1,225 @@
+# UX/UI Audit and Improvement Plan
+
+Measured on 2026-08-11 against the running site, after the Laravel 12 and Vite
+migrations. Every number below came from instrumenting the page in a real
+browser, not from reading the code.
+
+## The premise
+
+The retro-OS concept is the site's strongest asset and this plan does not touch
+it. A portfolio's job is to make someone want to hire the person who built it,
+and a boot sequence that behaves like a 1998 desktop is a memorable way to do
+that — far better than another card grid.
+
+The problem is the **cost of entry**. Every finding below is a toll a visitor
+pays before seeing a single piece of work.
+
+---
+
+## Findings
+
+### 1. Thirty-seven seconds before a visitor can do anything
+
+| Stage | Duration |
+| --- | --- |
+| `/` — intro text typing until "Press Enter to proceed" | ~9.7 s |
+| `/OS` — boot sequence until the desktop is usable | ~27 s |
+| **Total** | **~37 s** |
+
+None of this is the application being slow. PHP answers in 10–60 ms and the
+bundle is 170 KB. The time is hardcoded:
+
+```
+resources/js/components/loadingOne.vue:158   _.throttle(fn, 8000)      // 8 s
+resources/js/components/loadingTwo.vue:56    setTimeout(fn, 6500)      // 6.5 s
+resources/js/components/loadingOne.vue:130   delay: 3                  // ×several
+```
+
+Worse than the total is the shape of it: **for the first 10 seconds nothing on
+screen moves.** The memory counter sits at `Memory Testing : 0` while a
+`delay: 3` and an 8-second throttle elapse. A visitor has no way to tell a
+deliberate animation from a hung page, and no way to skip it.
+
+**Severity: high.** This is the single largest cause of visitors leaving.
+
+### 2. The desktop cannot be used with a keyboard
+
+Three of the four desktop icons are `<a>` elements with **no `href`**, so
+browsers do not put them in the tab order. Measured on the live desktop:
+
+```
+focusable elements on the whole page:  2
+```
+
+Those two are the GitHub link and "Log off". `ReadMe.txt`, `AboutMe.txt` and
+`ContactMe.exe` — the actual content — **cannot be opened without a mouse.**
+
+The document also has no headings (`h1`–`h3`: none) and no landmarks (`main`,
+`nav`, `header`, `footer`: none), so a screen reader is given a flat list of
+text with no structure.
+
+**Severity: high.** Anyone browsing by keyboard, and anyone using assistive
+technology, cannot reach the content at all.
+
+### 3. Content becomes unreachable below 667 px of viewport height
+
+```
+height the desktop content needs:  667 px
+html / body overflow:              hidden
+can the page scroll:               no
+```
+
+At a 600 px viewport the taskbar sits at y=627 — off screen — and `Github.link`
+is cut in half. Because scrolling is disabled, **there is no way to reach
+either.**
+
+A 1366×768 laptop, still one of the most common screens, leaves roughly 668 px
+after browser chrome. The site is balanced on the edge of breaking on the
+hardware a large share of visitors use, and goes over it in any window that is
+not full height.
+
+**Severity: high**, and the cheapest of the three to fix.
+
+### 4. The mobile site asks visitors to leave
+
+The mobile experience currently says, verbatim:
+
+> To be able to present a planned browsing experience, please use a Desktop or
+> Laptop computer.
+
+A portfolio link is usually opened from LinkedIn, a message or an email — on a
+phone. That visitor is being asked to come back later on different hardware,
+which most will not do.
+
+Beyond the copy, the page is 1,456 px tall with content ending around 850 px:
+roughly **600 px of empty space** before the footer, with a "Scroll Down" prompt
+rendered in dark grey on a dark grey background that is nearly invisible. There
+are no projects, no CV and no contact form — only social icons.
+
+**Severity: high.** This is likely the majority of traffic, receiving the least.
+
+### 5. The device split is decided by User-Agent, not by screen size
+
+`IndexController` picks a layout from `jenssegers/agent`. Two consequences
+measured directly:
+
+- **iPads get the desktop OS.** iPadOS sends a Macintosh User-Agent, so a touch
+  device receives an interface built for a mouse pointer.
+- **A narrow desktop window still gets the full OS**, squeezed, because the
+  viewport is never consulted.
+
+**Severity: medium.** It misroutes a real slice of visitors, and it is the
+root cause behind finding 3 having no fallback.
+
+### 6. Almost nothing for search engines or link previews
+
+What a crawler receives:
+
+```
+<title>Portfolio</title>
+<h1>Portfolio</h1>
+2,783 characters of text
+links to other pages:    0
+meta description:        absent
+og: / twitter: tags:     absent
+```
+
+Sharing the URL anywhere produces a bare link with no image, no title beyond
+"Portfolio", and no description. The name "Gediminas Palsys" does not appear in
+the title.
+
+**Severity: medium.** Costs reach rather than usability.
+
+---
+
+## Proposed changes
+
+### Phase A — Entry cost (highest return, lowest risk)
+
+**A1. Cut the journey from ~37 s to under 10 s.** Reduce the hardcoded waits
+rather than removing the sequence: the 8-second throttle and the 6.5-second
+timeout are the two largest, and the `delay: 3` values can come down together.
+Target roughly 6–8 seconds of boot, which still reads as a boot.
+
+**A2. Add a skip control.** A quiet "Skip →" affordance, and Enter/Escape/click
+anywhere jumping straight to the desktop. First-time visitors get the effect;
+returning visitors and impatient recruiters get the content.
+
+**A3. Remember that a visitor has seen it.** Store a flag; on later visits go
+straight to the desktop with the boot available on request. Nobody should watch
+the same animation twice.
+
+**A4. Make the first ten seconds move.** Whatever the final duration, something
+must be visibly progressing from the first frame — the memory counter should
+start immediately rather than after a three-second delay.
+
+### Phase B — Access and layout
+
+**B1. Make the icons real controls.** `<button>` elements, or anchors with an
+`href`, so they are focusable and operable by Enter/Space. This is the single
+change that makes the content reachable without a mouse.
+
+**B2. Add document structure.** One `h1` naming the person, headings inside the
+windows, and `main`/`footer` landmarks.
+
+**B3. Fix the 667 px cliff.** Either allow the desktop to scroll when it does
+not fit, or scale the icon grid to the available height. The taskbar should be
+pinned so it is never the thing that disappears.
+
+**B4. Visible focus styles.** The dashed retro aesthetic suits focus rings
+unusually well — this is a place where accessibility and the theme agree.
+
+### Phase C — Mobile as a first-class experience
+
+**C1. Rewrite the copy.** Remove the request to switch devices. A phone visitor
+should be told what they are looking at, not what they are missing.
+
+**C2. Give it content.** The same material the desktop windows hold — the
+introduction, the background, a way to make contact — laid out for a phone.
+The retro styling carries over; the OS metaphor does not need to.
+
+**C3. Remove the empty space** and either fix or drop the invisible "Scroll
+Down" prompt.
+
+**C4. Consider viewport-aware routing.** Keeping the User-Agent split but
+adding a viewport check would stop iPads and narrow windows receiving a
+mouse-only interface.
+
+### Phase D — Reach
+
+**D1. A real `<title>`** — the person's name and what they do, not "Portfolio".
+
+**D2. Meta description and Open Graph tags**, including an image, so a shared
+link looks like something worth opening.
+
+**D3. Give the crawler layout real content and internal links.** It already
+renders server-side; it just has nothing in it.
+
+---
+
+## Suggested order
+
+1. **Phase A** — the entry cost is what loses visitors before anything else can
+   matter.
+2. **Phase B** — mechanical, well-understood, and makes the content reachable
+   for everyone.
+3. **Phase D** — small, and it increases how many people arrive at all.
+4. **Phase C** — the largest piece and the one needing real design decisions,
+   worth doing when there is time to do it properly.
+
+## Out of scope
+
+- The retro-OS concept, the wallpaper, the colour scheme and the typeface. They
+  work, and they are the reason the site is memorable.
+- Vue 3 and GSAP 3. Unrelated to any finding here.
+- The boot sequence's existence. Only its duration and its skippability are in
+  question.
+
+## How this was measured
+
+Chromium via Playwright against the running site: DOM polling at 150–250 ms for
+the animation timeline, `getBoundingClientRect` and `getComputedStyle` for the
+layout cliff, direct queries for focusable elements and document structure, a
+real iPhone 13 device profile for the mobile capture, and plain `curl` for what
+a crawler receives. The four e2e specs added during the Vite migration cover
+the paths this work would change.
