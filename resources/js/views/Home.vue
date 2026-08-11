@@ -13,6 +13,10 @@
 
       <div v-if="loading" class="flex-block loading w-100">
 
+        <button type="button" class="skip-intro" @click="loginPage">
+          Press [ESC] to skip
+        </button>
+
         <div v-cloak class="flex-block h-100">
 
           <div v-if="step > 0" class="pb-2">
@@ -246,6 +250,7 @@
 
   import { TweenMax } from "gsap/all";
   import { materials } from '../textMaterial';
+  import { TIMING } from '../helpers/bootSequence';
 
   export default {
     name: "Home",
@@ -307,12 +312,12 @@
         case 5:
 
           this.step++;
-          setTimeout( to.delayAfter, 2000 );
+          setTimeout( to.delayAfter, TIMING.intro.afterMessageMs );
           break;
 
         case 7:
 
-          setTimeout( to.delayAfter, 1000 );
+          setTimeout( to.delayAfter, TIMING.intro.beforePromptMs );
           break;
 
         default:
@@ -329,13 +334,23 @@
 
     },
 
+    mounted(){
+
+      window.addEventListener('keydown', this.onKeydown);
+    },
+
+    beforeDestroy(){
+
+      window.removeEventListener('keydown', this.onKeydown);
+    },
+
     methods: {
 
       // Footer Animation
 
       afterFooter(){
 
-        TweenMax.staggerFromTo('.socialAnim', 1, { y:50, opacity: 0},{ y:0, opacity: 1, delay: 22}, 0.5 )
+        TweenMax.staggerFromTo('.socialAnim', TIMING.footer.fadeIn, { y:TIMING.footer.riseFrom, opacity: 0},{ y:0, opacity: 1, delay: TIMING.footer.delay}, TIMING.footer.stagger )
 
       },
 
@@ -348,11 +363,11 @@
 
       typing(el, done){
 
-        let delay = el.dataset.index * 75;
+        let delay = el.dataset.index * TIMING.intro.charDelayMs;
 
         setTimeout(function(){
 
-          TweenMax.to(el, 0.1, {opacity: 1, onComplete: done})
+          TweenMax.to(el, TIMING.intro.revealChar, {opacity: 1, onComplete: done})
 
         }, delay)
       },
@@ -363,12 +378,12 @@
 
           this.countStep += 1;
 
-        },3500),
+        }, TIMING.intro.settleMs),
 
       transition(value){
 
 
-        TweenMax.fromTo(this.$refs[value], 0.5, { opacity: 0}, { opacity: 1} );
+        TweenMax.fromTo(this.$refs[value], TIMING.intro.fadeIn, { opacity: 0}, { opacity: 1} );
 
       },
 
@@ -411,6 +426,14 @@
       loginPage(){
 
         this.loading = false;
+      },
+
+      onKeydown(event){
+
+        if(this.loading && event.key === 'Escape'){
+
+          this.loginPage();
+        }
       }
     }
   }

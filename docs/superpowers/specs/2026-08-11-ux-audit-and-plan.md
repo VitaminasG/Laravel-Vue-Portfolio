@@ -18,6 +18,12 @@ pays before seeing a single piece of work.
 
 ## Findings
 
+> **Phase A is delivered.** The journey to the desktop went from ~37 s to
+> ~9 s, it can be skipped with Escape or a button, and it does not play a
+> second time. Finding 1 below describes the state before that work; the
+> measured result is recorded at the end of this document. Findings 2–6 are
+> unchanged and still open.
+
 ### 1. Thirty-seven seconds before a visitor can do anything
 
 | Stage | Duration |
@@ -223,3 +229,39 @@ layout cliff, direct queries for focusable elements and document structure, a
 real iPhone 13 device profile for the mobile capture, and plain `curl` for what
 a crawler receives. The four e2e specs added during the Vite migration cover
 the paths this work would change.
+
+---
+
+## Phase A result
+
+Measured the same way as the original audit, on the same machine.
+
+| Stage | Before | After |
+| --- | --- | --- |
+| `/` intro until "Press Enter" | 9.7 s | 3.4 s |
+| `/OS` boot until the desktop | 27 s | 5.9 s |
+| **Total** | **~37 s** | **~9.3 s** |
+| Counter starts moving | ~10 s | 0.7 s |
+| Way to skip | none | Escape, or a button |
+| Second visit | full sequence again | straight to the desktop |
+
+The timings that produced the original number were scattered across three
+components as magic numbers. They now live in
+`resources/js/helpers/bootSequence.js`, which also holds the seen-it flag and
+the reduced-motion check — so the total is legible as the sum of what that file
+says, and tuning it further does not mean hunting through GSAP calls.
+
+Eight e2e specs cover the result: the time budget, the counter moving, both
+skip paths, the returning visitor, and reduced motion. The reduced-motion pair
+uses `page.emulateMedia` — the `test.use({ reducedMotion })` fixture form did
+not reach the page here, and a spec written that way passed while asserting
+nothing.
+
+`/OS?boot=1` replays the sequence for anyone who wants to see it again.
+
+### Not done in Phase A
+
+Reducing the wait made the sequence tolerable; it did not make the desktop
+reachable. Findings 2 and 3 — the keyboard trap and the 667 px cliff — still
+stand, and a visitor who now arrives in 9 seconds instead of 37 arrives at the
+same unreachable content. Phase B is the one that fixes that.

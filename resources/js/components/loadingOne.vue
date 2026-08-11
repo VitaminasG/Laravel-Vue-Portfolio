@@ -67,6 +67,7 @@
 <script>
 
   import { materials } from '../textMaterial';
+  import { TIMING } from '../helpers/bootSequence';
   import { TweenMax, TimelineMax, TextPlugin } from "gsap/all";
 
   // Referencing the plugin keeps the bundler from tree-shaking it away; the
@@ -118,7 +119,9 @@
 
       imHereTop(){
 
-        TweenMax.fromTo('.tbar', 1.5, {opacity: 0}, {opacity: 1, delay: 1}, 1 )
+        // No delay: this is the first paint of the whole site, and a header
+        // that waits is indistinguishable from a page that failed to load.
+        TweenMax.fromTo('.tbar', TIMING.bios.fadeIn, {opacity: 0}, {opacity: 1}, TIMING.bios.stagger )
       },
 
       imHereMid(el, done){
@@ -127,12 +130,12 @@
           onComplete: done
         });
 
-        tl.staggerFromTo('.mbarSub', 1, {opacity: 0},{opacity: 1, delay: 3}, 1)
-          .fromTo('.mbarSub1', 0.5, {opacity: 0}, {opacity: 1 })
-          .to(this.$data, 1, { n: 131072}, '+=0.5')
-          .fromTo('.mbarSub2', 0.5, {opacity: 0}, {opacity: 1}, '+=0.5')
-          .fromTo('.mbarSub3', 0.5, {opacity: 0}, {opacity: 1}, '+=0.5')
-          .fromTo('.mbarSub4', 0.5, {opacity: 0}, {opacity: 1}, '+=0.5');
+        tl.staggerFromTo('.mbarSub', TIMING.memory.fadeIn, {opacity: 0},{opacity: 1}, TIMING.memory.stagger)
+          .fromTo('.mbarSub1', TIMING.memory.fadeIn, {opacity: 0}, {opacity: 1 })
+          .to(this.$data, TIMING.memory.counter, { n: TIMING.memory.target}, TIMING.memory.gap)
+          .fromTo('.mbarSub2', TIMING.memory.fadeIn, {opacity: 0}, {opacity: 1}, TIMING.memory.gap)
+          .fromTo('.mbarSub3', TIMING.memory.fadeIn, {opacity: 0}, {opacity: 1}, TIMING.memory.gap)
+          .fromTo('.mbarSub4', TIMING.memory.fadeIn, {opacity: 0}, {opacity: 1}, TIMING.memory.gap);
 
       },
 
@@ -148,14 +151,17 @@
           onComplete: done
         });
 
-        tl2.staggerTo('.scramb', 0.2, {autoAlpha: 1, delay: 3}, 0.1)
-          .staggerTo('.scramb', 0.2, {autoAlpha: 0}, '+=0.2')
-          .to('.letter-' + key, 0.5, {text: letter, autoAlpha: 1}, '+=0.1');
+        tl2.staggerTo('.scramb', TIMING.scramble.reveal, {autoAlpha: 1}, TIMING.scramble.stagger)
+          .staggerTo('.scramb', TIMING.scramble.reveal, {autoAlpha: 0}, '+=0.1')
+          .to('.letter-' + key, TIMING.scramble.settle, {text: letter, autoAlpha: 1}, '+=0.1');
       },
 
+      // One after-appear fires per letter; the throttle collapses them into a
+      // single step, and its window doubles as how long the finished BIOS
+      // screen is held.
       doneTyping:
 
-        _.throttle(function(){this.step();},8000)
+        _.throttle(function(){this.step();}, TIMING.biosHoldMs)
       ,
 
       step(){

@@ -128,3 +128,40 @@ button, textarea, textarea::placeholder{
     box-shadow: 0 0 3px rgba($box-green, 0.6);
   }
 }
+
+/*
+ * The way out of an intro animation.
+ *
+ * A real BIOS puts its key hints at the bottom of the screen in the same plain
+ * type as everything else ("Press DEL to enter SETUP"), so the escape hatch
+ * costs nothing to the period feel it interrupts. Shared between the `/` intro
+ * and the `/OS` boot sequence, which both hold a visitor before any content.
+ */
+.skip-intro {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.25rem;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid transparent;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 0.8em;
+  // Quiet, but not the near-invisible grey-on-grey this audit flagged
+  // elsewhere: an escape hatch nobody can see is not an escape hatch.
+  opacity: 0.75;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  z-index: 10;
+
+  &:hover,
+  &:focus-visible {
+    opacity: 1;
+    border-color: currentColor;
+    outline: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}

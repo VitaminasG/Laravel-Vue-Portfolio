@@ -19,6 +19,7 @@
 <script>
 
   import { TweenMax} from "gsap/all";
+  import { TIMING } from '../helpers/bootSequence';
 
   export default {
 
@@ -48,12 +49,12 @@
 
     mounted() {
 
-      TweenMax.staggerFromTo('.obj', 3, {autoAlpha:0, y: -150}, {autoAlpha: 1, y: 0 }, 1 );
-      TweenMax.staggerFromTo('.barL', 3, {opacity: 0}, {opacity: 1});
+      TweenMax.staggerFromTo('.obj', TIMING.logo.fadeIn, {autoAlpha:0, y: TIMING.logo.riseFrom}, {autoAlpha: 1, y: 0 }, TIMING.logo.stagger );
+      TweenMax.staggerFromTo('.barL', TIMING.logo.fadeIn, {opacity: 0}, {opacity: 1});
 
       let to = this;
 
-      setTimeout( to.increaseVal , 6500);
+      setTimeout( to.increaseVal , TIMING.logoHoldMs);
 
     },
 
