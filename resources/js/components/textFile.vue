@@ -2,7 +2,7 @@
 
   <div>
 
-    <div class="modal" :class="{ 'is-active' : isActive}">
+    <div class="modal" :class="{ 'is-active' : isActive}" role="dialog" aria-modal="true">
 
       <div class="modal-background" />
 
@@ -10,11 +10,11 @@
 
         <header class="modal-card-head">
 
-          <p class="modal-card-title">
+          <h2 class="modal-card-title">
             <slot name="header" /> - textPad
-          </p>
+          </h2>
 
-          <button class="delete" @click="closeMod" />
+          <button class="delete" type="button" aria-label="Close window" @click="closeMod" />
 
         </header>
 
@@ -71,6 +71,16 @@
 
     },
 
+    mounted(){
+
+      window.addEventListener('keydown', this.onKeydown);
+    },
+
+    beforeDestroy(){
+
+      window.removeEventListener('keydown', this.onKeydown);
+    },
+
     methods: {
 
       closeMod(){
@@ -78,6 +88,17 @@
         store.clearState();
         store.changeState(false);
         this.isActive = store.dispatchState();
+
+        this.$emit('closed');
+
+      },
+
+      onKeydown(event){
+
+        if(this.isActive && event.key === 'Escape'){
+
+          this.closeMod();
+        }
 
       }
 

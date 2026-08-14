@@ -18,11 +18,11 @@ pays before seeing a single piece of work.
 
 ## Findings
 
-> **Phase A is delivered.** The journey to the desktop went from ~37 s to
-> ~9 s, it can be skipped with Escape or a button, and it does not play a
-> second time. Finding 1 below describes the state before that work; the
-> measured result is recorded at the end of this document. Findings 2–6 are
-> unchanged and still open.
+> **Phases A and B are delivered.** The journey to the desktop went from ~37 s
+> to ~9 s and can now be skipped; the desktop is now operable by keyboard and
+> survives a short viewport. Findings 1–3 below describe the state before that
+> work, and the measured results are recorded at the end of this document.
+> Findings 4–6 are unchanged and still open.
 
 ### 1. Thirty-seven seconds before a visitor can do anything
 
@@ -265,3 +265,49 @@ Reducing the wait made the sequence tolerable; it did not make the desktop
 reachable. Findings 2 and 3 — the keyboard trap and the 667 px cliff — still
 stand, and a visitor who now arrives in 9 seconds instead of 37 arrives at the
 same unreachable content. Phase B is the one that fixes that.
+
+---
+
+## Phase B result
+
+| | Before | After |
+| --- | --- | --- |
+| Focusable elements on the desktop | 2 | 5 |
+| Icons openable without a mouse | 1 of 4 | 4 of 4 |
+| `h1` / landmarks | 0 / 0 | 1 / 2 |
+| Taskbar at a 600 px viewport | off screen at y=627 | fully visible |
+| `Github.link` at a 600 px viewport | cut in half, unreachable | in view |
+
+Three of the four icons were `<a>` elements with no `href`, which is why
+browsers left them out of the tab order. They are `<button>` now — buttons for
+what they do, not for how they look, so every style selects a shared `.d-icon`
+class rather than the element and the desktop renders exactly as before.
+
+The height cliff is fixed by wrapping rather than scrolling. Four icons in one
+column need 667 px; `flex-wrap` starts a second column when the viewport cannot
+give them that, which is what the desktop this borrows from did for the same
+reason. The taskbar no longer relies on `margin-top: auto` to find the bottom
+of a container that could grow past the screen.
+
+Making the icons reachable meant also making the windows they open closable, or
+the fix would have replaced one trap with another. Escape closes a window, the
+close button has an accessible name, and focus returns to the icon that opened
+it instead of dropping the visitor at the top of the document.
+
+The focus ring reuses the hover treatment — a dotted outline offset from the
+icon, which is how the original marked a selected item. Keyboard visibility and
+the period look are the same thing here.
+
+Nine e2e specs cover it: tab order across all five controls, the open/close/
+return-focus cycle, document structure, every control staying in view at
+900×600, and the close button's name. Seventeen specs in total now.
+
+### Not done in Phase B
+
+No focus trap inside an open window — Tab can still leave it for the desktop
+behind. Closing works from anywhere, so this is a rough edge rather than a
+trap, and a real trap is a larger piece of work than the findings called for.
+
+Findings 4, 5 and 6 stand: the mobile site still asks visitors to leave, the
+device split still ignores viewport size, and crawlers still receive almost
+nothing.

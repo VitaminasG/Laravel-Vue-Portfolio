@@ -158,3 +158,25 @@ $percents: '25' 25%, '50' 50%, '75' 75%, '100' 100%;
   }
 
 }
+// Accessibility
+
+/*
+ * Present to a screen reader, absent from the screen.
+ *
+ * The desktop is meant to read as a bare 90s screen, so the heading naming
+ * whose portfolio this is cannot be drawn — but a document with no heading at
+ * all gives assistive technology nothing to orient by. This is the standard
+ * clip-rect technique rather than display:none, which would remove the element
+ * from the accessibility tree along with the layout.
+ */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

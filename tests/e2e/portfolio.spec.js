@@ -147,3 +147,78 @@ test.describe('with reduced motion requested', () => {
     await expect(page.getByText('Fierce Monkey BIOS')).toBeVisible({ timeout: 15_000 });
   });
 });
+
+// Phase B: the desktop had two focusable elements, three of its four icons
+// were anchors without an href, and it needed 667px of viewport height while
+// scrolling was disabled. These specs cover the properties that fix restored.
+
+test('every desktop icon is reachable by keyboard', async ({ page }) => {
+  await page.goto('/OS');
+  await expect(page.getByText('ReadMe.txt')).toBeVisible({ timeout: 30_000 });
+
+  const reached = [];
+  for (let i = 0; i < 5; i++) {
+    await page.keyboard.press('Tab');
+    reached.push(await page.evaluate(() => document.activeElement.innerText.trim()));
+  }
+
+  expect(reached).toEqual([
+    'ReadMe.txt', 'AboutMe.txt', 'ContactMe.exe', 'Github.link', 'Log off',
+  ]);
+});
+
+test('a window opens with Enter, closes with Escape, and returns focus', async ({ page }) => {
+  await page.goto('/OS');
+  await expect(page.getByText('ReadMe.txt')).toBeVisible({ timeout: 30_000 });
+
+  await page.keyboard.press('Tab');
+  await page.keyboard.press('Enter');
+  await expect(page.getByText('textPad')).toBeVisible({ timeout: 5_000 });
+
+  await page.keyboard.press('Escape');
+  await expect(page.locator('.modal.is-active')).toHaveCount(0);
+
+  // Without this the visitor is dropped at the top of the document and has to
+  // tab through the whole desktop again.
+  const focused = await page.evaluate(() => document.activeElement.innerText.trim());
+  expect(focused).toBe('ReadMe.txt');
+});
+
+test('the document has a heading and landmarks', async ({ page }) => {
+  await page.goto('/OS');
+  await expect(page.getByText('ReadMe.txt')).toBeVisible({ timeout: 30_000 });
+
+  const structure = await page.evaluate(() => ({
+    h1: document.querySelectorAll('h1').length,
+    main: document.querySelectorAll('main').length,
+    footer: document.querySelectorAll('footer').length,
+  }));
+
+  expect(structure).toEqual({ h1: 1, main: 1, footer: 1 });
+});
+
+test('the taskbar and every icon stay on screen in a short viewport', async ({ page }) => {
+  // 900x600 is below the 667px the icons used to need, and the page cannot
+  // scroll — so anything past the fold used to be unreachable outright.
+  await page.setViewportSize({ width: 900, height: 600 });
+  await page.goto('/OS');
+  await expect(page.getByText('ReadMe.txt')).toBeVisible({ timeout: 30_000 });
+
+  for (const label of ['ReadMe.txt', 'AboutMe.txt', 'ContactMe.exe', 'Github.link', 'Log off']) {
+    await expect(page.getByText(label)).toBeInViewport();
+  }
+
+  const taskbarInView = await page.evaluate(() => {
+    const b = document.querySelector('.d-footer').getBoundingClientRect();
+    return b.bottom <= window.innerHeight + 1 && b.top >= 0;
+  });
+  expect(taskbarInView).toBe(true);
+});
+
+test('the close button has an accessible name', async ({ page }) => {
+  await page.goto('/OS');
+  await expect(page.getByText('ReadMe.txt')).toBeVisible({ timeout: 30_000 });
+
+  await page.getByText('ReadMe.txt').click();
+  await expect(page.getByRole('button', { name: 'Close window' })).toBeVisible();
+});
