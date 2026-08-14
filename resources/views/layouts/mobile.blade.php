@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         @vite(['resources/sass/mobileApp.scss', 'resources/js/mobile.js'])
 
-        <title>{{ config('app.name') }}</title>
+        @include('partials.meta')
 
     </head>
 

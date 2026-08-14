@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @vite(['resources/sass/app.scss'])
 
-    <title>{{ config('app.name') }}</title>
+    @include('partials.meta')
 
 </head>
 
@@ -17,7 +17,8 @@
 
     <div class="text-center py-2">
 
-        <h1>{{ config('app.name') }}</h1>
+        <h1>{{ config('site.author') }}</h1>
+        <p>Full-stack web developer — PHP, Laravel and Vue</p>
 
     </div>
 
@@ -28,7 +29,7 @@
 
             <div class="column is-one-third flex-center">
 
-                <img class="h-75" src="/images/gediminas.png" alt="Avatar">
+                <img class="h-75" src="/images/Gediminas.png" alt="{{ config('site.author') }}">
 
             </div>
 
@@ -94,6 +95,19 @@
             </p>
 
         </div>
+
+    </div>
+
+    <div class="section">
+
+        <h2>Elsewhere</h2>
+
+        <ul>
+            @foreach (config('site.profiles') as $label => $url)
+                <li><a href="{{ $url }}" rel="me noopener">{{ $label }}</a></li>
+            @endforeach
+            <li><a href="mailto:{{ config('contact.recipient') }}">Email</a></li>
+        </ul>
 
     </div>
 

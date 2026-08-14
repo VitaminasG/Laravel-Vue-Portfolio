@@ -18,11 +18,13 @@ pays before seeing a single piece of work.
 
 ## Findings
 
-> **Phases A and B are delivered.** The journey to the desktop went from ~37 s
-> to ~9 s and can now be skipped; the desktop is now operable by keyboard and
-> survives a short viewport. Findings 1–3 below describe the state before that
-> work, and the measured results are recorded at the end of this document.
-> Findings 4–6 are unchanged and still open.
+> **Phases A, B and D are delivered.** The journey to the desktop went from
+> ~37 s to ~9 s and can now be skipped; the desktop is operable by keyboard and
+> survives a short viewport; and every layout now carries a real title,
+> description and link-preview card. Findings 1–3 and 6 below describe the
+> state before that work, and the measured results are recorded at the end of
+> this document. Findings 4 and 5 — the mobile experience — are unchanged and
+> still open.
 
 ### 1. Thirty-seven seconds before a visitor can do anything
 
@@ -311,3 +313,49 @@ trap, and a real trap is a larger piece of work than the findings called for.
 Findings 4, 5 and 6 stand: the mobile site still asks visitors to leave, the
 device split still ignores viewport size, and crawlers still receive almost
 nothing.
+
+---
+
+## Phase D result
+
+| | Before | After |
+| --- | --- | --- |
+| `<title>` | `Portfolio` | `Gediminas Palsys — Full-stack web developer` |
+| Meta description | absent | present, under 155 characters |
+| `og:` / `twitter:` tags | 0 | 14 |
+| Link preview image | none | 1200×630, absolute URL |
+| `<h1>` on the crawler page | `Portfolio` | `Gediminas Palsys` |
+| Links a crawler can follow | 0 | 3 |
+
+The three layouts each had the same gap, so the fix is one partial
+(`resources/views/partials/meta.blade.php`) that all three include, reading
+from `config/site.php`. Putting the values in config rather than in Blade means
+the title exists in one place instead of three, and can be overridden per
+environment.
+
+The preview image is a screenshot of the desktop itself at exactly 1200×630.
+It is the honest picture of what the link leads to, it reads at thumbnail size,
+and it needed no illustration work — the site already looks like its own poster.
+
+`APP_NAME` stays `Portfolio`: it names the Laravel application, which is a
+different question from what a reader should see.
+
+### Found while doing this
+
+The crawler page asked for `/images/gediminas.png` while the file is
+`Gediminas.png`. macOS resolves that; a Linux server does not, so the only
+image on the only page a search engine ever saw was a broken one in production.
+Fixed, and covered by a test that asserts the real filename.
+
+Fifteen PHPUnit tests cover the result, running the title, description,
+preview-card and absolute-URL checks against all three layouts rather than
+whichever one happened to be checked by hand.
+
+### Not done in Phase D
+
+No structured data (JSON-LD `Person`), no sitemap, no `robots.txt`. Each is
+worth having and none was among the findings.
+
+Findings 4 and 5 stand: the mobile site still asks visitors to leave, and the
+device split still ignores viewport size. That is Phase C, the one piece that
+needs real design decisions rather than mechanical fixes.
